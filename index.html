@@ -53,7 +53,7 @@
       pointer-events: none;
     }
 
-    /* ══════════ 翻轉層級隔離 ══════════ */
+    /* ══════════ 翻轉層級完全隔離 ══════════ */
     .flipper.flipped .face-a { 
       pointer-events: none !important; 
       z-index: 1 !important; 
@@ -75,7 +75,7 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 頂部標籤：筆記本橫線紋理 ══════════ */
+    /* ══════════ 頂部筆記本標籤 ══════════ */
     .tape-label {
       background-color: #fdfdfd;
       background-image: repeating-linear-gradient(
@@ -147,7 +147,6 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 中軸圓形孔 ＆ 雙曲沙漏平滑視窗 ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -255,7 +254,7 @@
       100% { height: 5px; }
     }
 
-    /* ══════════ 控制底座 ══════════ */
+    /* ══════════ 正面底座 ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 8px;
@@ -335,7 +334,7 @@
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B：操作面板 ＆ 白字透明框按鈕 ══════════ */
+    /* ══════════ Side B 質感面板 ══════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -344,7 +343,6 @@
       border: 1.5px solid #222;
       overflow-y: auto;
       max-height: 100%;
-      box-sizing: border-box;
     }
     .setting-group {
       background: rgba(0, 0, 0, 0.6);
@@ -354,68 +352,58 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
     .group-title { font-size: 12px; font-weight: 700; color: #ffca28; margin-bottom: 6px; }
-    
-    .link-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
     .full-input {
-      flex: 1;
       width: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: #111;
+      border: 1px solid #555;
       color: #fff;
-      padding: 7px 10px;
+      padding: 7px 9px;
       border-radius: 5px;
       font-size: 12px;
       box-sizing: border-box;
       outline: none;
-      transition: border-color 0.2s;
     }
-    .full-input:focus {
-      border-color: rgba(255, 255, 255, 0.7);
+    .link-row {
+      display: flex;
+      gap: 6px;
+    }
+    .link-row input {
+      flex: 1;
+      background: #111;
+      border: 1px solid #555;
+      color: #fff;
+      padding: 7px 9px;
+      border-radius: 5px;
+      font-size: 12px;
+      box-sizing: border-box;
+      outline: none;
     }
 
-    /* ══════════ 統一：白字透明框按鍵（參照圖片質感） ══════════ */
-    .btn-transparent,
-    .back-btn,
-    #btnLoad,
-    .btn-custom-action {
-      background: rgba(255, 255, 255, 0.05) !important;
+    /* ══════════ 白字透明線框按鍵風格 ══════════ */
+    .back-btn, #btnLoad, .btn-custom-action {
+      background: transparent !important;
       color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.4) !important;
-      border-radius: 5px !important;
-      padding: 6px 14px !important;
-      font-size: 12px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.75) !important;
+      padding: 6px 12px !important;
+      font-size: 11px !important;
+      border-radius: 6px !important;
       cursor: pointer !important;
+      transition: all 0.2s ease !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 6px;
-      transition: all 0.2s ease !important;
-      backdrop-filter: blur(4px);
+      gap: 4px !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
       text-decoration: none;
-      box-sizing: border-box;
     }
-    .btn-transparent:hover,
-    .back-btn:hover,
-    #btnLoad:hover,
-    .btn-custom-action:hover {
-      background: rgba(255, 255, 255, 0.18) !important;
+    .back-btn:hover, #btnLoad:hover, .btn-custom-action:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
       border-color: #ffffff !important;
-      color: #ffffff !important;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
       transform: translateY(-1px);
     }
-    .btn-transparent:active,
-    .back-btn:active,
-    #btnLoad:active,
-    .btn-custom-action:active {
+    .back-btn:active, #btnLoad:active, .btn-custom-action:active {
       transform: translateY(0);
-      background: rgba(255, 255, 255, 0.28) !important;
+      background: rgba(255, 255, 255, 0.25) !important;
     }
 
     .palette-grid {
@@ -436,7 +424,6 @@
       box-sizing: border-box;
     }
     .palette-circle:hover { transform: scale(1.2); border-color: #fff; }
-    
     .custom-color-picker-wrap {
       display: flex;
       align-items: center;
@@ -450,8 +437,8 @@
     .native-color-picker {
       appearance: none;
       -webkit-appearance: none;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -461,7 +448,6 @@
     }
     .native-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
     .native-color-picker::-webkit-color-swatch { border: 2px solid #fff; border-radius: 50%; }
-    
     .upload-btn-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
   </style>
 </head>
@@ -476,7 +462,7 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底復古手寫標題標籤 -->
+          <!-- 白底復古手寫標籤 -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
@@ -558,8 +544,8 @@
               <div class="setting-group" style="margin-top:0;">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
-                  <input type="text" id="linkInput" class="full-input" placeholder="貼上 YouTube 影片或播放清單網址">
-                  <button id="btnLoad" class="btn-transparent">載入播放</button>
+                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
+                  <button type="button" id="btnLoad">載入</button>
                 </div>
               </div>
 
@@ -584,34 +570,24 @@
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼（完全依照貼紙順序對齊，但基礎色調更深沈） -->
+              <!-- 3. 卡帶外殼（顏色排序完全一致，基礎色更深更沉穩） -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
-                  <!-- 1. 深紅 (對齊 經典紅) -->
-                  <div class="palette-circle color-case-btn" data-case="#4a0f12" data-bar="#2b080a" style="background:#4a0f12;" title="深酒紅"></div>
-                  <!-- 2. 深焦橙 (對齊 夕陽橙) -->
-                  <div class="palette-circle color-case-btn" data-case="#5e2b0c" data-bar="#361705" style="background:#5e2b0c;" title="焦糖深橙"></div>
-                  <!-- 3. 深金褐 (對齊 亮麗黃) -->
-                  <div class="palette-circle color-case-btn" data-case="#4f420e" data-bar="#2b2405" style="background:#4f420e;" title="沉穩芥末褐"></div>
-                  <!-- 4. 深墨綠 (對齊 森林綠) -->
-                  <div class="palette-circle color-case-btn" data-case="#102b14" data-bar="#08170b" style="background:#102b14;" title="深邃墨綠"></div>
-                  <!-- 5. 午夜藍 (對齊 蔚藍) -->
-                  <div class="palette-circle color-case-btn" data-case="#0b2847" data-bar="#061526" style="background:#0b2847;" title="海軍午夜藍"></div>
-                  <!-- 6. 靛夜藍 (對齊 靛青藍) -->
-                  <div class="palette-circle color-case-btn" data-case="#171e42" data-bar="#0b0f24" style="background:#171e42;" title="深邃靛藍"></div>
-                  <!-- 7. 深紫褐 (對齊 夢幻紫) -->
-                  <div class="palette-circle color-case-btn" data-case="#360e42" data-bar="#1e0724" style="background:#360e42;" title="暗夜紫黑"></div>
-                  <!-- 8. 黑魂 (對齊 墨黑) -->
-                  <div class="palette-circle color-case-btn" data-case="#141414" data-bar="#0c0d10" style="background:#141414;" title="極致炭黑"></div>
-                  <!-- 9. 復古米白 (對齊 純白) -->
-                  <div class="palette-circle color-case-btn" data-case="#dcd7cd" data-bar="#cbc4b7" style="background:#dcd7cd;" title="復古米灰白"></div>
-                  <!-- 10. 石板深灰 (對齊 水泥灰) -->
-                  <div class="palette-circle color-case-btn" data-case="#32363e" data-bar="#1d2024" style="background:#32363e;" title="冷調深石灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#4a0e11" data-bar="#240708" style="background:#4a0e11;" title="酒紅沉褐"></div>
+                  <div class="palette-circle color-case-btn" data-case="#5e2b0c" data-bar="#2e1506" style="background:#5e2b0c;" title="焦糖暗橙"></div>
+                  <div class="palette-circle color-case-btn" data-case="#54440b" data-bar="#261e05" style="background:#54440b;" title="芥末暗黃"></div>
+                  <div class="palette-circle color-case-btn" data-case="#123819" data-bar="#081c0c" style="background:#123819;" title="墨綠蒼林"></div>
+                  <div class="palette-circle color-case-btn" data-case="#0d2b4d" data-bar="#061526" style="background:#0d2b4d;" title="午夜深藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1c234a" data-bar="#0d1024" style="background:#1c234a;" title="深藍靛灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#3c1347" data-bar="#1d0924" style="background:#3c1347;" title="暗夜魅紫"></div>
+                  <div class="palette-circle color-case-btn" data-case="#141414" data-bar="#0a0a0a" style="background:#141414;" title="極致深黑"></div>
+                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" style="background:#eae6df; border-color:#aaa;" title="復古米白"></div>
+                  <div class="palette-circle color-case-btn" data-case="#3a3a3a" data-bar="#1f1f1f" style="background:#3a3a3a;" title="深炭灰"></div>
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="caseColorPicker" class="native-color-picker" value="#141414">
-                  <span class="picker-label">🌈 外殼自訂任意色域（自動匹配深色底座）</span>
+                  <span class="picker-label">🌈 外殼自訂任意色域</span>
                 </div>
               </div>
 
@@ -678,24 +654,14 @@
       return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     }
 
-    // 解析 YouTube 網址
-    function extractYouTubeTarget(url) {
-      if (!url) return null;
+    // 解析 YouTube 影片 ID
+    function extractVideoId(url) {
+      if (!url) return '';
       url = url.trim();
-      
-      const listMatch = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
-      const videoMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
-      
-      if (videoMatch && videoMatch[1]) {
-        return { type: 'video', id: videoMatch[1] };
-      }
-      if (listMatch && listMatch[1]) {
-        return { type: 'playlist', id: listMatch[1] };
-      }
-      if (/^[\w-]{11}$/.test(url)) {
-        return { type: 'video', id: url };
-      }
-      return null;
+      if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+      const reg = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
+      const match = url.match(reg);
+      return match ? match[1] : '';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -731,8 +697,8 @@
 
       function applyCaseColor(color, barColor = null) {
         const root = document.documentElement;
-        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -24 : -14);
-        const caseBorder = isLightColor(color) ? '#b0aba2' : '#080808';
+        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -20 : -10);
+        const caseBorder = isLightColor(color) ? '#c0c0c0' : '#0a0a0a';
         root.style.setProperty('--case-color', color);
         root.style.setProperty('--control-bar-bg', actualBarColor);
         root.style.setProperty('--case-border', caseBorder);
@@ -743,50 +709,34 @@
         }
       }
 
-      // 翻轉卡帶
+      // 翻轉卡帶控制
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
-      // 載入 YouTube 影片/音訊核心邏輯
-      function handleLoadMusic() {
-        const val = linkInput.value.trim();
+      // 載入 YouTube 影片邏輯
+      function handleLoadVideo() {
+        const val = linkInput?.value.trim();
         if (!val) return;
-        const target = extractYouTubeTarget(val);
-
-        if (!target) {
-          alert('請輸入有效的 YouTube 影片或播放清單網址！');
+        const vid = extractVideoId(val);
+        if (!vid) {
+          alert('請輸入有效的 YouTube 網址或影片 ID');
           return;
         }
 
         if (window.player && typeof window.player.loadVideoById === 'function') {
-          if (target.type === 'video') {
-            window.player.loadVideoById(target.id);
-          } else if (target.type === 'playlist') {
-            window.player.loadPlaylist({ list: target.id });
-          }
-          localStorage.setItem('cfg_yt_url', val);
-          
-          // 自動翻回正面觀看播放
-          setTimeout(() => {
-            flipper.classList.remove('flipped');
-          }, 300);
+          window.player.loadVideoById(vid);
+        } else if (window.loadTrack && typeof window.loadTrack === 'function') {
+          window.loadTrack(vid);
         } else {
-          // 若 player 尚未初始化，嘗試利用原先 widget-params/script 機制更新
-          localStorage.setItem('cfg_yt_url', val);
-          window.location.reload();
+          // 若播放器尚未就緒，將 ID 寫入快取待其初始化
+          localStorage.setItem('cfg_last_video', vid);
         }
+        localStorage.setItem('cfg_youtube_url', val);
       }
 
-      btnLoad?.addEventListener('click', (e) => {
-        e.preventDefault();
-        handleLoadMusic();
-      });
-
+      btnLoad?.addEventListener('click', handleLoadVideo);
       linkInput?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          handleLoadMusic();
-        }
+        if (e.key === 'Enter') handleLoadVideo();
       });
 
       // 建立聲波條
@@ -815,7 +765,7 @@
         });
       }, 150);
 
-      // 讀取設定快取
+      // 讀取快取
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) applyAccentColor(savedAccent);
 
@@ -828,10 +778,8 @@
         if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      const savedUrl = localStorage.getItem('cfg_yt_url');
-      if (savedUrl && linkInput) {
-        linkInput.value = savedUrl;
-      }
+      const savedUrl = localStorage.getItem('cfg_youtube_url');
+      if (savedUrl && linkInput) linkInput.value = savedUrl;
 
       // 貼紙選色監聽
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
@@ -851,7 +799,7 @@
       });
       caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
 
-      // 檔案上傳事件
+      // 圖片上傳
       fileInput?.addEventListener('change', function() {
         if (this.files?.[0]) {
           const reader = new FileReader();
@@ -865,7 +813,6 @@
         }
       });
 
-      // 圖片網址變更事件
       imgInput?.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
@@ -874,13 +821,12 @@
         }
       });
 
-      // 移除圖片按鈕
       document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
         e.preventDefault();
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
-      // 歌名更新輪詢
+      // 歌名更新
       setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const songName = window.player.getVideoData()?.title;
