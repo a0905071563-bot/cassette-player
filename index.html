@@ -105,7 +105,7 @@
     .screw.bl { bottom: 12px !important; left: 11px !important; }
     .screw.br { bottom: 12px !important; right: 11px !important; }
 
-   /* ══════════ 頂部白色標籤 ══════════ */
+    /* ══════════ 頂部白色標籤 ══════════ */
     .tape-label {
       background-color: #fdfdfd !important;
       background-image: repeating-linear-gradient(
@@ -120,10 +120,10 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
       margin: 4px 20px 0 !important;
       padding: 0 16px !important;
-      height: 36px !important;            /* 微調高 4px 容納更大字體 */
+      height: 36px !important;
       display: flex !important;
-      align-items: center !important;     /* 垂直強制置中 */
-      justify-content: center !important;  /* 水平強制置中 */
+      align-items: center !important;
+      justify-content: center !important;
       position: relative !important;
       z-index: 5 !important;
       box-sizing: border-box !important;
@@ -148,10 +148,9 @@
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
     }
 
-    /* 標題字體：加大至 22px，正黑且完全置中 */
     .tape-title {
       font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
-      font-size: 22px !important;         /* 字體放大 */
+      font-size: 22px !important;
       font-weight: 700 !important;
       color: #111111 !important;
       letter-spacing: 0.5px;
@@ -159,9 +158,9 @@
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       text-align: center !important;
-      line-height: 1.2 !important;        /* 修正文字 baseline 垂直居中 */
-      margin: 0 !important;              /* 清除偏移 margin */
-      width: 75% !important;              /* 給予適當寬度置中對齊 */
+      line-height: 1.2 !important;
+      margin: 0 !important;
+      width: 75% !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -183,7 +182,7 @@
       transition: background-color 0.3s ease;
     }
 
-  /* ══════════ 黑色中軸視窗（寬度縮短至 74%） ══════════ */
+    /* ══════════ 黑色中軸視窗（收窄至 74%） ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -192,7 +191,7 @@
       position: relative !important;
       overflow: hidden !important;
       height: 52px !important;
-      width: 74% !important;              /* 原 92% 改為 74%，兩邊明顯縮短更集中 */
+      width: 74% !important;
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
@@ -305,7 +304,6 @@
       border-top: 1.5px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* 梯形頂部中央小螺絲 */
     .trapezoid-wrapper .center-screw {
       position: absolute;
       top: 4px;
@@ -313,7 +311,7 @@
       transform: translateX(-50%);
     }
 
-    /* ══════════ 參考截圖：小圓孔進度條 ══════════ */
+    /* ══════════ 小圓孔進度條 ══════════ */
     .tape-progress {
       margin: 14px auto 2px !important;
       width: 96% !important;
@@ -339,7 +337,6 @@
       z-index: 1 !important;
     }
 
-    /* 點狀小圓孔容器（排列成一排螺絲孔） */
     .sound-wave-container {
       position: absolute !important;
       inset: 0 !important;
@@ -352,7 +349,6 @@
       z-index: 2 !important;
     }
 
-    /* 截圖中的圓點螺絲孔造型 */
     .wave-bar {
       width: 4px !important;
       height: 4px !important;
@@ -363,43 +359,116 @@
       box-shadow: inset 0 1px 1px rgba(0,0,0,0.8), 0 0.5px 1px rgba(255,255,255,0.1) !important;
     }
 
-    /* 播放到的進度：點亮為貼紙顏色小圓點 */
     .wave-bar.active {
       background: var(--accent-color) !important;
       box-shadow: 0 0 4px var(--accent-color) !important;
       transform: scale(1.15) !important;
     }
 
-    /* ══════════ 控制底座（保證按鍵 100% 可點擊） ══════════ */
+    /* ══════════ 播放控制底座（全新圖標樣式） ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
-      border-radius: 8px !important;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
+      border-radius: 28px !important;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.08) !important;
       border: 1px solid rgba(255,255,255,0.08) !important;
       position: relative !important;
       z-index: 10 !important;
-      pointer-events: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 6px 14px !important;
       margin-top: 10px !important;
       transition: background 0.3s ease;
     }
-    .play-btn, .flip-btn {
+
+    .hole-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      color: #ffffff;
+      transition: transform 0.12s ease, opacity 0.15s ease;
+    }
+    .hole-btn:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+    .hole-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* 音量鍵、上一首、下一首 */
+    .ctrl-icon-btn {
+      width: 32px;
+      height: 32px;
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+    .ctrl-icon-btn svg {
+      fill: currentColor !important;
+    }
+
+    /* 中央圓形主播放按鍵 */
+    .play-btn {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50% !important;
       background: var(--accent-color) !important;
       color: var(--btn-icon-color) !important;
-      border: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      transition: background 0.3s ease, transform 0.1s ease;
-      cursor: pointer !important;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.45) !important;
+      flex-shrink: 0;
     }
-    .play-btn:hover, .flip-btn:hover {
-      filter: brightness(1.15);
-      transform: scale(1.05);
-    }
-    .play-btn svg, .flip-btn svg {
+    .play-btn svg {
       fill: var(--btn-icon-color) !important;
-      stroke: var(--btn-icon-color) !important;
-      pointer-events: none;
     }
-    #volSlider::-webkit-slider-thumb { background: var(--accent-color) !important; }
+
+    /* 右側翻面按鍵（循環 Loop 箭頭圖標） */
+    .flip-btn {
+      height: 32px !important;
+      min-width: 44px !important;
+      padding: 0 8px !important;
+      border-radius: 16px !important;
+      background: var(--accent-color) !important;
+      color: var(--btn-icon-color) !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35) !important;
+    }
+    .flip-btn svg {
+      fill: var(--btn-icon-color) !important;
+    }
+
+    /* 音量滑桿 */
+    .vol-wrap {
+      flex: 1;
+      max-width: 90px;
+      margin: 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    #volSlider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.25);
+      outline: none;
+      cursor: pointer;
+    }
+    #volSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-color) !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    #volSlider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
 
     /* ══════════ Side B：統一白字透明線框風格 ══════════ */
     .side-b {
@@ -640,7 +709,7 @@
             </div>
           </div>
 
-          <!-- 梯形下巴區域：內建中央螺絲釘與截圖風格的小圓孔進度條 -->
+          <!-- 梯形下巴區域：內建中央螺絲釘與小圓孔進度條 -->
           <div class="trapezoid-wrapper">
             <span class="screw center-screw"></span>
             <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
@@ -650,24 +719,52 @@
           </div>
         </div>
 
-        <!-- 播放控制底座（上一首、播放/暫停、下一首、音量、換面） -->
+        <!-- 播放控制底座（音量喇叭鍵、上一首、播放/暫停、下一首、音量拉桿、循環Loop鍵） -->
         <div class="tape-base" id="tapeControlBase">
-          <button class="hole-btn" id="btnPrev" title="上一首">
-            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+          <!-- 1. 音量靜音切換按鈕 -->
+          <button class="hole-btn ctrl-icon-btn" id="btnMute" title="靜音 / 開啟聲音">
+            <svg viewBox="0 0 24 24" id="iconVolHigh" width="18" height="18" fill="currentColor">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" id="iconVolMuted" width="18" height="18" fill="currentColor" style="display:none;">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
           </button>
+
+          <!-- 2. 上一首按鈕 -->
+          <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+            </svg>
+          </button>
+
+          <!-- 3. 播放 / 暫停按鈕 -->
           <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
-            <svg viewBox="0 0 24 24" id="iconPlay"><path d="M8 5v14l11-7z"/></svg>
-            <svg viewBox="0 0 24 24" id="iconPause" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+            <svg viewBox="0 0 24 24" id="iconPlay" width="22" height="22" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" id="iconPause" width="22" height="22" fill="currentColor" style="display:none;">
+              <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+            </svg>
           </button>
-          <button class="hole-btn" id="btnNext" title="下一首">
-            <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
+
+          <!-- 4. 下一首按鈕 -->
+          <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
+            </svg>
           </button>
+
+          <!-- 5. 音量滑塊 -->
           <div class="vol-wrap">
             <input type="range" id="volSlider" min="0" max="100" value="60">
           </div>
-          <button class="hole-btn flip-btn" id="btnFlipB" title="換歌 / 設定">
-            B
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+
+          <!-- 6. 翻面按鈕（循環 Loop 箭頭圖標） -->
+          <button class="hole-btn flip-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+            </svg>
           </button>
         </div>
       </div>
@@ -710,4 +807,343 @@
                   <div class="palette-circle color-accent-btn" data-color="#2e7d32" style="background:#2e7d32;" title="森林綠"></div>
                   <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="蔚藍"></div>
                   <div class="palette-circle color-accent-btn" data-color="#3f51b5" style="background:#3f51b5;" title="靛青藍"></div>
-                  <div class="palette
+                  <div class="palette-circle color-accent-btn" data-color="#8e24aa" style="background:#8e24aa;" title="夢幻紫"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
+                </div>
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
+                  <span class="picker-label">🌈 貼紙自訂任意色域</span>
+                </div>
+              </div>
+
+              <!-- 3. 卡帶外殼與控制座底色 -->
+              <div class="setting-group">
+                <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
+                <div class="palette-grid">
+                  <div class="palette-circle color-case-btn" data-case="#5e1215" data-bar="#38090b" style="background:#5e1215;" title="深酒紅"></div>
+                  <div class="palette-circle color-case-btn" data-case="#6d320c" data-bar="#451e06" style="background:#6d320c;" title="焦茶橙"></div>
+                  <div class="palette-circle color-case-btn" data-case="#59440e" data-bar="#332707" style="background:#59440e;" title="芥末暗黃"></div>
+                  <div class="palette-circle color-case-btn" data-case="#153b1b" data-bar="#0b2410" style="background:#153b1b;" title="復古墨綠"></div>
+                  <div class="palette-circle color-case-btn" data-case="#0d2b4d" data-bar="#071b30" style="background:#0d2b4d;" title="午夜深藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1d234a" data-bar="#10142e" style="background:#1d234a;" title="靛青深藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#3d1447" data-bar="#240b2a" style="background:#3d1447;" title="暗幽紫"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
+                  <div class="palette-circle color-case-btn" data-case="#dcd7ce" data-bar="#cbc5bb" style="background:#dcd7ce;" title="暖調白灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#373d47" data-bar="#24282f" style="background:#373d47;" title="沉穩深灰"></div>
+                </div>
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
+                  <span class="picker-label">🌈 外殼自訂任意色域</span>
+                </div>
+              </div>
+
+              <!-- 4. 貼紙置入圖片 -->
+              <div class="setting-group">
+                <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
+                <div class="upload-btn-wrap">
+                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
+                  <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
+                  <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
+                </div>
+                <input type="text" id="stickerImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
+              </div>
+
+              <!-- 循環播放 -->
+              <div class="loop-row">
+                <span class="lbl"><span>循環播放 (LOOP)</span></span>
+                <label class="switch">
+                  <input type="checkbox" id="loopToggle">
+                  <span class="track"></span>
+                </label>
+              </div>
+
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const widgetId = params.get('id') || 'default';
+    const rawSetItem = localStorage.setItem.bind(localStorage);
+    const rawGetItem = localStorage.getItem.bind(localStorage);
+
+    localStorage.setItem = (key, val) => rawSetItem(`${widgetId}_${key}`, val);
+    localStorage.getItem = (key) => rawGetItem(`${widgetId}_${key}`);
+
+    function isLightColor(hex) {
+      if (!hex || !hex.startsWith('#')) return false;
+      const c = hex.substring(1);
+      const rgb = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
+      const luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * (rgb & 0xff);
+      return luma > 160;
+    }
+
+    function adjustBrightness(hex, percent) {
+      if (!hex || !hex.startsWith('#')) return hex;
+      let num = parseInt(hex.slice(1), 16);
+      if (hex.length === 4) {
+        const r = (num >> 8) & 0xf, g = (num >> 4) & 0xf, b = num & 0xf;
+        num = (r * 17 << 16) | (g * 17 << 8) | (b * 17);
+      }
+      let r = (num >> 16) + percent;
+      let g = ((num >> 8) & 0x00ff) + percent;
+      let b = (num & 0x0000ff) + percent;
+      r = Math.min(255, Math.max(0, r));
+      g = Math.min(255, Math.max(0, g));
+      b = Math.min(255, Math.max(0, b));
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    function parseYouTubeID(url) {
+      if (!url) return '';
+      const str = url.trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(str)) return str;
+      const match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/))([\w-]{11})/);
+      return match ? match[1] : '';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const stripe = document.getElementById('tapeStripe');
+      const title = document.getElementById('tapeTitle');
+      const imgInput = document.getElementById('stickerImgInput');
+      const fileInput = document.getElementById('fileUploadInput');
+      const soundWaveBox = document.getElementById('soundWaveBox');
+      const progressFill = document.getElementById('progressFill');
+      const wrapper = document.getElementById('cassette-player-wrapper');
+      const flipper = document.getElementById('flipper');
+      const nativeColorPicker = document.getElementById('nativeColorPicker');
+      const caseColorPicker = document.getElementById('caseColorPicker');
+      const linkInput = document.getElementById('linkInput');
+      const btnLoad = document.getElementById('btnLoad');
+      const btnMute = document.getElementById('btnMute');
+      const iconVolHigh = document.getElementById('iconVolHigh');
+      const iconVolMuted = document.getElementById('iconVolMuted');
+      const volSlider = document.getElementById('volSlider');
+
+      function applyAccentColor(color, clearCustomImg = false) {
+        const root = document.documentElement;
+        root.style.setProperty('--accent-color', color);
+        root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
+        localStorage.setItem('cfg_accent', color);
+        if (nativeColorPicker) {
+          nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+        }
+
+        if (clearCustomImg && stripe) {
+          stripe.style.backgroundImage = 'none';
+          localStorage.removeItem('cfg_tape_img');
+          if (imgInput) imgInput.value = '';
+          if (fileInput) fileInput.value = '';
+        }
+      }
+
+      function applyCaseColor(color, barColor = null) {
+        const root = document.documentElement;
+        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -20 : -15);
+        const caseBorder = isLightColor(color) ? '#b0b0b0' : '#0a0a0a';
+        root.style.setProperty('--case-color', color);
+        root.style.setProperty('--control-bar-bg', actualBarColor);
+        root.style.setProperty('--case-border', caseBorder);
+        localStorage.setItem('cfg_case_color', color);
+        localStorage.setItem('cfg_bar_color', actualBarColor);
+        if (caseColorPicker) {
+          caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
+        }
+      }
+
+      // 翻轉卡帶控制
+      document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
+      document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
+
+      // 音量與靜音切換
+      let previousVolume = 60;
+      if (btnMute && volSlider) {
+        btnMute.addEventListener('click', () => {
+          const p = window.player || (window.widget && window.widget.player);
+          if (parseInt(volSlider.value, 10) > 0) {
+            previousVolume = volSlider.value;
+            volSlider.value = 0;
+            if (p && typeof p.setVolume === 'function') p.setVolume(0);
+            iconVolHigh.style.display = 'none';
+            iconVolMuted.style.display = 'block';
+          } else {
+            volSlider.value = previousVolume || 60;
+            if (p && typeof p.setVolume === 'function') p.setVolume(volSlider.value);
+            iconVolHigh.style.display = 'block';
+            iconVolMuted.style.display = 'none';
+          }
+        });
+
+        volSlider.addEventListener('input', (e) => {
+          const val = parseInt(e.target.value, 10);
+          const p = window.player || (window.widget && window.widget.player);
+          if (p && typeof p.setVolume === 'function') p.setVolume(val);
+          if (val === 0) {
+            iconVolHigh.style.display = 'none';
+            iconVolMuted.style.display = 'block';
+          } else {
+            iconVolHigh.style.display = 'block';
+            iconVolMuted.style.display = 'none';
+          }
+        });
+      }
+
+      // YouTube 影片載入
+      function executeLoadVideo() {
+        const raw = linkInput?.value.trim() || '';
+        const vid = parseYouTubeID(raw);
+        if (!vid) {
+          alert('請輸入有效的 YouTube 影片網址或 ID');
+          return;
+        }
+
+        localStorage.setItem('yt_url', raw);
+        localStorage.setItem('yt_video_id', vid);
+        rawSetItem('saved_youtube_id', vid);
+
+        const p = window.player || (window.widget && window.widget.player);
+        if (p && typeof p.loadVideoById === 'function') {
+          try {
+            p.loadVideoById(vid);
+            p.playVideo();
+          } catch(e) {
+            p.cueVideoById(vid);
+          }
+        } else {
+          const curUrl = new URL(window.location.href);
+          curUrl.searchParams.set('v', vid);
+          window.location.href = curUrl.toString();
+        }
+      }
+
+      btnLoad?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        executeLoadVideo();
+      });
+
+      linkInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          executeLoadVideo();
+        }
+      });
+
+      const savedUrl = localStorage.getItem('yt_url') || localStorage.getItem('yt_video_id');
+      if (savedUrl && linkInput) {
+        linkInput.value = savedUrl;
+      }
+
+      // 生成小圓孔進度點
+      const barCount = 38;
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < barCount; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'wave-bar';
+        fragment.appendChild(bar);
+      }
+      soundWaveBox?.appendChild(fragment);
+      const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
+
+      // 進度輪詢
+      setInterval(() => {
+        const p = window.player || (window.widget && window.widget.player);
+        const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
+        wrapper?.classList.toggle('is-playing', isPlaying);
+
+        const percent = parseFloat(progressFill?.style.width) || 0;
+        const activeBarLimit = Math.floor((percent / 100) * barCount);
+
+        waveBars.forEach((bar, idx) => {
+          const isActive = idx <= activeBarLimit;
+          bar.classList.toggle('active', isActive);
+        });
+      }, 150);
+
+      // 配色載入
+      const savedAccent = localStorage.getItem('cfg_accent');
+      if (savedAccent) applyAccentColor(savedAccent);
+
+      const savedCase = localStorage.getItem('cfg_case_color');
+      if (savedCase) applyCaseColor(savedCase, localStorage.getItem('cfg_bar_color'));
+
+      const savedImg = localStorage.getItem('cfg_tape_img');
+      if (savedImg && stripe) {
+        stripe.style.backgroundImage = `url("${savedImg}")`;
+        if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
+      }
+
+      // 貼紙選色
+      document.querySelectorAll('.color-accent-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          applyAccentColor(btn.dataset.color, true);
+        });
+      });
+      nativeColorPicker?.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
+
+      // 外殼選色
+      document.querySelectorAll('.color-case-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          applyCaseColor(btn.dataset.case, btn.dataset.bar);
+        });
+      });
+      caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
+
+      // 圖片上傳
+      fileInput?.addEventListener('change', function() {
+        if (this.files?.[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const dataUrl = e.target.result;
+            if (stripe) stripe.style.backgroundImage = `url("${dataUrl}")`;
+            localStorage.setItem('cfg_tape_img', dataUrl);
+            if (imgInput) imgInput.value = '(已上傳圖片)';
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      imgInput?.addEventListener('change', () => {
+        const val = imgInput.value.trim();
+        if (val && !val.includes('(已上傳圖片)')) {
+          if (stripe) stripe.style.backgroundImage = `url("${val}")`;
+          localStorage.setItem('cfg_tape_img', val);
+        }
+      });
+
+      document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
+      });
+
+      // 定時更新標題
+      setInterval(() => {
+        const p = window.player || (window.widget && window.widget.player);
+        if (p && typeof p.getVideoData === 'function') {
+          const songName = p.getVideoData()?.title;
+          if (songName && title && title.textContent !== songName) {
+            title.textContent = songName;
+            title.title = songName;
+          }
+        }
+      }, 1000);
+    });
+  })();
+</script>
+
+<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
+<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
+<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
+<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
+</body>
+</html>
