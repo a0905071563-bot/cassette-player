@@ -38,7 +38,7 @@
 
     .vinyl-widget {
       width: 100%;
-      max-width: 480px;
+      max-width: 440px; /* 與底座寬度精確吻合 */
       padding: 12px;
       margin: 0 auto;
       display: flex;
@@ -49,8 +49,6 @@
     .scene {
       width: 100%;
       perspective: 1000px;
-      display: flex;
-      justify-content: center;
     }
 
     .flipper {
@@ -98,22 +96,24 @@
       z-index: 10;
     }
 
-    /* ══════════ 黑膠唱片機展示區（真正嚴格居中） ══════════ */
+    /* ══════════ 核心幾何對齊：以下方 Play 按鈕為中央軸線 ══════════ */
     .vinyl-stage-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .vinyl-stage {
       position: relative;
-      width: 370px; /* 封套 250px + 露出半片 120px = 370px */
+      width: 100%;
       height: 250px;
-      margin: 0 auto;
     }
 
-    /* ══════════ 右側黑膠唱片本體 ══════════ */
+    /* 組合總寬度 370px，其中心點為 185px；精確將中央軸線平移對齊 Play 鍵 (50%) */
+    .vinyl-stage {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-185px); /* 絕對以 370px 的正中央為中心點對齊 */
+      width: 370px;
+      height: 250px;
+    }
+
+    /* ══════════ 右側黑膠唱片本體（半片露出 + 璀璨高光 + 無陰影） ══════════ */
     .vinyl-disc {
       position: absolute;
       right: 0;
@@ -307,7 +307,7 @@
       transition: width 0.15s linear, background-color 0.3s ease;
     }
 
-    /* ══════════ 控制底座 ══════════ */
+    /* ══════════ 控制底座（置中） ══════════ */
     .tape-base {
       background: var(--control-bar-bg);
       border-radius: 28px;
@@ -319,7 +319,6 @@
       padding: 6px 26px;
       margin-top: 14px;
       width: 100%;
-      max-width: 440px;
       height: 48px;
       position: relative;
       transition: background 0.3s ease;
@@ -544,6 +543,7 @@
       
       <!-- LADO A (正面) -->
       <div class="face face-a">
+        <!-- 嚴格以 Play 按鍵 (50%) 為中心定位的黑膠舞台 -->
         <div class="vinyl-stage-wrapper">
           <div class="vinyl-stage">
             
@@ -582,7 +582,7 @@
           </div>
         </div>
 
-        <!-- 播放控制底座 -->
+        <!-- 播放控制底座（中央核心 Play 按鍵） -->
         <div class="tape-base" id="tapeControlBase">
           <div class="volume-module">
             <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
@@ -718,7 +718,7 @@
                 </div>
               </div>
 
-              <!-- 5. 封套底色與封面圖片（已移除網址輸入框） -->
+              <!-- 5. 封套底色與封面圖片 -->
               <div class="setting-group">
                 <div class="group-title">🖼️ 5. 封套封面外觀</div>
                 <div class="palette-grid">
