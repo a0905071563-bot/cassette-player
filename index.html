@@ -86,7 +86,7 @@
       z-index: 10;
     }
 
-    /* ══════════ 卡帶外殼 ══════════ */
+    /* 卡帶外殼  */
     .cassette {
       background: var(--case-color);
       border-radius: 16px;
@@ -127,20 +127,20 @@
     .screw.bl { bottom: 10px; left: 9px; }
     .screw.br { bottom: 10px; right: 9px; }
 
-    /* ══════════ 一體化大貼紙（包覆標題與中軸，避開螺絲釘） ══════════ */
+    /*貼紙*/
     .tape-sticker-container {
       background-color: var(--accent-color);
       background-size: cover;
       background-position: center;
-      margin: 0 26px; /* 避開四角螺絲釘 */
-      padding: 7px 8px 18px; /* 頂部留色包覆標題 */
+      margin: 0 26px; 
+      padding: 7px 8px 18px; 
       border-radius: 8px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.4);
       position: relative;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 嵌在彩色貼紙裡的白底手寫標籤條（縮短兩邊、下移居中） ══════════ */
+    /* ══════════手寫標籤條） ══════════ */
     .tape-label {
       background-color: #fdfdfd;
       background-image: repeating-linear-gradient(
@@ -153,8 +153,8 @@
       border: 1.5px solid #222;
       border-radius: 4px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-      margin: 0 auto 14px; /* 兩側微縮並向內對齊，下方留出舒適間距給中軸 */
-      width: 96%; /* 兩邊縮短，被彩色貼紙邊緣包覆 */
+      margin: 0 auto 14px; 
+      width: 96%; 
       height: 34px;
       display: flex;
       align-items: center;
@@ -162,10 +162,10 @@
       position: relative;
     }
 
-    /* 放大且 100% 幾何居中的手寫標題 */
+    /*手寫標題 */
     .tape-title {
       font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif;
-      font-size: 24px; /* 字體再放大 */
+      font-size: 30px; /* 字體再放大 */
       font-weight: 700;
       color: #111111;
       letter-spacing: 0.5px;
@@ -178,7 +178,7 @@
       line-height: 1;
     }
 
-    /* ══════════ 原版中軸黑框視窗 ══════════ */
+    /*  中軸黑框視窗 */
     .reel-plate {
       background: #0d0d0d;
       border: 2px solid #202020;
@@ -196,7 +196,7 @@
       position: relative;
     }
 
-    /* 左右黑色圓形凹陷底座 */
+    /* 左右黑色圓形底座 */
     .reel {
       background: radial-gradient(circle, #080808 60%, #151515 100%);
       border: 1.5px solid #1a1a1a;
@@ -256,7 +256,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* ══════════ 平滑收腰雙曲線沙漏（無橫槓頂底） ══════════ */
+    /* ══════════ 收腰沙漏 ══════════ */
     .tape-window {
       background: #080808;
       border-left: 2px solid #1a1a1a;
@@ -337,7 +337,7 @@
       100% { height: 5px; }
     }
 
-    /* ══════════ 梯形下巴區域 ══════════ */
+    /* ══════════ 梯形區域 ══════════ */
     .trapezoid-wrapper {
       position: relative;
       width: 82%;
@@ -632,15 +632,15 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- ══════ 整張大彩色貼紙（包覆標題與中軸） ══════ -->
+          <!-- ══════ 彩色貼紙 ══════ -->
           <div class="tape-sticker-container" id="tapeStripe">
             
-            <!-- 內嵌白底歌名標籤（兩側縮短，被彩色貼紙完整包覆） -->
+            <!-- 歌名標籤 -->
             <div class="tape-label">
               <div class="tape-title" id="tapeTitle">Playlist</div>
             </div>
 
-            <!-- 原版中軸黑框視窗 -->
+            <!-- 中軸黑框視窗 -->
             <div class="reel-plate">
               <!-- 左齒輪 -->
               <div class="reel">
@@ -649,7 +649,7 @@
                 </div>
               </div>
 
-              <!-- 中間平滑拋物線沙漏視窗 -->
+              <!-- 中間沙漏視窗 -->
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -674,7 +674,7 @@
 
           </div>
 
-          <!-- 梯形下巴區域 -->
+          <!-- 梯形區域 -->
           <div class="trapezoid-wrapper">
             <span class="screw center-screw"></span>
             <div class="tape-progress" id="tapeProgress">
@@ -758,7 +758,7 @@
 
               <!-- 2. 貼紙底色 ＆ 按鍵色彩聯動 -->
               <div class="setting-group">
-                <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
+                <div class="group-title"> 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
                 <div class="palette-grid">
                   <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
                   <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
@@ -773,13 +773,13 @@
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">🌈 貼紙自訂任意色域</span>
+                  <span class="picker-label">貼紙自訂任意色域</span>
                 </div>
               </div>
 
               <!-- 3. 卡帶外殼與控制座底色 -->
               <div class="setting-group">
-                <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
+                <div class="group-title"> 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
                   <div class="palette-circle color-case-btn" data-case="#5e1215" data-bar="#38090b" style="background:#5e1215;" title="深酒紅"></div>
                   <div class="palette-circle color-case-btn" data-case="#6d320c" data-bar="#451e06" style="background:#6d320c;" title="焦茶橙"></div>
@@ -794,15 +794,15 @@
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
-                  <span class="picker-label">🌈 外殼自訂任意色域</span>
+                  <span class="picker-label"> 外殼自訂任意色域</span>
                 </div>
               </div>
 
               <!-- 4. 貼紙置入圖片 -->
               <div class="setting-group">
-                <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
+                <div class="group-title"> 4. 貼紙置入圖片</div>
                 <div class="upload-btn-wrap">
-                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
+                  <label class="btn-custom-action" for="fileUploadInput"> 從電腦選擇圖片</label>
                   <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
                   <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
                 </div>
