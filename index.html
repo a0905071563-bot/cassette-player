@@ -66,20 +66,22 @@
     }
 
     /* ══════════ 卡帶外殼（1.6:1 飽滿大氣比例） ══════════ */
+   /* ══════════ 卡帶外殼（嚴格依循 1.55:1 經典比例） ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
       border-radius: 16px !important;
       box-shadow: 
-        0 20px 35px rgba(0, 0, 0, 0.7), 
+        0 22px 38px rgba(0, 0, 0, 0.75), 
         inset 0 1.5px 2px rgba(255, 255, 255, 0.35), 
         inset 0 -3px 8px rgba(0, 0, 0, 0.85) !important;
       border: 2px solid var(--case-border) !important;
-      padding: 14px 0 16px !important;
+      padding: 12px 0 0 !important;      /* 底部由梯形完全銜接 */
       position: relative !important;
+      overflow: hidden !important;       /* 確保梯形平滑貼合底部 */
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 螺絲釘：精確對齊外殼四個圓弧轉角 ══════════ */
+    /* ══════════ 螺絲釘（十字金屬質感，全實裝 5 顆） ══════════ */
     .screw {
       position: absolute !important;
       width: 13px !important;
@@ -100,12 +102,21 @@
     .screw::before { width: 7px; height: 1.5px; }
     .screw::after { width: 1.5px; height: 7px; }
 
-    .screw.tl { top: 9px !important; left: 10px !important; }
-    .screw.tr { top: 9px !important; right: 10px !important; }
-    .screw.bl { bottom: 9px !important; left: 10px !important; }
-    .screw.br { bottom: 9px !important; right: 10px !important; }
+    /* 四角貼齊轉折角 */
+    .screw.tl { top: 10px !important; left: 11px !important; }
+    .screw.tr { top: 10px !important; right: 11px !important; }
+    .screw.bl { bottom: 12px !important; left: 11px !important; }
+    .screw.br { bottom: 12px !important; right: 11px !important; }
 
-    /* ══════════ 頂部白色標籤：復古筆記本橫線紋理（32px） ══════════ */
+    /* 梯形頂部中央第 5 顆螺絲釘 */
+    .screw.center-screw {
+      top: 6px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      z-index: 10 !important;
+    }
+
+    /* ══════════ 頂部白色標籤 ══════════ */
     .tape-label {
       background-color: #fdfdfd !important;
       background-image: repeating-linear-gradient(
@@ -118,7 +129,7 @@
       border: 1.5px solid #222 !important;
       border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 8px 18px 0 !important;
+      margin: 4px 20px 0 !important;
       padding: 0 12px !important;
       height: 32px !important;
       display: flex !important;
@@ -129,47 +140,13 @@
       box-sizing: border-box !important;
     }
 
-    .tape-label::before {
-      content: "A";
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #111111;
-      color: #ffffff;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
-      font-weight: 800;
-      width: 18px;
-      height: 18px;
-      line-height: 18px;
-      text-align: center;
-      border-radius: 3px;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
-    }
-
-    .tape-title {
-      font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
-      font-size: 18px !important;
-      font-weight: 700 !important;
-      color: #111111 !important;
-      letter-spacing: 0.5px;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      text-align: center !important;
-      line-height: 1 !important;
-      margin: 0 24px !important;
-      outline: none;
-    }
-
-    /* ══════════ 貼紙區域：垂直拉伸，展開參考圖的飽滿高度 ══════════ */
+    /* ══════════ 貼紙區域：垂直展開飽滿高度 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover;
       background-position: center;
-      margin: 0 18px !important;
-      padding: 38px 0 42px !important;
+      margin: 0 20px !important;
+      padding: 24px 0 26px !important;
       border: none !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
@@ -178,197 +155,79 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 黑色中軸視窗（52px 高度不變，圓形轉軸 + 雙曲線平滑沙漏） ══════════ */
-    .reel-plate {
-      background: #111111 !important;
-      border: 2px solid #222222 !important;
-      border-radius: 6px !important;
-      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15) !important;
+    /* ══════════ 參考圖經典梯形凸起基座（內嵌進度條與孔洞） ══════════ */
+    .tape-trapezoid-base {
       position: relative !important;
-      overflow: hidden !important;
-      height: 52px !important;
-      width: 90% !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 8px !important;
-      box-sizing: border-box !important;
-    }
-
-    .reel {
-      background: #080808 !important;
-      border: 2px solid #2a2a2a !important;
-      border-radius: 50% !important;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1) !important;
-      width: 44px !important;
-      height: 44px !important;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tape-window {
-      background: #080808 !important;
-      border-left: 2px solid #1f1f1f;
-      border-right: 2px solid #1f1f1f;
-      position: relative !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      height: 44px !important;
-      flex: 1 !important;
-      margin: 0 4px;
-    }
-
-    .tape-window::before {
-      content: "";
-      position: absolute;
-      width: 36px;
-      height: 100%;
-      background: #3e3e3e;
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      mask-size: 100% 100%;
-      -webkit-mask-size: 100% 100%;
-      opacity: 0.85;
-      z-index: 1;
-    }
-
-    .tape-window::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at -4px 50%, #444 0%, transparent 16px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #444 0%, transparent 16px);
-      opacity: 0.6;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .mid-scale-equalizer {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 78%;
-      height: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .scale-bar-line {
-      width: 2px;
-      height: 5px;
-      background: #ffffff;
-      border-radius: 1px;
-      box-shadow: 0 0 2px rgba(255,255,255,0.7);
-      transition: height 0.12s ease;
-    }
-    .is-playing .scale-bar-line { animation: scalePulse 0.55s infinite ease-in-out alternate; }
-    .scale-bar-line:nth-child(1) { animation-delay: 0.05s; }
-    .scale-bar-line:nth-child(2) { animation-delay: 0.22s; }
-    .scale-bar-line:nth-child(3) { animation-delay: 0.41s; }
-    .scale-bar-line:nth-child(4) { animation-delay: 0.15s; }
-    .scale-bar-line:nth-child(5) { animation-delay: 0.33s; }
-    .scale-bar-line:nth-child(6) { animation-delay: 0.18s; }
-    .scale-bar-line:nth-child(7) { animation-delay: 0.45s; }
-    .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
-    .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
-
-    @keyframes scalePulse {
-      0% { height: 3px; }
-      50% { height: 13px; }
-      100% { height: 5px; }
-    }
-
-    /* ══════════ 控制底座 ══════════ */
-    .tape-base {
-      background: var(--control-bar-bg) !important;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
-      position: relative;
-      z-index: 10;
-      transition: background 0.3s ease;
-    }
-    .play-btn, .flip-btn {
-      background: var(--accent-color) !important;
-      color: var(--btn-icon-color) !important;
-      border: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      transition: background 0.3s ease, transform 0.1s ease;
-    }
-    .play-btn:hover, .flip-btn:hover {
-      filter: brightness(1.15);
-      transform: scale(1.05);
-    }
-    .play-btn svg, .flip-btn svg {
-      fill: var(--btn-icon-color) !important;
-      stroke: var(--btn-icon-color) !important;
-      pointer-events: none;
-    }
-    #volSlider::-webkit-slider-thumb { background: var(--accent-color) !important; }
-
-    /* ══════════ 底部聲波進度條 ══════════ */
-    .tape-progress {
-      margin: 18px 20px 4px !important;
-      height: 12px !important;
-      background: rgba(0, 0, 0, 0.65) !important;
-      border-radius: 6px !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      position: relative !important;
-      overflow: hidden !important;
+      width: 78% !important;              /* 梯形下巴比例 */
+      height: 48px !important;
+      margin: 12px auto 0 !important;
+      /* 利用 clip-path 裁切出上窄下寬的梯形外觀 */
+      clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
+      -webkit-clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
+      background: rgba(0, 0, 0, 0.45) !important;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.9) !important;
       cursor: pointer !important;
+      overflow: hidden !important;
     }
+
+    /* 進度條背景填充（點擊 / 拖曳會跟著前進） */
     #progressFill {
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      position: absolute;
-      inset: 0 auto auto 0;
-      pointer-events: none;
-      transition: width 0.15s linear;
+      position: absolute !important;
+      inset: 0 auto auto 0 !important;
+      height: 100% !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      pointer-events: none !important;
+      transition: width 0.15s linear !important;
+      z-index: 1 !important;
     }
+
+    /* 參考圖中的 4 個經典定位輪孔（外大內小金黃/深銅色質感） */
+    .holes-wrap {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 32px;
+      box-sizing: border-box;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .guide-hole {
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #c59b27 20%, #7c5e10 70%, #291e03 100%);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.2);
+      border: 1px solid #1a1505;
+      display: inline-block;
+    }
+    .guide-hole.big {
+      width: 16px;
+      height: 16px;
+    }
+    .guide-hole.small {
+      width: 11px;
+      height: 11px;
+      margin-top: 2.5px;
+    }
+
+    /* 隱藏在梯形底部的跳動聲波 */
     .sound-wave-container {
       position: absolute;
-      inset: 0;
+      bottom: 1px;
+      left: 0;
+      width: 100%;
+      height: 16px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
-      padding: 0 4px;
+      padding: 0 8px;
       box-sizing: border-box;
       pointer-events: none;
       z-index: 2;
+      opacity: 0.85;
     }
-    .wave-bar {
-      width: 3px;
-      height: 25%;
-      border-radius: 2px;
-      background: #444;
-      transition: height 0.15s ease, background 0.15s ease;
-    }
-    .is-playing .wave-bar.active {
-      background: var(--accent-color) !important;
-      filter: brightness(1.2);
-      animation: soundJump 0.65s infinite ease-in-out alternate;
-    }
-    .wave-bar:nth-child(2n) { animation-delay: 0.12s; }
-    .wave-bar:nth-child(3n) { animation-delay: 0.28s; }
-    .wave-bar:nth-child(4n) { animation-delay: 0.42s; }
-    .wave-bar:nth-child(5n) { animation-delay: 0.05s; }
-
-    @keyframes soundJump {
-      0% { height: 20%; }
-      50% { height: 90%; }
-      100% { height: 40%; }
-    }
-
     /* ══════════ Side B：統一白字透明線框風格 ══════════ */
     .side-b {
       background: #11151c;
