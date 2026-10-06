@@ -65,8 +65,7 @@
       z-index: 20 !important; 
     }
 
-    /* ══════════ 卡帶外殼（1.6:1 飽滿大氣比例） ══════════ */
-   /* ══════════ 卡帶外殼（嚴格依循 1.55:1 經典比例） ══════════ */
+    /* ══════════ 卡帶外殼（嚴格依循 1.55:1 經典比例） ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
       border-radius: 16px !important;
@@ -75,9 +74,9 @@
         inset 0 1.5px 2px rgba(255, 255, 255, 0.35), 
         inset 0 -3px 8px rgba(0, 0, 0, 0.85) !important;
       border: 2px solid var(--case-border) !important;
-      padding: 12px 0 0 !important;      /* 底部由梯形完全銜接 */
+      padding: 12px 0 0 !important;
       position: relative !important;
-      overflow: hidden !important;       /* 確保梯形平滑貼合底部 */
+      overflow: hidden !important;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
@@ -102,7 +101,6 @@
     .screw::before { width: 7px; height: 1.5px; }
     .screw::after { width: 1.5px; height: 7px; }
 
-    /* 四角貼齊轉折角 */
     .screw.tl { top: 10px !important; left: 11px !important; }
     .screw.tr { top: 10px !important; right: 11px !important; }
     .screw.bl { bottom: 12px !important; left: 11px !important; }
@@ -140,13 +138,47 @@
       box-sizing: border-box !important;
     }
 
+    .tape-label::before {
+      content: "A";
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #111111;
+      color: #ffffff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+    }
+
+    .tape-title {
+      font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      color: #111111 !important;
+      letter-spacing: 0.5px;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      text-align: center !important;
+      line-height: 1 !important;
+      margin: 0 24px !important;
+      outline: none;
+    }
+
     /* ══════════ 貼紙區域：垂直展開飽滿高度 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover;
       background-position: center;
       margin: 0 20px !important;
-      padding: 24px 0 26px !important;
+      padding: 30px 0 32px !important;
       border: none !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
@@ -155,13 +187,149 @@
       transition: background-color 0.3s ease;
     }
 
+    /* ══════════ 黑色中軸視窗 ══════════ */
+    .reel-plate {
+      background: #111111 !important;
+      border: 2px solid #222222 !important;
+      border-radius: 6px !important;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      height: 52px !important;
+      width: 92% !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 0 8px !important;
+      box-sizing: border-box !important;
+    }
+
+    .reel {
+      background: #080808 !important;
+      border: 2px solid #2a2a2a !important;
+      border-radius: 50% !important;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1) !important;
+      width: 44px !important;
+      height: 44px !important;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tape-window {
+      background: #080808 !important;
+      border-left: 2px solid #1f1f1f;
+      border-right: 2px solid #1f1f1f;
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      height: 44px !important;
+      flex: 1 !important;
+      margin: 0 4px;
+    }
+
+    .tape-window::before {
+      content: "";
+      position: absolute;
+      width: 36px;
+      height: 100%;
+      background: #3e3e3e;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
+      mask-size: 100% 100%;
+      -webkit-mask-size: 100% 100%;
+      opacity: 0.85;
+      z-index: 1;
+    }
+
+    .tape-window::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at -4px 50%, #444 0%, transparent 16px),
+        radial-gradient(circle at calc(100% + 4px) 50%, #444 0%, transparent 16px);
+      opacity: 0.6;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .mid-scale-equalizer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 78%;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .scale-bar-line {
+      width: 2px;
+      height: 5px;
+      background: #ffffff;
+      border-radius: 1px;
+      box-shadow: 0 0 2px rgba(255,255,255,0.7);
+      transition: height 0.12s ease;
+    }
+    .is-playing .scale-bar-line { animation: scalePulse 0.55s infinite ease-in-out alternate; }
+    .scale-bar-line:nth-child(1) { animation-delay: 0.05s; }
+    .scale-bar-line:nth-child(2) { animation-delay: 0.22s; }
+    .scale-bar-line:nth-child(3) { animation-delay: 0.41s; }
+    .scale-bar-line:nth-child(4) { animation-delay: 0.15s; }
+    .scale-bar-line:nth-child(5) { animation-delay: 0.33s; }
+    .scale-bar-line:nth-child(6) { animation-delay: 0.18s; }
+    .scale-bar-line:nth-child(7) { animation-delay: 0.45s; }
+    .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
+    .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
+
+    @keyframes scalePulse {
+      0% { height: 3px; }
+      50% { height: 13px; }
+      100% { height: 5px; }
+    }
+
+    /* ══════════ 控制底座 ══════════ */
+    .tape-base {
+      background: var(--control-bar-bg) !important;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 10;
+      transition: background 0.3s ease;
+    }
+    .play-btn, .flip-btn {
+      background: var(--accent-color) !important;
+      color: var(--btn-icon-color) !important;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+    .play-btn:hover, .flip-btn:hover {
+      filter: brightness(1.15);
+      transform: scale(1.05);
+    }
+    .play-btn svg, .flip-btn svg {
+      fill: var(--btn-icon-color) !important;
+      stroke: var(--btn-icon-color) !important;
+      pointer-events: none;
+    }
+    #volSlider::-webkit-slider-thumb { background: var(--accent-color) !important; }
+
     /* ══════════ 參考圖經典梯形凸起基座（內嵌進度條與孔洞） ══════════ */
     .tape-trapezoid-base {
       position: relative !important;
-      width: 78% !important;              /* 梯形下巴比例 */
+      width: 78% !important;
       height: 48px !important;
-      margin: 12px auto 0 !important;
-      /* 利用 clip-path 裁切出上窄下寬的梯形外觀 */
+      margin: 14px auto 0 !important;
       clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
       -webkit-clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
       background: rgba(0, 0, 0, 0.45) !important;
@@ -171,7 +339,6 @@
       overflow: hidden !important;
     }
 
-    /* 進度條背景填充（點擊 / 拖曳會跟著前進） */
     #progressFill {
       position: absolute !important;
       inset: 0 auto auto 0 !important;
@@ -182,7 +349,7 @@
       z-index: 1 !important;
     }
 
-    /* 參考圖中的 4 個經典定位輪孔（外大內小金黃/深銅色質感） */
+    /* 4 個經典定位輪孔（外大內小金黃/深銅色質感） */
     .holes-wrap {
       position: absolute;
       bottom: 8px;
@@ -202,15 +369,8 @@
       border: 1px solid #1a1505;
       display: inline-block;
     }
-    .guide-hole.big {
-      width: 16px;
-      height: 16px;
-    }
-    .guide-hole.small {
-      width: 11px;
-      height: 11px;
-      margin-top: 2.5px;
-    }
+    .guide-hole.big { width: 16px; height: 16px; }
+    .guide-hole.small { width: 11px; height: 11px; margin-top: 2.5px; }
 
     /* 隱藏在梯形底部的跳動聲波 */
     .sound-wave-container {
@@ -228,6 +388,29 @@
       z-index: 2;
       opacity: 0.85;
     }
+    .wave-bar {
+      width: 3px;
+      height: 25%;
+      border-radius: 2px;
+      background: #444;
+      transition: height 0.15s ease, background 0.15s ease;
+    }
+    .is-playing .wave-bar.active {
+      background: var(--accent-color) !important;
+      filter: brightness(1.2);
+      animation: soundJump 0.65s infinite ease-in-out alternate;
+    }
+    .wave-bar:nth-child(2n) { animation-delay: 0.12s; }
+    .wave-bar:nth-child(3n) { animation-delay: 0.28s; }
+    .wave-bar:nth-child(4n) { animation-delay: 0.42s; }
+    .wave-bar:nth-child(5n) { animation-delay: 0.05s; }
+
+    @keyframes soundJump {
+      0% { height: 20%; }
+      50% { height: 90%; }
+      100% { height: 40%; }
+    }
+
     /* ══════════ Side B：統一白字透明線框風格 ══════════ */
     .side-b {
       background: #11151c;
@@ -437,10 +620,11 @@
       <!-- LADO A (正面) -->
       <div class="face face-a">
         <div class="cassette" id="cassetteBody">
+          <!-- 四角螺絲釘 -->
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底復古手寫標題標籤 -->
+          <!-- 白底手寫標籤 -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
@@ -448,10 +632,7 @@
           <!-- 貼紙區 -->
           <div class="tape-stripe" id="tapeStripe">
             <div class="reel-plate">
-              <!-- 左圓形齒輪孔 -->
               <div class="reel"><div class="teeth"></div></div>
-              
-              <!-- 雙曲線平滑沙漏視窗 -->
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -465,14 +646,19 @@
                   <div class="scale-bar-line"></div>
                 </div>
               </div>
-
-              <!-- 右圓形齒輪孔 -->
               <div class="reel"><div class="teeth"></div></div>
             </div>
           </div>
 
-          <!-- 進度條與聲波跳動 -->
-          <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
+          <!-- 梯形下巴（內建第 5 顆中央螺絲、4 個銅輪孔、隱藏進度條與聲波） -->
+          <div class="tape-trapezoid-base" id="tapeProgress" role="slider" tabindex="0">
+            <span class="screw center-screw"></span>
+            <div class="holes-wrap">
+              <span class="guide-hole big"></span>
+              <span class="guide-hole small"></span>
+              <span class="guide-hole small"></span>
+              <span class="guide-hole big"></span>
+            </div>
             <div class="fill" id="progressFill"></div>
             <div class="sound-wave-container" id="soundWaveBox"></div>
           </div>
@@ -660,186 +846,3 @@
         root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
         localStorage.setItem('cfg_accent', color);
         if (nativeColorPicker) {
-          nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
-        }
-
-        if (clearCustomImg && stripe) {
-          stripe.style.backgroundImage = 'none';
-          localStorage.removeItem('cfg_tape_img');
-          if (imgInput) imgInput.value = '';
-          if (fileInput) fileInput.value = '';
-        }
-      }
-
-      function applyCaseColor(color, barColor = null) {
-        const root = document.documentElement;
-        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -20 : -15);
-        const caseBorder = isLightColor(color) ? '#b0b0b0' : '#0a0a0a';
-        root.style.setProperty('--case-color', color);
-        root.style.setProperty('--control-bar-bg', actualBarColor);
-        root.style.setProperty('--case-border', caseBorder);
-        localStorage.setItem('cfg_case_color', color);
-        localStorage.setItem('cfg_bar_color', actualBarColor);
-        if (caseColorPicker) {
-          caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
-        }
-      }
-
-      // 翻轉卡帶控制
-      document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
-      document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
-
-      // YouTube 影片載入
-      function executeLoadVideo() {
-        const raw = linkInput?.value.trim() || '';
-        const vid = parseYouTubeID(raw);
-        if (!vid) {
-          alert('請輸入有效的 YouTube 影片網址或 ID');
-          return;
-        }
-
-        localStorage.setItem('yt_url', raw);
-        localStorage.setItem('yt_video_id', vid);
-        rawSetItem('saved_youtube_id', vid);
-
-        const p = window.player || (window.widget && window.widget.player);
-        if (p && typeof p.loadVideoById === 'function') {
-          try {
-            p.loadVideoById(vid);
-            p.playVideo();
-          } catch(e) {
-            p.cueVideoById(vid);
-          }
-        } else {
-          const curUrl = new URL(window.location.href);
-          curUrl.searchParams.set('v', vid);
-          window.location.href = curUrl.toString();
-        }
-      }
-
-      btnLoad?.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        executeLoadVideo();
-      });
-
-      linkInput?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          executeLoadVideo();
-        }
-      });
-
-      const savedUrl = localStorage.getItem('yt_url') || localStorage.getItem('yt_video_id');
-      if (savedUrl && linkInput) {
-        linkInput.value = savedUrl;
-      }
-
-      // 生成 38 根動態聲波條
-      const barCount = 38;
-      const fragment = document.createDocumentFragment();
-      for (let i = 0; i < barCount; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wave-bar';
-        fragment.appendChild(bar);
-      }
-      soundWaveBox?.appendChild(fragment);
-      const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
-
-      // 聲波輪詢監聽
-      setInterval(() => {
-        const p = window.player || (window.widget && window.widget.player);
-        const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
-        wrapper?.classList.toggle('is-playing', isPlaying);
-
-        const percent = parseFloat(progressFill?.style.width) || 0;
-        const activeBarLimit = Math.floor((percent / 100) * barCount);
-        const currentAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#e51d24';
-
-        waveBars.forEach((bar, idx) => {
-          const isActive = idx <= activeBarLimit;
-          bar.classList.toggle('active', isActive);
-          bar.style.background = isActive ? currentAccent : '#444';
-          bar.style.opacity = isActive ? '1' : '0.4';
-        });
-      }, 150);
-
-      // 配色載入
-      const savedAccent = localStorage.getItem('cfg_accent');
-      if (savedAccent) applyAccentColor(savedAccent);
-
-      const savedCase = localStorage.getItem('cfg_case_color');
-      if (savedCase) applyCaseColor(savedCase, localStorage.getItem('cfg_bar_color'));
-
-      const savedImg = localStorage.getItem('cfg_tape_img');
-      if (savedImg && stripe) {
-        stripe.style.backgroundImage = `url("${savedImg}")`;
-        if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
-      }
-
-      // 貼紙選色
-      document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          applyAccentColor(btn.dataset.color, true);
-        });
-      });
-      nativeColorPicker?.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
-
-      // 外殼選色
-      document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          applyCaseColor(btn.dataset.case, btn.dataset.bar);
-        });
-      });
-      caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
-
-      // 圖片上傳
-      fileInput?.addEventListener('change', function() {
-        if (this.files?.[0]) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const dataUrl = e.target.result;
-            if (stripe) stripe.style.backgroundImage = `url("${dataUrl}")`;
-            localStorage.setItem('cfg_tape_img', dataUrl);
-            if (imgInput) imgInput.value = '(已上傳圖片)';
-          };
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      imgInput?.addEventListener('change', () => {
-        const val = imgInput.value.trim();
-        if (val && !val.includes('(已上傳圖片)')) {
-          if (stripe) stripe.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('cfg_tape_img', val);
-        }
-      });
-
-      document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
-      });
-
-      // 定時更新標題
-      setInterval(() => {
-        const p = window.player || (window.widget && window.widget.player);
-        if (p && typeof p.getVideoData === 'function') {
-          const songName = p.getVideoData()?.title;
-          if (songName && title && title.textContent !== songName) {
-            title.textContent = songName;
-            title.title = songName;
-          }
-        }
-      }, 1000);
-    });
-  })();
-</script>
-
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
-</body>
-</html>
