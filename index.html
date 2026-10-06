@@ -145,35 +145,38 @@
       height: 46px;
     }
   /* ══════════ 中間視窗：平滑曲線沙漏與黑色圓孔 ══════════ */
-.tape-window {
-  background: #383838 !important;     /* 沙漏透光區底色（半透深灰） */
-  border-left: 2px solid #222 !important;
-  border-right: 2px solid #222 !important;
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-  height: 42px !important;
-  flex: 1 !important;
-}
+    <!-- 貼紙區 -->
+          <div class="tape-stripe" id="tapeStripe">
+            <div class="reel-plate">
+              <!-- 左圓形齒輪孔 -->
+              <div class="reel"><div class="teeth"></div></div>
+              
+              <!-- 雙曲線平滑沙漏視窗 -->
+              <div class="tape-window">
+                <div class="mid-scale-equalizer">
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                </div>
+              </div>
 
-/* 左右兩側的黑底圓弧造型：利用徑向遮罩自然切出圓潤收腰的平滑弧線 */
-.tape-window::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: 
-    /* 左側向內凹的圓形黑底 */
-    radial-gradient(circle at -6px 50%, transparent 22px, #0a0a0a 23px),
-    /* 右側向內凹的圓形黑底 */
-    radial-gradient(circle at calc(100% + 6px) 50%, transparent 22px, #0a0a0a 23px);
-  background-size: 51% 100%;
-  background-position: left top, right top;
-  background-repeat: no-repeat;
-  z-index: 1;
-  pointer-events: none;
-}
+              <!-- 右圓形齒輪孔 -->
+              <div class="reel"><div class="teeth"></div></div>
+            </div>
+          </div>
+
+          <!-- 進度條與聲波跳動 -->
+          <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
+            <div class="fill" id="progressFill"></div>
+            <div class="sound-wave-container" id="soundWaveBox"></div>
+          </div>
+        </div>
 
 /* 玻璃高光反光層（增加卡帶塑膠透鏡質感） */
 .tape-window::after {
