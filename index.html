@@ -7,8 +7,7 @@
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- 引入復古手寫字體 Caveat 與 Permanent Marker -->
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
@@ -51,9 +50,21 @@
       height: 100%;
       transform: rotateY(180deg);
       z-index: 1;
+      pointer-events: none;
     }
-    .flipper.flipped .face-a { pointer-events: none; z-index: 1; }
-    .flipper.flipped .face-b { pointer-events: auto; z-index: 5; }
+
+    /* ══════════ 關鍵翻轉點擊層級修復 ══════════ */
+    .flipper.flipped .face-a { 
+      pointer-events: none !important; 
+      z-index: 1 !important; 
+    }
+    .flipper.flipped .face-a * {
+      pointer-events: none !important; /* 徹底封鎖正面底座與按鈕的點擊穿透 */
+    }
+    .flipper.flipped .face-b { 
+      pointer-events: auto !important; 
+      z-index: 10 !important; 
+    }
 
     #cassetteBody {
       background: var(--case-color) !important;
@@ -64,67 +75,64 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 標籤貼紙：經典白底手寫卡帶風格 ══════════ */
-  /* ══════════ 頂部標籤：復古筆記本橫線紋理 ══════════ */
-.tape-label {
-  background-color: #fdfdfd;
-  /* 筆記本淺灰色橫線紋理（灰白相間條紋） */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 11px,
-    #d1d5db 11px,
-    #d1d5db 13px
-  );
-  border: 1.5px solid #222 !important;
-  border-radius: 4px 4px 0 0 !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-  margin: 4px 14px 0 !important;
-  padding: 0 12px !important;
-  height: 32px !important;            /* 適度微調高度，讓字體不被吃掉 */
-  display: flex !important;
-  align-items: center !important;     /* 垂直置中 */
-  justify-content: center !important;  /* 水平置中 */
-  position: relative !important;
-  z-index: 5 !important;
-  box-sizing: border-box !important;
-}
+    /* ══════════ 頂部標籤：復古筆記本橫線紋理 ══════════ */
+    .tape-label {
+      background-color: #fdfdfd;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 11px,
+        #d1d5db 11px,
+        #d1d5db 13px
+      );
+      border: 1.5px solid #222 !important;
+      border-radius: 4px 4px 0 0 !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+      margin: 4px 14px 0 !important;
+      padding: 0 12px !important;
+      height: 32px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative !important;
+      z-index: 5 !important;
+      box-sizing: border-box !important;
+    }
 
-/* 左側經典「A」面黑底方塊裝飾（不含多餘文字） */
-.tape-label::before {
-  content: "A";
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #111111;
-  color: #ffffff;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  text-align: center;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
-}
+    .tape-label::before {
+      content: "A";
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #111111;
+      color: #ffffff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+    }
 
-/* 標題字體：置中、正黑、手寫復古感 */
-.tape-title {
-  font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  color: #111111 !important;          /* 標題字體純黑色 */
-  letter-spacing: 0.5px;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  text-align: center !important;
-  line-height: 1 !important;
-  margin: 0 24px !important;          /* 留出左右邊界，避免遮擋左側 A 標籤 */
-  outline: none;
-}
+    .tape-title {
+      font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      color: #111111 !important;
+      letter-spacing: 0.5px;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      text-align: center !important;
+      line-height: 1 !important;
+      margin: 0 24px !important;
+      outline: none;
+    }
+
     /* ══════════ 貼紙區域 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
@@ -156,7 +164,6 @@
       box-sizing: border-box !important;
     }
 
-    /* 讓齒輪轉軸內圈呈現正圓形挖槽 */
     .reel {
       background: #080808 !important;
       border: 2px solid #2a2a2a !important;
@@ -184,14 +191,12 @@
       margin: 0 4px;
     }
 
-    /* 平滑曲線沙漏透光區 (使用 SVG 雙曲線遮罩取代生硬的直線折角) */
     .tape-window::before {
       content: "";
       position: absolute;
       width: 36px;
       height: 100%;
       background: #3e3e3e;
-      /* 上下開口寬、中段收腰自然平滑過渡 */
       mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
       -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
       mask-size: 100% 100%;
@@ -200,7 +205,6 @@
       z-index: 1;
     }
 
-    /* 左右兩側磁帶卷軸邊緣弧度漸變 */
     .tape-window::after {
       content: "";
       position: absolute;
@@ -331,6 +335,7 @@
       100% { height: 40%; }
     }
 
+    /* ══════════ Side B ══════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -503,6 +508,7 @@
             </summary>
             <div class="sb-body">
               
+              <!-- 1. YouTube 音樂連結 -->
               <div class="setting-group" style="margin-top:0;">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
@@ -511,6 +517,7 @@
                 </div>
               </div>
 
+              <!-- 2. 貼紙底色 ＆ 按鍵色彩聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
                 <div class="palette-grid">
@@ -531,26 +538,28 @@
                 </div>
               </div>
 
+              <!-- 3. 卡帶外殼與控制座底色 -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
-                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#fbc02d" style="background:#fbc02d;" title="亮麗黃"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#2e7d32" style="background:#2e7d32;" title="森林綠"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="蔚藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#3f51b5" style="background:#3f51b5;" title="靛青藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#8e24aa" style="background:#8e24aa;" title="夢幻紫"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
+                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" style="background:#eae6df;" title="復古米白"></div>
+                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" style="background:#4a5568;" title="水泥冷灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" style="background:#1e293b;" title="午夜星空藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#2d3748" data-bar="#1a202c" style="background:#2d3748;" title="炭黑"></div>
+                  <div class="palette-circle color-case-btn" data-case="#f7f7f7" data-bar="#e5e5e5" style="background:#f7f7f7; border-color:#aaa;" title="陶瓷純白"></div>
+                  <div class="palette-circle color-case-btn" data-case="#5c1d24" data-bar="#380d12" style="background:#5c1d24;" title="酒紅外殼"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1b382b" data-bar="#0f2219" style="background:#1b382b;" title="復古墨綠"></div>
+                  <div class="palette-circle color-case-btn" data-case="#3d2c1d" data-bar="#24190f" style="background:#3d2c1d;" title="暖調咖啡"></div>
+                  <div class="palette-circle color-case-btn" data-case="#2b1a3d" data-bar="#180e24" style="background:#2b1a3d;" title="深邃紫黑"></div>
                 </div>
                 <div class="custom-color-picker-wrap">
-                  <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">🌈 貼紙自訂任意色域</span>
+                  <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
+                  <span class="picker-label">🌈 外殼自訂任意色域</span>
                 </div>
               </div>
 
+              <!-- 4. 貼紙置入圖片 -->
               <div class="setting-group">
                 <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
                 <div class="upload-btn-wrap">
@@ -561,6 +570,7 @@
                 <input type="text" id="stickerImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
               </div>
 
+              <!-- 循環播放 -->
               <div class="loop-row" style="margin-top:10px;">
                 <span class="lbl"><span>循環播放 (LOOP)</span></span>
                 <label class="switch">
@@ -596,6 +606,22 @@
       return luma > 160;
     }
 
+    function adjustBrightness(hex, percent) {
+      if (!hex || !hex.startsWith('#')) return hex;
+      let num = parseInt(hex.slice(1), 16);
+      if (hex.length === 4) {
+        const r = (num >> 8) & 0xf, g = (num >> 4) & 0xf, b = num & 0xf;
+        num = (r * 17 << 16) | (g * 17 << 8) | (b * 17);
+      }
+      let r = (num >> 16) + percent;
+      let g = ((num >> 8) & 0x00ff) + percent;
+      let b = (num & 0x0000ff) + percent;
+      r = Math.min(255, Math.max(0, r));
+      g = Math.min(255, Math.max(0, g));
+      b = Math.min(255, Math.max(0, b));
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const stripe = document.getElementById('tapeStripe');
       const title = document.getElementById('tapeTitle');
@@ -613,30 +639,37 @@
         root.style.setProperty('--accent-color', color);
         root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
         localStorage.setItem('cfg_accent', color);
-        nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+        if (nativeColorPicker) {
+          nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+        }
 
-        if (clearCustomImg) {
+        if (clearCustomImg && stripe) {
           stripe.style.backgroundImage = 'none';
           localStorage.removeItem('cfg_tape_img');
-          imgInput.value = '';
-          fileInput.value = '';
+          if (imgInput) imgInput.value = '';
+          if (fileInput) fileInput.value = '';
         }
       }
 
       function applyCaseColor(color, barColor = null) {
         const root = document.documentElement;
-        const actualBarColor = barColor || (isLightColor(color) ? '#dedede' : '#11151c');
+        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -20 : -10);
+        const caseBorder = isLightColor(color) ? '#c0c0c0' : '#0a0a0a';
         root.style.setProperty('--case-color', color);
         root.style.setProperty('--control-bar-bg', actualBarColor);
-        root.style.setProperty('--case-border', isLightColor(color) ? '#c0c0c0' : '#0a0a0a');
+        root.style.setProperty('--case-border', caseBorder);
         localStorage.setItem('cfg_case_color', color);
         localStorage.setItem('cfg_bar_color', actualBarColor);
-        caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
+        if (caseColorPicker) {
+          caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
+        }
       }
 
+      // 翻轉卡帶
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
+      // 建立聲波條
       const barCount = 38;
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < barCount; i++) {
@@ -644,14 +677,15 @@
         bar.className = 'wave-bar';
         fragment.appendChild(bar);
       }
-      soundWaveBox.appendChild(fragment);
-      const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
+      soundWaveBox?.appendChild(fragment);
+      const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
 
+      // 聲波輪詢
       setInterval(() => {
         const isPlaying = window.player && typeof window.player.getPlayerState === 'function' && window.player.getPlayerState() === 1;
-        wrapper.classList.toggle('is-playing', isPlaying);
+        wrapper?.classList.toggle('is-playing', isPlaying);
 
-        const percent = parseFloat(progressFill.style.width) || 0;
+        const percent = parseFloat(progressFill?.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
 
         waveBars.forEach((bar, idx) => {
@@ -661,6 +695,7 @@
         });
       }, 150);
 
+      // 讀取設定快取
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) applyAccentColor(savedAccent);
 
@@ -668,57 +703,63 @@
       if (savedCase) applyCaseColor(savedCase, localStorage.getItem('cfg_bar_color'));
 
       const savedImg = localStorage.getItem('cfg_tape_img');
-      if (savedImg) {
+      if (savedImg && stripe) {
         stripe.style.backgroundImage = `url("${savedImg}")`;
-        imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
+        if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
+      // 貼紙選色監聽
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           applyAccentColor(btn.dataset.color, true);
         });
       });
-      nativeColorPicker.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
+      nativeColorPicker?.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
 
+      // 外殼選色監聽（修復綁定）
       document.querySelectorAll('.color-case-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           applyCaseColor(btn.dataset.case, btn.dataset.bar);
         });
       });
-      caseColorPicker.addEventListener('input', (e) => applyCaseColor(e.target.value));
+      caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
 
-      fileInput.addEventListener('change', function() {
+      // 檔案上傳事件
+      fileInput?.addEventListener('change', function() {
         if (this.files?.[0]) {
           const reader = new FileReader();
           reader.onload = (e) => {
             const dataUrl = e.target.result;
-            stripe.style.backgroundImage = `url("${dataUrl}")`;
+            if (stripe) stripe.style.backgroundImage = `url("${dataUrl}")`;
             localStorage.setItem('cfg_tape_img', dataUrl);
-            imgInput.value = '(已上傳圖片)';
+            if (imgInput) imgInput.value = '(已上傳圖片)';
           };
           reader.readAsDataURL(this.files[0]);
         }
       });
 
-      imgInput.addEventListener('change', () => {
+      // 圖片網址變更事件
+      imgInput?.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
-          stripe.style.backgroundImage = `url("${val}")`;
+          if (stripe) stripe.style.backgroundImage = `url("${val}")`;
           localStorage.setItem('cfg_tape_img', val);
         }
       });
 
-      document.getElementById('btnClearImg').addEventListener('click', (e) => {
+      // 移除圖片按鈕
+      document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
         e.preventDefault();
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
+      // 歌名定時更新
       setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const songName = window.player.getVideoData()?.title;
-          if (songName && title.textContent !== songName) {
+          if (songName && title && title.textContent !== songName) {
             title.textContent = songName;
             title.title = songName;
           }
