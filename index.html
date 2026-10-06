@@ -65,7 +65,7 @@
       z-index: 20 !important; 
     }
 
-    /* ══════════ 卡帶外殼（經典 1.55:1 比例） ══════════ */
+    /* ══════════ 卡帶外殼 ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
       border-radius: 16px !important;
@@ -365,7 +365,7 @@
       transform: scale(1.15) !important;
     }
 
-    /* ══════════ 播放控制底座（中央精確居中 + 左右對稱內縮） ══════════ */
+    /* ══════════ 播放控制底座 ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 28px !important;
@@ -376,7 +376,7 @@
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      padding: 6px 28px !important;       /* 兩側加寬留白，讓圖標往內收縮 */
+      padding: 6px 28px !important;
       margin-top: 10px !important;
       height: 48px !important;
       box-sizing: border-box !important;
@@ -404,7 +404,6 @@
       transform: scale(0.95) !important;
     }
 
-    /* 左側緊湊音量模組（縮短避免與中間重疊） */
     .volume-module {
       display: flex;
       align-items: center;
@@ -418,7 +417,7 @@
       color: rgba(255, 255, 255, 0.85) !important;
     }
     .vol-wrap {
-      width: 56px;                       /* 音量條縮短為 56px */
+      width: 56px;
       display: flex;
       align-items: center;
     }
@@ -445,7 +444,6 @@
       transform: scale(1.25);
     }
 
-    /* 正中間核心播放控制組（強制絕對水平垂直居中） */
     .playback-controls {
       position: absolute !important;
       left: 50% !important;
@@ -465,7 +463,6 @@
       fill: currentColor !important;
     }
 
-    /* 中央實心主播放鍵 */
     .play-btn {
       width: 42px !important;
       height: 42px !important;
@@ -479,7 +476,6 @@
       fill: var(--btn-icon-color) !important;
     }
 
-    /* 最右側純無框循環 Loop 鍵 */
     .clean-loop-btn {
       width: 28px !important;
       height: 28px !important;
@@ -490,7 +486,7 @@
       fill: currentColor !important;
     }
 
-    /* ══════════ Side B：統一白字透明線框風格 ══════════ */
+    /* ══════════ Side B：控制面板 ══════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -513,7 +509,7 @@
       font-size: 12px; 
       font-weight: 700; 
       color: #ffffff; 
-      letter-spacing: 0.5px;
+      letter-spacing: 0.5px; 
       margin-bottom: 6px; 
     }
     
@@ -699,7 +695,6 @@
       <!-- LADO A (正面) -->
       <div class="face face-a">
         <div class="cassette" id="cassetteBody">
-          <!-- 四角螺絲釘 -->
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
@@ -729,7 +724,7 @@
             </div>
           </div>
 
-          <!-- 梯形下巴區域：內建中央螺絲釘與小圓孔進度條 -->
+          <!-- 梯形下巴區域 -->
           <div class="trapezoid-wrapper">
             <span class="screw center-screw"></span>
             <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
@@ -739,9 +734,8 @@
           </div>
         </div>
 
-        <!-- 播放控制底座（左側音量、中央絕對居中播放組、右側內縮循環鍵） -->
+        <!-- 播放控制底座 -->
         <div class="tape-base" id="tapeControlBase">
-          <!-- 1. 最左側：音量模組（縮短緊湊版） -->
           <div class="volume-module">
             <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
               <svg viewBox="0 0 24 24" id="iconVolHigh" width="18" height="18" fill="currentColor">
@@ -756,7 +750,6 @@
             </div>
           </div>
 
-          <!-- 2. 正中間：核心播放控制組（強制絕對居中） -->
           <div class="playback-controls">
             <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -778,7 +771,6 @@
             </button>
           </div>
 
-          <!-- 3. 最右側：純無框循環 Loop 鍵 -->
           <button class="hole-btn clean-loop-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
@@ -886,6 +878,7 @@
   </div>
 </div>
 
+<!-- ══════════ 邏輯腳本 ══════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -893,6 +886,7 @@
     const rawSetItem = localStorage.setItem.bind(localStorage);
     const rawGetItem = localStorage.getItem.bind(localStorage);
 
+    // 儲存隔離
     localStorage.setItem = (key, val) => rawSetItem(`${widgetId}_${key}`, val);
     localStorage.getItem = (key) => rawGetItem(`${widgetId}_${key}`);
 
@@ -979,7 +973,7 @@
         }
       }
 
-      // 翻轉卡帶控制
+      // 翻轉卡帶
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
@@ -1016,53 +1010,47 @@
         });
       }
 
-      // YouTube 影片載入
-      function executeLoadVideo() {
+      // 核心：YouTube 換歌處理 (打通原作者機制 + 支援直接載入)
+      function handleLoadVideo() {
         const raw = linkInput?.value.trim() || '';
         const vid = parseYouTubeID(raw);
-        if (!vid) {
-          alert('請輸入有效的 YouTube 影片網址或 ID');
-          return;
-        }
+        if (!vid) return;
 
+        // 同步所有可能的快取鍵
         localStorage.setItem('yt_url', raw);
+        localStorage.setItem('casete_song', raw);
+        localStorage.setItem('casete_url', raw);
         localStorage.setItem('yt_video_id', vid);
-        rawSetItem('saved_youtube_id', vid);
 
         const p = window.player || (window.widget && window.widget.player);
         if (p && typeof p.loadVideoById === 'function') {
           try {
             p.loadVideoById(vid);
             p.playVideo();
-          } catch(e) {
+          } catch (err) {
             p.cueVideoById(vid);
           }
-        } else {
-          const curUrl = new URL(window.location.href);
-          curUrl.searchParams.set('v', vid);
-          window.location.href = curUrl.toString();
         }
       }
 
-      btnLoad?.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        executeLoadVideo();
+      // 當點擊 CARGAR 載入按鈕時，同步觸發
+      btnLoad?.addEventListener('click', () => {
+        handleLoadVideo();
       });
 
       linkInput?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          e.preventDefault();
-          executeLoadVideo();
+          handleLoadVideo();
         }
       });
 
-      const savedUrl = localStorage.getItem('yt_url') || localStorage.getItem('yt_video_id');
-      if (savedUrl && linkInput) {
-        linkInput.value = savedUrl;
+      // 初始化還原輸入框
+      const savedLink = localStorage.getItem('yt_url') || localStorage.getItem('casete_song') || localStorage.getItem('casete_url');
+      if (savedLink && linkInput && !linkInput.value) {
+        linkInput.value = savedLink;
       }
 
-      // 生成小圓孔進度點
+      // 產生 38 根聲波小圓孔
       const barCount = 38;
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < barCount; i++) {
@@ -1073,7 +1061,7 @@
       soundWaveBox?.appendChild(fragment);
       const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
 
-      // 進度與播放狀態輪詢
+      // 狀態監聽
       setInterval(() => {
         const p = window.player || (window.widget && window.widget.player);
         const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
@@ -1086,10 +1074,8 @@
 
         const percent = parseFloat(progressFill?.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
-
         waveBars.forEach((bar, idx) => {
-          const isActive = idx <= activeBarLimit;
-          bar.classList.toggle('active', isActive);
+          bar.classList.toggle('active', idx <= activeBarLimit);
         });
       }, 150);
 
@@ -1151,7 +1137,7 @@
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
-      // 定時更新標題
+      // 歌名同步
       setInterval(() => {
         const p = window.player || (window.widget && window.widget.player);
         if (p && typeof p.getVideoData === 'function') {
