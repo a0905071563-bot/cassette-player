@@ -4,14 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Retro Cassette Player</title>
-  <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
-  <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
     :root {
       --case-color: #1a1a1a;
       --case-border: #0a0a0a;
@@ -20,29 +34,40 @@
       --btn-icon-color: #ffffff;
     }
 
-    #cassette-player-wrapper .scene {
+    .cassette-widget {
       width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      position: relative;
+      max-width: 440px;
+      padding: 10px;
+    }
+
+    .scene {
+      width: 100%;
       perspective: 1000px;
     }
+
     .flipper {
       position: relative;
       width: 100%;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    .flipper.flipped {
+      transform: rotateY(180deg);
+    }
+
     .face {
       width: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
+
     .face-a {
       position: relative;
       z-index: 2;
       transform: rotateY(0deg);
     }
+
     .face-b {
       position: absolute;
       top: 0;
@@ -53,42 +78,37 @@
       pointer-events: none;
     }
 
-    /* 翻轉點擊層級 */
-    .flipper.flipped .face-a,
-    .flipper.flipped .face-a * { 
-      pointer-events: none !important; 
-      z-index: 1 !important; 
+    .flipper.flipped .face-a {
+      pointer-events: none;
     }
-    .flipper.flipped .face-b,
-    .flipper.flipped .face-b * { 
-      pointer-events: auto !important; 
-      z-index: 20 !important; 
+    .flipper.flipped .face-b {
+      pointer-events: auto;
+      z-index: 10;
     }
 
-    /* ══════════ 卡帶外殼 ══════════ */
-    #cassetteBody {
-      background: var(--case-color) !important;
-      border-radius: 16px !important;
+    /* ══════════ 卡帶本體 ══════════ */
+    .cassette {
+      background: var(--case-color);
+      border-radius: 16px;
       box-shadow: 
-        0 22px 38px rgba(0, 0, 0, 0.75), 
+        0 20px 35px rgba(0, 0, 0, 0.7), 
         inset 0 1.5px 2px rgba(255, 255, 255, 0.35), 
-        inset 0 -3px 8px rgba(0, 0, 0, 0.85) !important;
-      border: 2px solid var(--case-border) !important;
-      padding: 12px 0 12px !important;
-      position: relative !important;
+        inset 0 -3px 8px rgba(0, 0, 0, 0.85);
+      border: 2px solid var(--case-border);
+      padding: 12px 0 10px;
+      position: relative;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 四角螺絲釘 ══════════ */
     .screw {
-      position: absolute !important;
-      width: 13px !important;
-      height: 13px !important;
-      border-radius: 50% !important;
-      background: radial-gradient(circle at 35% 35%, #999 10%, #444 60%, #151515 100%) !important;
-      border: 1px solid #111 !important;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.8) !important;
-      z-index: 8 !important;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #999 10%, #444 60%, #151515 100%);
+      border: 1px solid #111;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.8);
+      z-index: 8;
     }
     .screw::before, .screw::after {
       content: "";
@@ -97,36 +117,35 @@
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
     }
-    .screw::before { width: 7px; height: 1.5px; }
-    .screw::after { width: 1.5px; height: 7px; }
+    .screw::before { width: 6px; height: 1.5px; }
+    .screw::after { width: 1.5px; height: 6px; }
 
-    .screw.tl { top: 10px !important; left: 11px !important; }
-    .screw.tr { top: 10px !important; right: 11px !important; }
-    .screw.bl { bottom: 12px !important; left: 11px !important; }
-    .screw.br { bottom: 12px !important; right: 11px !important; }
+    .screw.tl { top: 9px; left: 10px; }
+    .screw.tr { top: 9px; right: 10px; }
+    .screw.bl { bottom: 10px; left: 10px; }
+    .screw.br { bottom: 10px; right: 10px; }
 
-    /* ══════════ 頂部白色標籤 ══════════ */
+    /* 頂部白底標籤 */
     .tape-label {
-      background-color: #fdfdfd !important;
+      background-color: #fdfdfd;
       background-image: repeating-linear-gradient(
         to bottom,
         transparent 0px,
-        transparent 11px,
-        #d1d5db 11px,
-        #d1d5db 13px
-      ) !important;
-      border: 1.5px solid #222 !important;
-      border-radius: 4px 4px 0 0 !important;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 4px 20px 0 !important;
-      padding: 0 16px !important;
-      height: 36px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
-      z-index: 5 !important;
-      box-sizing: border-box !important;
+        transparent 10px,
+        #d1d5db 10px,
+        #d1d5db 12px
+      );
+      border: 1.5px solid #222;
+      border-radius: 4px 4px 0 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      margin: 2px 18px 0;
+      padding: 0 14px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
     }
 
     .tape-label::before {
@@ -149,81 +168,94 @@
     }
 
     .tape-title {
-      font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
-      font-size: 22px !important;
-      font-weight: 700 !important;
-      color: #111111 !important;
+      font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #111111;
       letter-spacing: 0.5px;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      text-align: center !important;
-      line-height: 1.2 !important;
-      margin: 0 !important;
-      width: 75% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      outline: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      width: 75%;
     }
 
-    /* ══════════ 貼紙區域 ══════════ */
+    /* 貼紙區塊 */
     .tape-stripe {
-      background-color: var(--accent-color) !important;
+      background-color: var(--accent-color);
       background-size: cover;
       background-position: center;
-      margin: 0 20px !important;
-      padding: 26px 0 28px !important;
-      border: none !important;
-      border-bottom-left-radius: 6px !important;
-      border-bottom-right-radius: 6px !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.4) !important;
-      position: relative !important;
+      margin: 0 18px;
+      padding: 22px 0 24px;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+      position: relative;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 黑色中軸視窗 ══════════ */
+    /* 黑色中軸視窗 (圓弧邊緣) */
     .reel-plate {
-      background: #111111 !important;
-      border: 2px solid #222222 !important;
-      border-radius: 6px !important;
-      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      height: 52px !important;
-      width: 74% !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 6px !important;
-      box-sizing: border-box !important;
+      background: #111111;
+      border: 2px solid #222222;
+      border-radius: 10px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15);
+      height: 50px;
+      width: 76%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
     }
 
     .reel {
-      background: #080808 !important;
-      border: 2px solid #2a2a2a !important;
-      border-radius: 50% !important;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1) !important;
-      width: 44px !important;
-      height: 44px !important;
+      background: #080808;
+      border: 2px solid #2a2a2a;
+      border-radius: 50%;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1);
+      width: 42px;
+      height: 42px;
       flex-shrink: 0;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
+    .reel-teeth {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle, transparent 9px, #fff 10px, #fff 13px, transparent 14px),
+        repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 60deg);
+      opacity: 0.85;
+    }
+
+    .is-playing .reel-teeth {
+      animation: spinReel 2.2s linear infinite;
+    }
+
+    @keyframes spinReel {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 中間透明沙漏視窗 (圓弧曲線) */
     .tape-window {
-      background: #080808 !important;
+      background: #080808;
       border-left: 2px solid #1f1f1f;
       border-right: 2px solid #1f1f1f;
-      position: relative !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      height: 44px !important;
-      flex: 1 !important;
+      border-radius: 6px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: 42px;
+      flex: 1;
       margin: 0 4px;
     }
 
@@ -232,11 +264,13 @@
       position: absolute;
       width: 36px;
       height: 100%;
-      background: #3e3e3e;
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      mask-size: 100% 100%;
-      -webkit-mask-size: 100% 100%;
+      background: #444444;
+      mask-image: radial-gradient(circle at -4px 50%, transparent 16px, black 17px),
+                  radial-gradient(circle at calc(100% + 4px) 50%, transparent 16px, black 17px);
+      -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 16px, black 17px),
+                          radial-gradient(circle at calc(100% + 4px) 50%, transparent 16px, black 17px);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
       opacity: 0.85;
       z-index: 1;
     }
@@ -253,6 +287,7 @@
       pointer-events: none;
     }
 
+    /* 垂直白色動態聲波刻度 */
     .mid-scale-equalizer {
       position: absolute;
       top: 50%;
@@ -291,19 +326,17 @@
       100% { height: 5px; }
     }
 
-    /* ══════════ 梯形底座區域 ══════════ */
+    /* 梯形下巴區域 */
     .trapezoid-wrapper {
       position: relative;
       width: 82%;
-      margin: 10px auto 0;
-      padding: 10px 14px 6px;
-      box-sizing: border-box;
+      margin: 8px auto 0;
+      padding: 8px 14px 4px;
       clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
       -webkit-clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
       background: rgba(0, 0, 0, 0.4);
       border-top: 1.5px solid rgba(255, 255, 255, 0.2);
     }
-
     .trapezoid-wrapper .center-screw {
       position: absolute;
       top: 4px;
@@ -311,98 +344,74 @@
       transform: translateX(-50%);
     }
 
-    /* ══════════ 小圓孔進度條 ══════════ */
+    /* 小圓孔進度條 */
     .tape-progress {
-      margin: 14px auto 2px !important;
-      width: 96% !important;
-      height: 12px !important;
-      background: rgba(0, 0, 0, 0.75) !important;
-      border-radius: 6px !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-
-    #progressFill {
-      position: absolute !important;
-      inset: 0 auto auto 0 !important;
-      height: 100% !important;
-      background: transparent !important;
-      pointer-events: none !important;
-      transition: width 0.15s linear !important;
-      z-index: 1 !important;
+      margin: 12px auto 2px;
+      width: 96%;
+      height: 12px;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
 
     .sound-wave-container {
-      position: absolute !important;
-      inset: 0 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 6px !important;
-      box-sizing: border-box !important;
-      pointer-events: none !important;
-      z-index: 2 !important;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      pointer-events: none;
     }
 
     .wave-bar {
-      width: 4px !important;
-      height: 4px !important;
-      border-radius: 50% !important;
-      background: #555555 !important;
-      transition: background 0.15s ease, transform 0.1s ease !important;
-      flex-shrink: 0 !important;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,0.8), 0 0.5px 1px rgba(255,255,255,0.1) !important;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #555555;
+      transition: background 0.15s ease, transform 0.1s ease;
+      flex-shrink: 0;
     }
 
     .wave-bar.active {
-      background: var(--accent-color) !important;
-      box-shadow: 0 0 4px var(--accent-color) !important;
-      transform: scale(1.15) !important;
+      background: var(--accent-color);
+      box-shadow: 0 0 4px var(--accent-color);
+      transform: scale(1.15);
     }
 
-    /* ══════════ 播放控制底座 ══════════ */
+    /* 控制底座 */
     .tape-base {
-      background: var(--control-bar-bg) !important;
-      border-radius: 28px !important;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.08) !important;
-      border: 1px solid rgba(255,255,255,0.08) !important;
-      position: relative !important;
-      z-index: 10 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 6px 28px !important;
-      margin-top: 10px !important;
-      height: 48px !important;
-      box-sizing: border-box !important;
+      background: var(--control-bar-bg);
+      border-radius: 28px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 26px;
+      margin-top: 10px;
+      height: 48px;
+      position: relative;
       transition: background 0.3s ease;
     }
 
     .hole-btn {
-      background: transparent !important;
-      border: none !important;
-      outline: none !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 0 !important;
-      color: #ffffff !important;
-      box-shadow: none !important;
-      transition: transform 0.12s ease, opacity 0.15s ease !important;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      transition: transform 0.12s ease, opacity 0.15s ease;
     }
-    .hole-btn:hover {
-      transform: scale(1.15) !important;
-      opacity: 0.85 !important;
-    }
-    .hole-btn:active {
-      transform: scale(0.95) !important;
-    }
+    .hole-btn:hover { transform: scale(1.15); opacity: 0.85; }
+    .hole-btn:active { transform: scale(0.95); }
 
     .volume-module {
       display: flex;
@@ -410,17 +419,9 @@
       gap: 6px;
       max-width: 90px;
     }
-    .vol-btn {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      color: rgba(255, 255, 255, 0.85) !important;
-    }
-    .vol-wrap {
-      width: 56px;
-      display: flex;
-      align-items: center;
-    }
+    .vol-btn { width: 24px; height: 24px; color: rgba(255, 255, 255, 0.85); }
+    .vol-wrap { width: 56px; display: flex; align-items: center; }
+    
     #volSlider {
       -webkit-appearance: none;
       width: 100%;
@@ -435,58 +436,36 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: var(--accent-color) !important;
+      background: var(--accent-color);
       box-shadow: 0 1px 3px rgba(0,0,0,0.5);
       cursor: pointer;
-      transition: transform 0.1s ease;
-    }
-    #volSlider::-webkit-slider-thumb:hover {
-      transform: scale(1.25);
     }
 
     .playback-controls {
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 12px !important;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .ctrl-icon-btn {
-      width: 28px;
-      height: 28px;
-      color: rgba(255, 255, 255, 0.95) !important;
-    }
-    .ctrl-icon-btn svg {
-      fill: currentColor !important;
-    }
+    .ctrl-icon-btn { width: 28px; height: 28px; }
 
     .play-btn {
-      width: 42px !important;
-      height: 42px !important;
-      border-radius: 50% !important;
-      background: var(--accent-color) !important;
-      color: var(--btn-icon-color) !important;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.4) !important;
-      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--btn-icon-color);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
     }
-    .play-btn svg {
-      fill: var(--btn-icon-color) !important;
-    }
+    .play-btn svg { fill: var(--btn-icon-color); }
 
-    .clean-loop-btn {
-      width: 28px !important;
-      height: 28px !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-      flex-shrink: 0;
-    }
-    .clean-loop-btn svg {
-      fill: currentColor !important;
-    }
+    .clean-loop-btn { width: 28px; height: 28px; }
 
-    /* ══════════ Side B：控制面板 ══════════ */
+    /* ══════════ Side B：後台面板 ══════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -497,71 +476,62 @@
       max-height: 100%;
       color: #ffffff;
     }
-    
+
+    .video-window {
+      width: 100%;
+      height: 160px;
+      background: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 8px 0;
+      position: relative;
+    }
+    #ytPlayerFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
     .setting-group {
-      background: rgba(255, 255, 255, 0.04) !important;
-      border-radius: 8px !important;
-      padding: 10px 12px !important;
-      margin-top: 10px !important;
-      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
     }
-    .group-title { 
-      font-size: 12px; 
-      font-weight: 700; 
-      color: #ffffff; 
-      letter-spacing: 0.5px; 
-      margin-bottom: 6px; 
-    }
-    
-    .full-input, 
-    .link-row input[type="text"] {
-      background: rgba(0, 0, 0, 0.45) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
-      color: #ffffff !important;
-      padding: 7px 10px !important;
-      border-radius: 6px !important;
-      font-size: 12px !important;
-      box-sizing: border-box !important;
-      outline: none !important;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .full-input:focus, 
-    .link-row input[type="text"]:focus {
-      border-color: rgba(255, 255, 255, 0.7) !important;
-      background: rgba(0, 0, 0, 0.6) !important;
+    .group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
     }
 
-    .back-btn, 
-    #btnLoad, 
-    .btn-custom-action {
-      background: rgba(255, 255, 255, 0.06) !important;
-      color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      padding: 6px 14px !important;
-      font-size: 11px !important;
-      font-weight: 600 !important;
-      border-radius: 6px !important;
-      cursor: pointer !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 5px !important;
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease !important;
-    }
-    .back-btn:hover, 
-    #btnLoad:hover, 
-    .btn-custom-action:hover {
-      background: rgba(255, 255, 255, 0.18) !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-      transform: translateY(-1px);
+    .full-input, .link-row input[type="text"] {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
     }
 
-    .link-row {
-      display: flex;
-      gap: 8px;
+    .link-row { display: flex; gap: 8px; }
+    .link-row input[type="text"] { flex: 1; }
+
+    .back-btn, #btnLoad, .btn-custom-action {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .link-row input[type="text"] {
-      flex: 1;
+    .back-btn:hover, #btnLoad:hover, .btn-custom-action:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .palette-grid {
@@ -578,13 +548,9 @@
       border: 2px solid rgba(255,255,255,0.7);
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-      transition: transform 0.15s ease, border-color 0.15s ease;
-      box-sizing: border-box;
+      transition: transform 0.15s ease;
     }
-    .palette-circle:hover { 
-      transform: scale(1.2); 
-      border-color: #ffffff; 
-    }
+    .palette-circle:hover { transform: scale(1.2); border-color: #fff; }
 
     .custom-color-picker-wrap {
       display: flex;
@@ -596,11 +562,7 @@
       padding: 6px 10px;
       border-radius: 6px;
     }
-    .picker-label { 
-      font-size: 11px; 
-      color: #ffffff; 
-      font-weight: 500; 
-    }
+    .picker-label { font-size: 11px; color: #fff; }
     .native-color-picker {
       appearance: none;
       -webkit-appearance: none;
@@ -612,79 +574,46 @@
       background: none;
       padding: 0;
     }
-    .native-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
     .native-color-picker::-webkit-color-swatch { border: none; border-radius: 50%; }
 
-    .upload-btn-wrap { 
-      display: flex; 
-      align-items: center; 
-      gap: 8px; 
-      margin-top: 6px; 
-    }
+    .upload-btn-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
 
-    /* ══════════ 循環播放 (LOOP) 開關 ══════════ */
     .loop-row {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 8px 12px !important;
-      background: rgba(255, 255, 255, 0.04) !important;
-      border: 1px solid rgba(255, 255, 255, 0.18) !important;
-      border-radius: 8px !important;
-      margin-top: 10px !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      margin-top: 10px;
     }
-    .loop-row .lbl {
-      font-size: 12px !important;
-      font-weight: 700 !important;
-      color: #ffffff !important;
-      letter-spacing: 0.5px;
-    }
-    .switch {
-      position: relative !important;
-      display: inline-block !important;
-      width: 44px !important;
-      height: 22px !important;
-      box-sizing: border-box !important;
-    }
-    .switch input {
-      opacity: 0 !important;
-      width: 0 !important;
-      height: 0 !important;
-      position: absolute !important;
-    }
+    .loop-row .lbl { font-size: 12px; font-weight: 700; color: #fff; }
+    .switch { position: relative; width: 44px; height: 22px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
     .switch .track {
-      position: absolute !important;
-      cursor: pointer !important;
-      inset: 0 !important;
-      background: rgba(0, 0, 0, 0.55) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
-      border-radius: 22px !important;
-      box-sizing: border-box !important;
-      transition: background 0.25s ease, border-color 0.25s ease !important;
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.25s ease;
     }
     .switch .track::before {
-      position: absolute !important;
-      content: "" !important;
-      height: 14px !important;
-      width: 14px !important;
-      left: 3px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      background-color: #ffffff !important;
-      border-radius: 50% !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
-      box-sizing: border-box !important;
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease !important;
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      border-radius: 50%;
+      transition: transform 0.25s ease;
     }
-    .switch input:checked + .track {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: #ffffff !important;
-    }
-    .switch input:checked + .track::before {
-      transform: translate(21px, -50%) !important;
-      background-color: #ffffff !important;
-      box-shadow: 0 0 6px rgba(255, 255, 255, 0.8) !important;
-    }
+    .switch input:checked + .track { background: rgba(255, 255, 255, 0.25); border-color: #fff; }
+    .switch input:checked + .track::before { transform: translate(21px, -50%); }
   </style>
 </head>
 <body>
@@ -698,15 +627,15 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底手寫標籤 -->
+          <!-- 白底歌名標籤 -->
           <div class="tape-label">
-            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
+            <div class="tape-title" id="tapeTitle">Playlist</div>
           </div>
 
           <!-- 貼紙區 -->
           <div class="tape-stripe" id="tapeStripe">
             <div class="reel-plate">
-              <div class="reel"><div class="teeth"></div></div>
+              <div class="reel"><div class="reel-teeth"></div></div>
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -720,15 +649,14 @@
                   <div class="scale-bar-line"></div>
                 </div>
               </div>
-              <div class="reel"><div class="teeth"></div></div>
+              <div class="reel"><div class="reel-teeth"></div></div>
             </div>
           </div>
 
           <!-- 梯形下巴區域 -->
           <div class="trapezoid-wrapper">
             <span class="screw center-screw"></span>
-            <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
-              <div class="fill" id="progressFill"></div>
+            <div class="tape-progress" id="tapeProgress">
               <div class="sound-wave-container" id="soundWaveBox"></div>
             </div>
           </div>
@@ -751,7 +679,7 @@
           </div>
 
           <div class="playback-controls">
-            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
+            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="重新播放">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                 <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
               </svg>
@@ -764,7 +692,7 @@
                 <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
               </svg>
             </button>
-            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
+            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="快轉 / 跳到結尾">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                 <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
               </svg>
@@ -787,14 +715,15 @@
               <span aria-hidden="true">◀</span> <span>返回正面</span>
             </button>
           </div>
+
+          <!-- YouTube 播放器容器 -->
           <div class="video-window">
-            <div id="ytPlayer"></div>
+            <div id="playerPlaceholder"></div>
           </div>
 
           <details class="sb-collapse" open>
-            <summary class="sb-summary">
+            <summary class="sb-summary" style="cursor:pointer; font-size:13px; font-weight:bold; margin-bottom:8px;">
               <span>卡帶設定與外觀</span>
-              <span class="chev" aria-hidden="true">▾</span>
             </summary>
             <div class="sb-body">
               
@@ -802,7 +731,7 @@
               <div class="setting-group" style="margin-top:0;">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
-                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
+                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址或 ID">
                   <button type="button" id="btnLoad">載入</button>
                 </div>
               </div>
@@ -878,7 +807,7 @@
   </div>
 </div>
 
-<!-- ══════════ 邏輯腳本 ══════════ -->
+<!-- ══════════ 100% 獨立自給自足核心腳本 ══════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -886,33 +815,11 @@
     const rawSetItem = localStorage.setItem.bind(localStorage);
     const rawGetItem = localStorage.getItem.bind(localStorage);
 
-    // 儲存隔離
-    localStorage.setItem = (key, val) => rawSetItem(`${widgetId}_${key}`, val);
-    localStorage.getItem = (key) => rawGetItem(`${widgetId}_${key}`);
-
-    function isLightColor(hex) {
-      if (!hex || !hex.startsWith('#')) return false;
-      const c = hex.substring(1);
-      const rgb = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
-      const luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * (rgb & 0xff);
-      return luma > 160;
-    }
-
-    function adjustBrightness(hex, percent) {
-      if (!hex || !hex.startsWith('#')) return hex;
-      let num = parseInt(hex.slice(1), 16);
-      if (hex.length === 4) {
-        const r = (num >> 8) & 0xf, g = (num >> 4) & 0xf, b = num & 0xf;
-        num = (r * 17 << 16) | (g * 17 << 8) | (b * 17);
-      }
-      let r = (num >> 16) + percent;
-      let g = ((num >> 8) & 0x00ff) + percent;
-      let b = (num & 0x0000ff) + percent;
-      r = Math.min(255, Math.max(0, r));
-      g = Math.min(255, Math.max(0, g));
-      b = Math.min(255, Math.max(0, b));
-      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-    }
+    const localStore = {
+      set: (key, val) => rawSetItem(`${widgetId}_${key}`, val),
+      get: (key) => rawGetItem(`${widgetId}_${key}`),
+      remove: (key) => localStorage.removeItem(`${widgetId}_${key}`)
+    };
 
     function parseYouTubeID(url) {
       if (!url) return '';
@@ -922,239 +829,306 @@
       return match ? match[1] : '';
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const stripe = document.getElementById('tapeStripe');
-      const title = document.getElementById('tapeTitle');
-      const imgInput = document.getElementById('stickerImgInput');
-      const fileInput = document.getElementById('fileUploadInput');
-      const soundWaveBox = document.getElementById('soundWaveBox');
-      const progressFill = document.getElementById('progressFill');
+    function isLightColor(hex) {
+      if (!hex || !hex.startsWith('#')) return false;
+      const c = hex.substring(1);
+      const rgb = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
+      return (0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * (rgb & 0xff)) > 160;
+    }
+
+    let ytPlayer = null;
+    let isReady = false;
+    let isLooping = localStore.get('yt_loop') === 'true';
+
+    // 載入官方 YouTube IFrame API
+    window.onYouTubeIframeAPIReady = function() {
+      const initialId = localStore.get('yt_video_id') || 'jfKfPfyJRdk'; // 預設放鬆音樂
+      ytPlayer = new YT.Player('playerPlaceholder', {
+        height: '100%',
+        width: '100%',
+        videoId: initialId,
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: {
+          'playsinline': 1,
+          'controls': 1,
+          'rel': 0,
+          'enablejsapi': 1,
+          'origin': window.location.origin
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    function onPlayerReady(event) {
+      isReady = true;
+      const vol = parseInt(localStore.get('yt_volume') || '60', 10);
+      try {
+        ytPlayer.setVolume(vol);
+      } catch(e) {}
+      document.getElementById('volSlider').value = vol;
+      refreshTitle();
+    }
+
+    function onPlayerStateChange(event) {
       const wrapper = document.getElementById('cassette-player-wrapper');
-      const flipper = document.getElementById('flipper');
-      const nativeColorPicker = document.getElementById('nativeColorPicker');
-      const caseColorPicker = document.getElementById('caseColorPicker');
-      const linkInput = document.getElementById('linkInput');
-      const btnLoad = document.getElementById('btnLoad');
-      const btnMute = document.getElementById('btnMute');
-      const iconVolHigh = document.getElementById('iconVolHigh');
-      const iconVolMuted = document.getElementById('iconVolMuted');
-      const volSlider = document.getElementById('volSlider');
       const iconPlay = document.getElementById('iconPlay');
       const iconPause = document.getElementById('iconPause');
 
-      function applyAccentColor(color, clearCustomImg = false) {
-        const root = document.documentElement;
-        root.style.setProperty('--accent-color', color);
-        root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
-        localStorage.setItem('cfg_accent', color);
-        if (nativeColorPicker) {
-          nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
-        }
-
-        if (clearCustomImg && stripe) {
-          stripe.style.backgroundImage = 'none';
-          localStorage.removeItem('cfg_tape_img');
-          if (imgInput) imgInput.value = '';
-          if (fileInput) fileInput.value = '';
-        }
+      if (event.data === YT.PlayerState.PLAYING) {
+        wrapper.classList.add('is-playing');
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+        refreshTitle();
+      } else {
+        wrapper.classList.remove('is-playing');
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
       }
 
-      function applyCaseColor(color, barColor = null) {
-        const root = document.documentElement;
-        const actualBarColor = barColor || adjustBrightness(color, isLightColor(color) ? -20 : -15);
-        const caseBorder = isLightColor(color) ? '#b0b0b0' : '#0a0a0a';
-        root.style.setProperty('--case-color', color);
-        root.style.setProperty('--control-bar-bg', actualBarColor);
-        root.style.setProperty('--case-border', caseBorder);
-        localStorage.setItem('cfg_case_color', color);
-        localStorage.setItem('cfg_bar_color', actualBarColor);
-        if (caseColorPicker) {
-          caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
+      if (event.data === YT.PlayerState.ENDED) {
+        if (isLooping) {
+          ytPlayer.seekTo(0);
+          ytPlayer.playVideo();
         }
       }
+    }
 
-      // 翻轉卡帶
-      document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
-      document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
-
-      // 音量與靜音切換
-      let previousVolume = 60;
-      if (btnMute && volSlider) {
-        btnMute.addEventListener('click', () => {
-          const p = window.player || (window.widget && window.widget.player);
-          if (parseInt(volSlider.value, 10) > 0) {
-            previousVolume = volSlider.value;
-            volSlider.value = 0;
-            if (p && typeof p.setVolume === 'function') p.setVolume(0);
-            iconVolHigh.style.display = 'none';
-            iconVolMuted.style.display = 'block';
-          } else {
-            volSlider.value = previousVolume || 60;
-            if (p && typeof p.setVolume === 'function') p.setVolume(volSlider.value);
-            iconVolHigh.style.display = 'block';
-            iconVolMuted.style.display = 'none';
-          }
-        });
-
-        volSlider.addEventListener('input', (e) => {
-          const val = parseInt(e.target.value, 10);
-          const p = window.player || (window.widget && window.widget.player);
-          if (p && typeof p.setVolume === 'function') p.setVolume(val);
-          if (val === 0) {
-            iconVolHigh.style.display = 'none';
-            iconVolMuted.style.display = 'block';
-          } else {
-            iconVolHigh.style.display = 'block';
-            iconVolMuted.style.display = 'none';
-          }
-        });
+    function refreshTitle() {
+      if (ytPlayer && typeof ytPlayer.getVideoData === 'function') {
+        const d = ytPlayer.getVideoData();
+        if (d && d.title) {
+          const t = document.getElementById('tapeTitle');
+          t.textContent = d.title;
+          t.title = d.title;
+        }
       }
+    }
 
-      // 核心：YouTube 換歌處理 (打通原作者機制 + 支援直接載入)
-      function handleLoadVideo() {
-        const raw = linkInput?.value.trim() || '';
+    window.addEventListener('DOMContentLoaded', () => {
+      const flipper = document.getElementById('flipper');
+      const linkInput = document.getElementById('linkInput');
+      const btnLoad = document.getElementById('btnLoad');
+      const btnPlay = document.getElementById('btnPlay');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+      const btnMute = document.getElementById('btnMute');
+      const volSlider = document.getElementById('volSlider');
+      const iconVolHigh = document.getElementById('iconVolHigh');
+      const iconVolMuted = document.getElementById('iconVolMuted');
+      const loopToggle = document.getElementById('loopToggle');
+      const stripe = document.getElementById('tapeStripe');
+      const imgInput = document.getElementById('stickerImgInput');
+      const fileInput = document.getElementById('fileUploadInput');
+      const btnClearImg = document.getElementById('btnClearImg');
+      const nativeColorPicker = document.getElementById('nativeColorPicker');
+      const caseColorPicker = document.getElementById('caseColorPicker');
+      const soundWaveBox = document.getElementById('soundWaveBox');
+      const tapeProgress = document.getElementById('tapeProgress');
+
+      document.getElementById('btnFlipB').addEventListener('click', () => flipper.classList.add('flipped'));
+      document.getElementById('btnFlipA').addEventListener('click', () => flipper.classList.remove('flipped'));
+
+      // 播放 / 暫停
+      btnPlay.addEventListener('click', () => {
+        if (!isReady || !ytPlayer) return;
+        const state = ytPlayer.getPlayerState();
+        if (state === YT.PlayerState.PLAYING) {
+          ytPlayer.pauseVideo();
+        } else {
+          ytPlayer.playVideo();
+        }
+      });
+
+      // 重播 / 快轉
+      btnPrev.addEventListener('click', () => {
+        if (isReady && ytPlayer) ytPlayer.seekTo(0);
+      });
+      btnNext.addEventListener('click', () => {
+        if (isReady && ytPlayer) {
+          const dur = ytPlayer.getDuration();
+          if (dur > 2) ytPlayer.seekTo(dur - 2);
+        }
+      });
+
+      // 音量控制
+      let lastVol = 60;
+      btnMute.addEventListener('click', () => {
+        if (!isReady || !ytPlayer) return;
+        if (ytPlayer.isMuted() || parseInt(volSlider.value, 10) === 0) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(lastVol || 60);
+          volSlider.value = lastVol || 60;
+          iconVolHigh.style.display = 'block';
+          iconVolMuted.style.display = 'none';
+        } else {
+          lastVol = volSlider.value;
+          ytPlayer.mute();
+          volSlider.value = 0;
+          iconVolHigh.style.display = 'none';
+          iconVolMuted.style.display = 'block';
+        }
+      });
+
+      volSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (isReady && ytPlayer) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(val);
+        }
+        localStore.set('yt_volume', val);
+        iconVolHigh.style.display = val === 0 ? 'none' : 'block';
+        iconVolMuted.style.display = val === 0 ? 'block' : 'none';
+      });
+
+      // 載入 YouTube 影片
+      function doLoad() {
+        const raw = linkInput.value.trim();
         const vid = parseYouTubeID(raw);
-        if (!vid) return;
+        if (!vid) {
+          alert('請貼上有效的 YouTube 網址！');
+          return;
+        }
 
-        // 同步所有可能的快取鍵
-        localStorage.setItem('yt_url', raw);
-        localStorage.setItem('casete_song', raw);
-        localStorage.setItem('casete_url', raw);
-        localStorage.setItem('yt_video_id', vid);
+        localStore.set('yt_url', raw);
+        localStore.set('yt_video_id', vid);
 
-        const p = window.player || (window.widget && window.widget.player);
-        if (p && typeof p.loadVideoById === 'function') {
+        if (isReady && ytPlayer) {
           try {
-            p.loadVideoById(vid);
-            p.playVideo();
-          } catch (err) {
-            p.cueVideoById(vid);
+            ytPlayer.loadVideoById(vid);
+            ytPlayer.playVideo();
+          } catch(e) {
+            ytPlayer.cueVideoById(vid);
           }
+          setTimeout(refreshTitle, 1500);
+          setTimeout(refreshTitle, 3000);
         }
       }
 
-      // 當點擊 CARGAR 載入按鈕時，同步觸發
-      btnLoad?.addEventListener('click', () => {
-        handleLoadVideo();
+      btnLoad.addEventListener('click', doLoad);
+      linkInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') doLoad();
       });
 
-      linkInput?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          handleLoadVideo();
-        }
+      const savedUrl = localStore.get('yt_url');
+      if (savedUrl) linkInput.value = savedUrl;
+
+      // 循環播放設定
+      loopToggle.checked = isLooping;
+      loopToggle.addEventListener('change', () => {
+        isLooping = loopToggle.checked;
+        localStore.set('yt_loop', isLooping);
       });
 
-      // 初始化還原輸入框
-      const savedLink = localStorage.getItem('yt_url') || localStorage.getItem('casete_song') || localStorage.getItem('casete_url');
-      if (savedLink && linkInput && !linkInput.value) {
-        linkInput.value = savedLink;
-      }
-
-      // 產生 38 根聲波小圓孔
+      // 38 根聲波小孔
       const barCount = 38;
-      const fragment = document.createDocumentFragment();
       for (let i = 0; i < barCount; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wave-bar';
-        fragment.appendChild(bar);
+        const b = document.createElement('div');
+        b.className = 'wave-bar';
+        soundWaveBox.appendChild(b);
       }
-      soundWaveBox?.appendChild(fragment);
-      const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
+      const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
 
-      // 狀態監聽
+      // 點擊進度條跳轉
+      tapeProgress.addEventListener('click', (e) => {
+        if (!isReady || !ytPlayer) return;
+        const rect = tapeProgress.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        const dur = ytPlayer.getDuration() || 0;
+        if (dur > 0) ytPlayer.seekTo(ratio * dur, true);
+      });
+
+      // 進度條輪詢更新
       setInterval(() => {
-        const p = window.player || (window.widget && window.widget.player);
-        const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
-        wrapper?.classList.toggle('is-playing', isPlaying);
-
-        if (iconPlay && iconPause) {
-          iconPlay.style.display = isPlaying ? 'none' : 'block';
-          iconPause.style.display = isPlaying ? 'block' : 'none';
-        }
-
-        const percent = parseFloat(progressFill?.style.width) || 0;
-        const activeBarLimit = Math.floor((percent / 100) * barCount);
-        waveBars.forEach((bar, idx) => {
-          bar.classList.toggle('active', idx <= activeBarLimit);
+        if (!isReady || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 1;
+        const ratio = cur / dur;
+        const activeLimit = Math.floor(ratio * barCount);
+        waveBars.forEach((b, idx) => {
+          b.classList.toggle('active', idx <= activeLimit);
         });
-      }, 150);
+      }, 250);
 
-      // 配色載入
-      const savedAccent = localStorage.getItem('cfg_accent');
-      if (savedAccent) applyAccentColor(savedAccent);
+      // 配色
+      function applyAccent(color, clearImg = false) {
+        document.documentElement.style.setProperty('--accent-color', color);
+        document.documentElement.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111' : '#fff');
+        localStore.set('cfg_accent', color);
+        nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
 
-      const savedCase = localStorage.getItem('cfg_case_color');
-      if (savedCase) applyCaseColor(savedCase, localStorage.getItem('cfg_bar_color'));
-
-      const savedImg = localStorage.getItem('cfg_tape_img');
-      if (savedImg && stripe) {
-        stripe.style.backgroundImage = `url("${savedImg}")`;
-        if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
+        if (clearImg) {
+          stripe.style.backgroundImage = 'none';
+          localStore.remove('cfg_tape_img');
+          imgInput.value = '';
+          fileInput.value = '';
+        }
       }
 
-      // 貼紙選色
-      document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          applyAccentColor(btn.dataset.color, true);
-        });
-      });
-      nativeColorPicker?.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
+      function applyCase(cColor, bColor) {
+        document.documentElement.style.setProperty('--case-color', cColor);
+        document.documentElement.style.setProperty('--control-bar-bg', bColor);
+        localStore.set('cfg_case_color', cColor);
+        localStore.set('cfg_bar_color', bColor);
+        caseColorPicker.value = cColor.startsWith('#') && cColor.length === 7 ? cColor : '#1a1a1a';
+      }
 
-      // 外殼選色
-      document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          applyCaseColor(btn.dataset.case, btn.dataset.bar);
-        });
+      const savedAccent = localStore.get('cfg_accent');
+      if (savedAccent) applyAccent(savedAccent);
+
+      const savedCase = localStore.get('cfg_case_color');
+      const savedBar = localStore.get('cfg_bar_color');
+      if (savedCase) applyCase(savedCase, savedBar || '#11151c');
+
+      const savedImg = localStore.get('cfg_tape_img');
+      if (savedImg) {
+        stripe.style.backgroundImage = `url("${savedImg}")`;
+        imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
+      }
+
+      document.querySelectorAll('.color-accent-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyAccent(btn.dataset.color, true));
       });
-      caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
+      nativeColorPicker.addEventListener('input', (e) => applyAccent(e.target.value, true));
+
+      document.querySelectorAll('.color-case-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyCase(btn.dataset.case, btn.dataset.bar));
+      });
+      caseColorPicker.addEventListener('input', (e) => applyCase(e.target.value, '#11151c'));
 
       // 圖片上傳
-      fileInput?.addEventListener('change', function() {
-        if (this.files?.[0]) {
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
           const reader = new FileReader();
           reader.onload = (e) => {
-            const dataUrl = e.target.result;
-            if (stripe) stripe.style.backgroundImage = `url("${dataUrl}")`;
-            localStorage.setItem('cfg_tape_img', dataUrl);
-            if (imgInput) imgInput.value = '(已上傳圖片)';
+            const d = e.target.result;
+            stripe.style.backgroundImage = `url("${d}")`;
+            localStore.set('cfg_tape_img', d);
+            imgInput.value = '(已上傳圖片)';
           };
           reader.readAsDataURL(this.files[0]);
         }
       });
 
-      imgInput?.addEventListener('change', () => {
+      imgInput.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
-          if (stripe) stripe.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('cfg_tape_img', val);
+          stripe.style.backgroundImage = `url("${val}")`;
+          localStore.set('cfg_tape_img', val);
         }
       });
 
-      document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
+      btnClearImg.addEventListener('click', () => {
+        applyAccent(localStore.get('cfg_accent') || '#e51d24', true);
       });
-
-      // 歌名同步
-      setInterval(() => {
-        const p = window.player || (window.widget && window.widget.player);
-        if (p && typeof p.getVideoData === 'function') {
-          const songName = p.getVideoData()?.title;
-          if (songName && title && title.textContent !== songName) {
-            title.textContent = songName;
-            title.title = songName;
-          }
-        }
-      }, 1000);
     });
   })();
 </script>
-
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
 </body>
 </html>
