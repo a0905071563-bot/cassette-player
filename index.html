@@ -86,7 +86,7 @@
       z-index: 10;
     }
 
-    /* ══════════ 卡帶外殼 ══════════ */
+    /* ══════════ 卡帶外殼（底邊無縫收攏） ══════════ */
     .cassette {
       background: var(--case-color);
       border-radius: 16px;
@@ -95,7 +95,8 @@
         inset 0 1.5px 2px rgba(255, 255, 255, 0.35), 
         inset 0 -3px 8px rgba(0, 0, 0, 0.85);
       border: 2px solid var(--case-border);
-      padding: 12px 0 10px;
+      padding: 12px 0 0; /* 底部內距歸零，讓梯形無縫貼齊外殼底邊 */
+      overflow: hidden;   /* 確保底邊與圓角完美對齊裁切 */
       position: relative;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
@@ -194,7 +195,7 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 原版造型中軸黑框視窗 ══════════ */
+    /* ══════════ 原版中軸黑框視窗 ══════════ */
     .reel-plate {
       background: #0d0d0d;
       border: 2px solid #202020;
@@ -229,7 +230,6 @@
       justify-content: center;
     }
 
-    /* 原版 6 顆小齒牙（Teeth）圍繞中心孔洞 */
     .reel-core {
       width: 22px;
       height: 22px;
@@ -240,7 +240,6 @@
       justify-content: center;
     }
 
-    /* 中央黑色孔洞 */
     .reel-core::after {
       content: "";
       position: absolute;
@@ -252,7 +251,6 @@
       z-index: 2;
     }
 
-    /* 6 顆小白色凸齒 */
     .reel-teeth {
       position: absolute;
       width: 100%;
@@ -266,9 +264,8 @@
       -webkit-mask-image: radial-gradient(circle, transparent 4.5px, black 5px, black 9px, transparent 9.5px);
     }
 
-    /* 播放時旋轉小齒牙 */
     .is-playing .reel-teeth {
-      animation: spinTeeth 2s linear infinite;
+      animation: spinTeeth 2.2s linear infinite;
     }
 
     @keyframes spinTeeth {
@@ -276,7 +273,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* ══════════ 中間沙漏與黑膠捲（圓潤弧形） ══════════ */
+    /* ══════════ 精準還原圖 2：平滑收腰雙曲線沙漏（無橫槓頂底） ══════════ */
     .tape-window {
       background: #080808;
       border-left: 2px solid #1a1a1a;
@@ -292,24 +289,22 @@
       margin: 0 4px;
     }
 
-    /* 中間透光沙漏（向內收腰平滑曲線） */
+    /* 使用精確向量雙弧線：寬頂寬底 + 中央平滑柔和收腰，絕無方角橫槓 */
     .tape-window::before {
       content: "";
       position: absolute;
-      width: 36px;
+      width: 38px;
       height: 100%;
-      background: #3a3a3a;
-      mask-image: radial-gradient(circle at -3px 50%, transparent 16px, black 17px),
-                  radial-gradient(circle at calc(100% + 3px) 50%, transparent 16px, black 17px);
-      -webkit-mask-image: radial-gradient(circle at -3px 50%, transparent 16px, black 17px),
-                          radial-gradient(circle at calc(100% + 3px) 50%, transparent 16px, black 17px);
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in;
-      opacity: 0.9;
+      background: #3e3e3e;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 12 0 L 88 0 Q 56 50 88 100 L 12 100 Q 44 50 12 0 Z' fill='%23000'/%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 12 0 L 88 0 Q 56 50 88 100 L 12 100 Q 44 50 12 0 Z' fill='%23000'/%3E%3C/svg%3E");
+      mask-size: 100% 100%;
+      -webkit-mask-size: 100% 100%;
+      opacity: 0.92;
       z-index: 1;
     }
 
-    /* 左右兩側黑膠帶圓弧凸起 */
+    /* 左右兩側柔順透明暗影 */
     .tape-window::after {
       content: "";
       position: absolute;
@@ -361,12 +356,12 @@
       100% { height: 5px; }
     }
 
-    /* 梯形下巴區域 */
+    /* ══════════ 梯形下巴區域（完全貼齊外殼底邊 + 進度條下移） ══════════ */
     .trapezoid-wrapper {
       position: relative;
       width: 82%;
       margin: 8px auto 0;
-      padding: 8px 14px 4px;
+      padding: 10px 14px 12px; /* 底部加厚留白，讓進度條下移 */
       clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
       -webkit-clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
       background: rgba(0, 0, 0, 0.4);
@@ -374,14 +369,14 @@
     }
     .trapezoid-wrapper .center-screw {
       position: absolute;
-      top: 4px;
+      top: 5px;
       left: 50%;
       transform: translateX(-50%);
     }
 
-    /* 小圓孔進度條 */
+    /* 小圓孔進度條（向下微調下移） */
     .tape-progress {
-      margin: 12px auto 2px;
+      margin: 16px auto 0; /* 下移間距，居中偏下對齊底邊 */
       width: 96%;
       height: 12px;
       background: rgba(0, 0, 0, 0.75);
@@ -665,16 +660,15 @@
           <!-- 貼紙區 -->
           <div class="tape-stripe" id="tapeStripe">
             
-            <!-- 原版造型中軸黑框視窗 -->
             <div class="reel-plate">
-              <!-- 左齒輪：黑底盤 + 6 顆小齒牙圍繞中央圓孔 -->
+              <!-- 左齒輪 -->
               <div class="reel">
                 <div class="reel-core">
                   <div class="reel-teeth"></div>
                 </div>
               </div>
 
-              <!-- 中間沙漏與黑膠捲 -->
+              <!-- 中間平滑拋物線沙漏視窗（無直角橫槓，頂底通透） -->
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -689,7 +683,7 @@
                 </div>
               </div>
 
-              <!-- 右齒輪：黑底盤 + 6 顆小齒牙圍繞中央圓孔 -->
+              <!-- 右齒輪 -->
               <div class="reel">
                 <div class="reel-core">
                   <div class="reel-teeth"></div>
@@ -699,7 +693,7 @@
 
           </div>
 
-          <!-- 梯形下巴區域 -->
+          <!-- 梯形下巴區域：底部完全貼齊外殼底端，進度條下移平衡 -->
           <div class="trapezoid-wrapper">
             <span class="screw center-screw"></span>
             <div class="tape-progress" id="tapeProgress">
