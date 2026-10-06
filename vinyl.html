@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Vinyl Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Zen+Maru+Gothic:wght@700&family=Barlow+Condensed:wght@700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    :root {
+      --jacket-bg: #f8f8f8;
+      --control-bar-bg: #11151c;
+      --accent-color: #e51d24;
+      --btn-icon-color: #ffffff;
+    }
+
+    .vinyl-widget {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px;
+    }
+
+    .scene {
+      width: 100%;
+      perspective: 1000px;
+    }
+
+    .flipper {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flipper.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .face-a {
+      position: relative;
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .face-b {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      transform: rotateY(180deg);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .flipper.flipped .face-a {
+      pointer-events: none;
+    }
+    .flipper.flipped .face-b {
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    /* ══════════ 黑膠唱片機展示區 ══════════ */
+    .vinyl-stage {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ══════════ 右側黑膠唱片本體（半片露出 + 順時針旋轉） ══════════ */
+    .vinyl-disc {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 236px;
+      height: 236px;
+      border-radius: 50%;
+      /* 經典黑膠唱片同心圓黑膠溝槽 (Grooves) 光澤紋理 */
+      background: 
+        radial-gradient(circle at center, transparent 38px, rgba(255,255,255,0.06) 42px, transparent 46px),
+        radial-gradient(circle at center, transparent 65px, rgba(255,255,255,0.05) 70px, transparent 75px),
+        radial-gradient(circle at center, transparent 95px, rgba(255,255,255,0.06) 100px, transparent 105px),
+        repeating-radial-gradient(circle at center, #111 0px, #111 2px, #1c1c1c 3px, #0d0d0d 4px);
+      box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(0,0,0,0.9);
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    /* 唱片中央標籤與圓孔 */
+    .disc-label {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 3px rgba(0,0,0,0.4), inset 0 0 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* 中央小孔 */
+    .disc-hole {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0d0d0d;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 0 2px rgba(0,0,0,0.8);
+      z-index: 2;
+    }
+
+    /* 播放時順時針持續旋轉動畫 */
+    .is-playing .vinyl-disc {
+      animation: spinVinyl 3.5s linear infinite;
+    }
+
+    @keyframes spinVinyl {
+      from {
+        transform: translateY(-50%) rotate(0deg);
+      }
+      to {
+        transform: translateY(-50%) rotate(360deg);
+      }
+    }
+
+    /* ══════════ 左側方形唱片封套 ══════════ */
+    .vinyl-jacket {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 250px;
+      height: 250px;
+      background-color: var(--jacket-bg);
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px;
+      box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.45),
+        inset -2px 0 4px rgba(0,0,0,0.1);
+      z-index: 2;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 0.3s ease;
+      overflow: hidden;
+    }
+
+    /* 封套開口處的半圓形手扣取槽（Thumb Notch） */
+    .jacket-notch {
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 48px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: inset 4px 0 6px rgba(0,0,0,0.25);
+      pointer-events: none;
+    }
+
+    /* 封套上方：歌名 ＆ 聲波水平並列 */
+    .jacket-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 8px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .header-decor-line {
+      width: 32px;
+      height: 3px;
+      background: #111;
+      border-radius: 2px;
+      margin-bottom: 2px;
+    }
+
+    .song-title-text {
+      font-family: 'Montserrat', 'Zen Maru Gothic', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: #111111;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    /* 歌名旁邊的動態聲波 */
+    .header-waveform {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .mini-wave-bar {
+      width: 2.5px;
+      height: 4px;
+      background: #111111;
+      border-radius: 1px;
+      transition: height 0.12s ease;
+    }
+
+    .is-playing .mini-wave-bar {
+      animation: miniWavePulse 0.6s infinite ease-in-out alternate;
+    }
+    .mini-wave-bar:nth-child(1) { animation-delay: 0.05s; }
+    .mini-wave-bar:nth-child(2) { animation-delay: 0.22s; }
+    .mini-wave-bar:nth-child(3) { animation-delay: 0.41s; }
+    .mini-wave-bar:nth-child(4) { animation-delay: 0.15s; }
+    .mini-wave-bar:nth-child(5) { animation-delay: 0.33s; }
+    .mini-wave-bar:nth-child(6) { animation-delay: 0.18s; }
+
+    @keyframes miniWavePulse {
+      0% { height: 3px; }
+      50% { height: 13px; }
+      100% { height: 5px; }
+    }
+
+    /* 封套下方進度條 */
+    .jacket-progress-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      z-index: 3;
+    }
+    .jacket-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #111;
+      border-radius: 3px;
+      transition: width 0.15s linear;
+    }
+
+    /* ══════════ 控制底座 ══════════ */
+    .tape-base {
+      background: var(--control-bar-bg);
+      border-radius: 28px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 26px;
+      margin-top: 14px;
+      height: 48px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .hole-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      transition: transform 0.12s ease, opacity 0.15s ease;
+    }
+    .hole-btn:hover { transform: scale(1.15); opacity: 0.85; }
+    .hole-btn:active { transform: scale(0.95); }
+
+    .volume-module {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 90px;
+    }
+    .vol-btn { width: 24px; height: 24px; color: rgba(255, 255, 255, 0.85); }
+    .vol-wrap { width: 56px; display: flex; align-items: center; }
+    
+    #volSlider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.25);
+      outline: none;
+      cursor: pointer;
+    }
+    #volSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+
+    .playback-controls {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-icon-btn { width: 28px; height: 28px; }
+
+    .play-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--btn-icon-color);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+    .play-btn svg { fill: var(--btn-icon-color); }
+
+    .clean-loop-btn { width: 28px; height: 28px; }
+
+    /* ══════════ Side B：後台面板 ══════════ */
+    .side-b {
+      background: #11151c;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      overflow-y: auto;
+      max-height: 100%;
+      color: #ffffff;
+    }
+
+    .video-window {
+      width: 100%;
+      height: 160px;
+      background: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 8px 0;
+      position: relative;
+    }
+
+    .setting-group {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .full-input, .link-row input[type="text"] {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+    }
+
+    .link-row { display: flex; gap: 8px; }
+    .link-row input[type="text"] { flex: 1; }
+
+    .back-btn, #btnLoad, .btn-custom-action {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .back-btn:hover, #btnLoad:hover, .btn-custom-action:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .palette-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 6px 0;
+      align-items: center;
+    }
+    .palette-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.7);
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+      transition: transform 0.15s ease;
+    }
+    .palette-circle:hover { transform: scale(1.2); border-color: #fff; }
+
+    .custom-color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .picker-label { font-size: 11px; color: #fff; }
+    .native-color-picker {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+    }
+    .native-color-picker::-webkit-color-swatch { border: none; border-radius: 50%; }
+
+    .upload-btn-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+
+    .loop-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .loop-row .lbl { font-size: 12px; font-weight: 700; color: #fff; }
+    .switch { position: relative; width: 44px; height: 22px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch .track {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .switch .track::before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      border-radius: 50%;
+      transition: transform 0.25s ease;
+    }
+    .switch input:checked + .track { background: rgba(255, 255, 255, 0.25); border-color: #fff; }
+    .switch input:checked + .track::before { transform: translate(21px, -50%); }
+  </style>
+</head>
+<body>
+<div class="vinyl-widget" id="vinyl-player-wrapper">
+  <div class="scene">
+    <div class="flipper" id="flipper">
+      
+      <!-- LADO A (正面) -->
+      <div class="face face-a">
+        <!-- 黑膠展示台 -->
+        <div class="vinyl-stage">
+          
+          <!-- 右側露出黑膠唱片 -->
+          <div class="vinyl-disc">
+            <div class="disc-label">
+              <div class="disc-hole"></div>
+            </div>
+          </div>
+
+          <!-- 左側方形封套（自訂底色或圖片） -->
+          <div class="vinyl-jacket" id="vinylJacket">
+            <div class="jacket-notch"></div>
+            
+            <!-- 上方歌名 ＆ 聲波柱 -->
+            <div class="jacket-header">
+              <div class="header-decor-line"></div>
+              <div class="header-row">
+                <div class="song-title-text" id="songTitle">VINYL PLAYLIST</div>
+                <div class="header-waveform">
+                  <div class="mini-wave-bar"></div>
+                  <div class="mini-wave-bar"></div>
+                  <div class="mini-wave-bar"></div>
+                  <div class="mini-wave-bar"></div>
+                  <div class="mini-wave-bar"></div>
+                  <div class="mini-wave-bar"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 下方進度條 -->
+            <div class="jacket-progress-wrap" id="jacketProgress">
+              <div class="jacket-progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 播放控制底座 -->
+        <div class="tape-base" id="tapeControlBase">
+          <div class="volume-module">
+            <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
+              <svg viewBox="0 0 24 24" id="iconVolHigh" width="18" height="18" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" id="iconVolMuted" width="18" height="18" fill="currentColor" style="display:none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+            </button>
+            <div class="vol-wrap">
+              <input type="range" id="volSlider" min="0" max="100" value="60">
+            </div>
+          </div>
+
+          <div class="playback-controls">
+            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="重新播放">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+              </svg>
+            </button>
+            <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
+              <svg viewBox="0 0 24 24" id="iconPlay" width="22" height="22" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" id="iconPause" width="22" height="22" fill="currentColor" style="display:none;">
+                <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+              </svg>
+            </button>
+            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="快轉 / 跳到結尾">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
+              </svg>
+            </button>
+          </div>
+
+          <button class="hole-btn clean-loop-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- LADO B (設定面) -->
+      <div class="face face-b">
+        <div class="side-b">
+          <div class="side-b-header">
+            <button class="back-btn" id="btnFlipA">
+              <span aria-hidden="true">◀</span> <span>返回正面</span>
+            </button>
+          </div>
+
+          <div class="video-window">
+            <div id="playerPlaceholder"></div>
+          </div>
+
+          <details class="sb-collapse" open>
+            <summary class="sb-summary" style="cursor:pointer; font-size:13px; font-weight:bold; margin-bottom:8px;">
+              <span>黑膠唱片機設定</span>
+            </summary>
+            <div class="sb-body">
+              
+              <!-- 1. YouTube 音樂連結 -->
+              <div class="setting-group" style="margin-top:0;">
+                <div class="group-title">🎵 1. YouTube 音樂連結</div>
+                <div class="link-row">
+                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址或 ID">
+                  <button type="button" id="btnLoad">載入</button>
+                </div>
+              </div>
+
+              <!-- 2. 封套底色 ＆ 按鍵色彩聯動 -->
+              <div class="setting-group">
+                <div class="group-title">🎨 2. 封套底色 ＆ 按鍵色彩聯動</div>
+                <div class="palette-grid">
+                  <div class="palette-circle color-jacket-btn" data-color="#f8f8f8" style="background:#f8f8f8; border-color:#999;" title="純白紙卡"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#f2efe9" style="background:#f2efe9;" title="復古米黃"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#222222" style="background:#222222;" title="沉穩曜黑"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#c93b3b" style="background:#c93b3b;" title="復古紅"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#e67e22" style="background:#e67e22;" title="黑膠暖橘"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#2980b9" style="background:#2980b9;" title="唱片深藍"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#27ae60" style="background:#27ae60;" title="墨綠"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#8e44ad" style="background:#8e44ad;" title="霓虹紫"></div>
+                </div>
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="jacketColorPicker" class="native-color-picker" value="#f8f8f8">
+                  <span class="picker-label">🌈 封套自訂任意色域</span>
+                </div>
+              </div>
+
+              <!-- 3. 封套置入封面圖片 -->
+              <div class="setting-group">
+                <div class="group-title">🖼️ 3. 封套自訂封面圖片</div>
+                <div class="upload-btn-wrap">
+                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
+                  <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
+                  <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
+                </div>
+                <input type="text" id="jacketImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
+              </div>
+
+              <!-- 循環播放 -->
+              <div class="loop-row">
+                <span class="lbl"><span>循環播放 (LOOP)</span></span>
+                <label class="switch">
+                  <input type="checkbox" id="loopToggle">
+                  <span class="track"></span>
+                </label>
+              </div>
+
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const widgetId = params.get('id') || 'vinyl_default';
+    const rawSetItem = localStorage.setItem.bind(localStorage);
+    const rawGetItem = localStorage.getItem.bind(localStorage);
+
+    const localStore = {
+      set: (key, val) => rawSetItem(`${widgetId}_${key}`, val),
+      get: (key) => rawGetItem(`${widgetId}_${key}`),
+      remove: (key) => localStorage.removeItem(`${widgetId}_${key}`)
+    };
+
+    function parseYouTubeID(url) {
+      if (!url) return '';
+      const str = url.trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(str)) return str;
+      const match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/))([\w-]{11})/);
+      return match ? match[1] : '';
+    }
+
+    function isLightColor(hex) {
+      if (!hex || !hex.startsWith('#')) return false;
+      const c = hex.substring(1);
+      const rgb = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
+      return (0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * (rgb & 0xff)) > 160;
+    }
+
+    let ytPlayer = null;
+    let isReady = false;
+    let isLooping = localStore.get('yt_loop') === 'true';
+
+    window.onYouTubeIframeAPIReady = function() {
+      const initialId = localStore.get('yt_video_id') || 'jfKfPfyJRdk';
+      ytPlayer = new YT.Player('playerPlaceholder', {
+        height: '100%',
+        width: '100%',
+        videoId: initialId,
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: {
+          'playsinline': 1,
+          'controls': 1,
+          'rel': 0,
+          'enablejsapi': 1,
+          'origin': window.location.origin
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    function onPlayerReady(event) {
+      isReady = true;
+      const vol = parseInt(localStore.get('yt_volume') || '60', 10);
+      try { ytPlayer.setVolume(vol); } catch(e) {}
+      document.getElementById('volSlider').value = vol;
+      refreshTitle();
+    }
+
+    function onPlayerStateChange(event) {
+      const wrapper = document.getElementById('vinyl-player-wrapper');
+      const iconPlay = document.getElementById('iconPlay');
+      const iconPause = document.getElementById('iconPause');
+
+      if (event.data === YT.PlayerState.PLAYING) {
+        wrapper.classList.add('is-playing');
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+        refreshTitle();
+      } else {
+        wrapper.classList.remove('is-playing');
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+      }
+
+      if (event.data === YT.PlayerState.ENDED) {
+        if (isLooping) {
+          ytPlayer.seekTo(0);
+          ytPlayer.playVideo();
+        }
+      }
+    }
+
+    function refreshTitle() {
+      if (ytPlayer && typeof ytPlayer.getVideoData === 'function') {
+        const d = ytPlayer.getVideoData();
+        if (d && d.title) {
+          const t = document.getElementById('songTitle');
+          t.textContent = d.title;
+          t.title = d.title;
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const flipper = document.getElementById('flipper');
+      const linkInput = document.getElementById('linkInput');
+      const btnLoad = document.getElementById('btnLoad');
+      const btnPlay = document.getElementById('btnPlay');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+      const btnMute = document.getElementById('btnMute');
+      const volSlider = document.getElementById('volSlider');
+      const iconVolHigh = document.getElementById('iconVolHigh');
+      const iconVolMuted = document.getElementById('iconVolMuted');
+      const loopToggle = document.getElementById('loopToggle');
+      const jacket = document.getElementById('vinylJacket');
+      const jacketImgInput = document.getElementById('jacketImgInput');
+      const fileInput = document.getElementById('fileUploadInput');
+      const btnClearImg = document.getElementById('btnClearImg');
+      const jacketColorPicker = document.getElementById('jacketColorPicker');
+      const progressFill = document.getElementById('progressFill');
+      const jacketProgress = document.getElementById('jacketProgress');
+
+      document.getElementById('btnFlipB').addEventListener('click', () => flipper.classList.add('flipped'));
+      document.getElementById('btnFlipA').addEventListener('click', () => flipper.classList.remove('flipped'));
+
+      btnPlay.addEventListener('click', () => {
+        if (!isReady || !ytPlayer) return;
+        const state = ytPlayer.getPlayerState();
+        if (state === YT.PlayerState.PLAYING) {
+          ytPlayer.pauseVideo();
+        } else {
+          ytPlayer.playVideo();
+        }
+      });
+
+      btnPrev.addEventListener('click', () => {
+        if (isReady && ytPlayer) ytPlayer.seekTo(0);
+      });
+      btnNext.addEventListener('click', () => {
+        if (isReady && ytPlayer) {
+          const dur = ytPlayer.getDuration();
+          if (dur > 2) ytPlayer.seekTo(dur - 2);
+        }
+      });
+
+      let lastVol = 60;
+      btnMute.addEventListener('click', () => {
+        if (!isReady || !ytPlayer) return;
+        if (ytPlayer.isMuted() || parseInt(volSlider.value, 10) === 0) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(lastVol || 60);
+          volSlider.value = lastVol || 60;
+          iconVolHigh.style.display = 'block';
+          iconVolMuted.style.display = 'none';
+        } else {
+          lastVol = volSlider.value;
+          ytPlayer.mute();
+          volSlider.value = 0;
+          iconVolHigh.style.display = 'none';
+          iconVolMuted.style.display = 'block';
+        }
+      });
+
+      volSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (isReady && ytPlayer) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(val);
+        }
+        localStore.set('yt_volume', val);
+        iconVolHigh.style.display = val === 0 ? 'none' : 'block';
+        iconVolMuted.style.display = val === 0 ? 'block' : 'none';
+      });
+
+      function doLoad() {
+        const raw = linkInput.value.trim();
+        const vid = parseYouTubeID(raw);
+        if (!vid) {
+          alert('請貼上有效的 YouTube 網址！');
+          return;
+        }
+
+        localStore.set('yt_url', raw);
+        localStore.set('yt_video_id', vid);
+
+        if (isReady && ytPlayer) {
+          try {
+            ytPlayer.loadVideoById(vid);
+            ytPlayer.playVideo();
+          } catch(e) {
+            ytPlayer.cueVideoById(vid);
+          }
+          setTimeout(refreshTitle, 1500);
+        }
+      }
+
+      btnLoad.addEventListener('click', doLoad);
+      linkInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') doLoad();
+      });
+
+      const savedUrl = localStore.get('yt_url');
+      if (savedUrl) linkInput.value = savedUrl;
+
+      loopToggle.checked = isLooping;
+      loopToggle.addEventListener('change', () => {
+        isLooping = loopToggle.checked;
+        localStore.set('yt_loop', isLooping);
+      });
+
+      // 點擊進度條跳轉
+      jacketProgress.addEventListener('click', (e) => {
+        if (!isReady || !ytPlayer) return;
+        const rect = jacketProgress.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        const dur = ytPlayer.getDuration() || 0;
+        if (dur > 0) ytPlayer.seekTo(ratio * dur, true);
+      });
+
+      setInterval(() => {
+        if (!isReady || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 1;
+        const percent = (cur / dur) * 100;
+        progressFill.style.width = `${percent}%`;
+      }, 250);
+
+      // ══════════ 封套外觀配色處理 ══════════
+      function applyJacketColor(color, clearImg = false) {
+        document.documentElement.style.setProperty('--jacket-bg', color);
+        document.documentElement.style.setProperty('--accent-color', isLightColor(color) ? '#111111' : color);
+        localStore.set('cfg_jacket_bg', color);
+        if (jacketColorPicker) jacketColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#f8f8f8';
+
+        if (clearImg) {
+          jacket.style.backgroundImage = 'none';
+          localStore.remove('cfg_jacket_img');
+          if (jacketImgInput) jacketImgInput.value = '';
+          if (fileInput) fileInput.value = '';
+        }
+      }
+
+      const savedJacketColor = localStore.get('cfg_jacket_bg');
+      if (savedJacketColor) applyJacketColor(savedJacketColor);
+
+      const savedJacketImg = localStore.get('cfg_jacket_img');
+      if (savedJacketImg && jacket) {
+        jacket.style.backgroundImage = `url("${savedJacketImg}")`;
+        if (jacketImgInput) jacketImgInput.value = savedJacketImg.startsWith('data:') ? '(自訂上傳圖片)' : savedJacketImg;
+      }
+
+      document.querySelectorAll('.color-jacket-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          e.preventDefault();
+          applyJacketColor(this.getAttribute('data-color'), true);
+        };
+      });
+      jacketColorPicker.oninput = function(e) {
+        applyJacketColor(e.target.value, true);
+      };
+
+      fileInput.onchange = function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const d = e.target.result;
+            jacket.style.backgroundImage = `url("${d}")`;
+            localStore.set('cfg_jacket_img', d);
+            jacketImgInput.value = '(已上傳圖片)';
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      };
+
+      jacketImgInput.onchange = function() {
+        const val = this.value.trim();
+        if (val && !val.includes('(已上傳圖片)')) {
+          jacket.style.backgroundImage = `url("${val}")`;
+          localStore.set('cfg_jacket_img', val);
+        }
+      };
+
+      btnClearImg.onclick = function(e) {
+        e.preventDefault();
+        applyJacketColor(localStore.get('cfg_jacket_bg') || '#f8f8f8', true);
+      };
+    });
+  })();
+</script>
+</body>
+</html>
