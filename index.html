@@ -21,7 +21,7 @@
       --btn-icon-color: #ffffff;
     }
 
-    /* ══════════ 卡帶外殼 ══════════ */
+    /* ══════════ 回歸標準飽滿的卡帶立體外殼 ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
       border-radius: 12px !important;
@@ -30,21 +30,20 @@
         inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
       border: 1.5px solid var(--case-border) !important;
-      padding-top: 8px !important;
-      padding-bottom: 6px !important;
+      padding: 10px 0 12px !important;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 頂部白底標籤：壓扁變窄，大幅節省高度 ══════════ */
+    /* ══════════ 頂部白底手寫歌名籤（適度收合但字型清晰） ══════════ */
     .tape-label {
       background: #ffffff !important;
       border: 1.5px solid #222 !important;
-      border-radius: 3px 3px 0 0 !important;
+      border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 6px 14px 0 !important;
-      padding: 2px 10px !important; /* 大幅壓扁 */
-      height: 24px !important;
-      min-height: 24px !important;
+      margin: 4px 14px 0 !important;
+      padding: 4px 10px !important;
+      height: 28px !important;
+      min-height: 28px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -54,10 +53,10 @@
     }
     .tape-title {
       font-family: 'Zen Maru Gothic', 'Caveat', 'Permanent Marker', sans-serif !important;
-      font-size: 14px !important; /* 字體稍微緊湊 */
+      font-size: 16px !important;
       font-weight: 700 !important;
       color: #111111 !important;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -66,13 +65,13 @@
       width: 100% !important;
     }
 
-    /* ══════════ 貼紙區域：上下極致展開，展示更多紅色/底圖 ══════════ */
+    /* ══════════ 貼紙區域：垂直高度充裕、大面積展示插圖與色彩 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
-      padding: 16px 0 18px !important; /* 擴展上下高度，讓紅色區域大幅增加 */
+      padding: 14px 0 16px !important; /* 上下充裕呼吸空間 */
       border: none !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
@@ -81,35 +80,30 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 中間黑框視窗：大幅壓扁扁平化 ══════════ */
+    /* ══════════ 中間黑框視窗：標準比例、齒輪轉輪大氣置中 ══════════ */
     .reel-plate {
       background: #141414 !important;
-      border: 2px solid #252525 !important;
-      border-radius: 4px !important;
+      border: 2px solid #282828 !important;
+      border-radius: 5px !important;
       box-shadow: 
-        inset 0 3px 6px rgba(0,0,0,0.9),
-        0 1px 2px rgba(255,255,255,0.15) !important;
+        inset 0 3px 7px rgba(0,0,0,0.9),
+        0 1px 2px rgba(255,255,255,0.2) !important;
       position: relative !important;
       overflow: hidden !important;
-      height: 48px !important; /* 壓扁黑框高度 */
-      min-height: 48px !important;
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
       box-sizing: border-box !important;
     }
 
-    /* 縮小兩側轉輪 */
+    /* 轉輪齒輪大小回歸大氣標準 */
     .reel {
       background: #0d0d0d !important;
       border: 1px solid #2a2a2a !important;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      width: 44px !important;
-      height: 44px !important;
-      transform: scale(0.92) !important;
     }
 
-    /* 壓扁的中間沙漏透明視窗 */
+    /* 沙漏視窗 */
     .tape-window {
       background: #0a0a0a !important;
       border-left: 2px solid #222 !important;
@@ -119,19 +113,17 @@
       align-items: center !important;
       justify-content: center !important;
       overflow: hidden !important;
-      height: 38px !important;
-      flex: 1 !important;
     }
 
     /* 沙漏透光遮罩 */
     .tape-window::before {
       content: "";
       position: absolute;
-      width: 32px;
+      width: 36px;
       height: 100%;
-      background: #444444;
+      background: #4a4a4a;
       clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%, 35% 50%);
-      opacity: 0.8;
+      opacity: 0.85;
       z-index: 1;
     }
 
@@ -140,8 +132,8 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background: 
-        radial-gradient(circle at -4px 50%, #666 0%, transparent 14px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #666 0%, transparent 14px);
+        radial-gradient(circle at -4px 50%, #666 0%, transparent 16px),
+        radial-gradient(circle at calc(100% + 4px) 50%, #666 0%, transparent 16px);
       opacity: 0.55;
       z-index: 1;
       pointer-events: none;
@@ -154,7 +146,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 78%;
-      height: 12px;
+      height: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -163,7 +155,7 @@
     }
     .scale-bar-line {
       width: 2px;
-      height: 5px;
+      height: 6px;
       background: #ffffff;
       border-radius: 1px;
       box-shadow: 0 0 2px rgba(255,255,255,0.7);
@@ -182,14 +174,14 @@
     .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
     .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
     @keyframes scalePulse {
-      0% { height: 3px; }
-      50% { height: 11px; }
-      100% { height: 5px; }
+      0% { height: 4px; }
+      50% { height: 13px; }
+      100% { height: 6px; }
     }
 
     .tape-window .spool, .tape-window .gap { display: none !important; }
 
-    /* ══════════ 控制按鈕保證可點擊 ＆ 主題色聯動 ══════════ */
+    /* ══════════ 控制按鈕（最高層級確保每次點擊 100% 觸發） ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 8px !important;
@@ -251,10 +243,10 @@
 
     /* 進度條下移 ＆ 底部聲波柱 */
     .tape-progress {
-      margin: 12px 16px 2px !important;
-      height: 12px !important;
+      margin: 14px 16px 2px !important;
+      height: 14px !important;
       background: rgba(0, 0, 0, 0.65) !important;
-      border-radius: 6px !important;
+      border-radius: 7px !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
       position: relative !important;
@@ -304,7 +296,7 @@
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B 控制面板 ══════════ */
+    /* ══════════ Side B 操作面板 ══════════ */
     .face-b {
       pointer-events: auto !important;
       z-index: 100 !important;
@@ -430,17 +422,17 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底歌名標籤（已大幅壓扁） -->
+          <!-- 白底歌名標籤 -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 貼紙色彩區（上下高度大幅擴增） -->
+          <!-- 貼紙色彩區（大面積展示空間） -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
             
-            <!-- 壓扁後的 Maxell 中軸黑框視窗 -->
+            <!-- 標準大氣比例的 Maxell 視窗 -->
             <div class="reel-plate">
               <div class="reel"><div class="teeth"></div></div>
               
@@ -786,580 +778,4 @@
 <script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
 <script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
 </body>
-</html><!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro Cassette Player</title>
-  <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
-  <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
-
-  <style>
-    /* ══════════ 全域動態色彩變數 ══════════ */
-    :root {
-      --case-color: #1a1a1a;
-      --case-border: #0a0a0a;
-      --control-bar-bg: #11151c;
-      --accent-color: #e51d24; 
-      --btn-icon-color: #ffffff;
-    }
-
-    /* ══════════ 卡帶外殼 ＆ 黑色控制底座 聯動改色 ══════════ */
-    #cassetteBody {
-      background: var(--case-color) !important;
-      border-radius: 12px !important;
-      box-shadow: 
-        0 18px 30px rgba(0, 0, 0, 0.65),
-        inset 0 1px 2px rgba(255, 255, 255, 0.35),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
-      border: 1.5px solid var(--case-border) !important;
-      padding-bottom: 8px !important;
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-
-    .tape-base {
-      background: var(--control-bar-bg) !important;
-      border-radius: 8px !important;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
-      border: 1px solid rgba(255,255,255,0.08) !important;
-      transition: background 0.3s ease;
-    }
-
-    /* ══════════ 頂部白底手寫歌名標籤 ══════════ */
-    .tape-label {
-      background: #ffffff !important;
-      border: 2px solid #222 !important;
-      border-radius: 4px 4px 0 0 !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-      margin: 12px 14px 0 !important;
-      padding: 6px 12px !important;
-      position: relative !important;
-      z-index: 5 !important;
-    }
-    .tape-title {
-      font-family: 'Zen Maru Gothic', 'Caveat', 'Permanent Marker', sans-serif !important;
-      font-size: 19px !important;
-      font-weight: 700 !important;
-      color: #111111 !important;
-      letter-spacing: 0.5px;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      text-align: center !important;
-      line-height: 1.2;
-    }
-
-    /* ══════════ 貼紙區域 ══════════ */
-    .tape-stripe {
-      background-color: var(--accent-color) !important;
-      background-size: cover !important;
-      background-position: center !important;
-      margin: 0 14px !important;
-      padding: 10px 0 !important;
-      border: none !important;
-      border-bottom-left-radius: 6px !important;
-      border-bottom-right-radius: 6px !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
-      position: relative !important;
-      transition: background-color 0.3s ease;
-    }
-
-    /* ══════════ Maxell 造型中軸黑框視窗 ══════════ */
-    .reel-plate {
-      background: #141414 !important;
-      border: 3px solid #222 !important;
-      border-radius: 4px !important;
-      box-shadow: 
-        inset 0 3px 8px rgba(0,0,0,0.9),
-        0 1px 2px rgba(255,255,255,0.2) !important;
-      position: relative !important;
-      overflow: hidden !important;
-    }
-
-    /* 左右轉輪方框凹槽 */
-    .reel {
-      background: #0d0d0d !important;
-      border: 1px solid #2a2a2a !important;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.8) !important;
-    }
-
-    /* 中間透明視窗：沙漏弧形遮罩 */
-    .tape-window {
-      background: #0a0a0a !important;
-      border-left: 2px solid #222 !important;
-      border-right: 2px solid #222 !important;
-      position: relative !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-    }
-
-    /* 沙漏型透光弧面質感 */
-    .tape-window::before {
-      content: "";
-      position: absolute;
-      width: 38px;
-      height: 100%;
-      background: #555555;
-      clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%, 35% 50%);
-      opacity: 0.85;
-      z-index: 1;
-    }
-
-    /* 左右兩側黑膠弧形邊緣 */
-    .tape-window::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: 
-        radial-gradient(circle at -4px 50%, #777 0%, transparent 18px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #777 0%, transparent 18px);
-      opacity: 0.6;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* ══════════ 中間白色刻度線變身「垂直動態聲波」 ══════════ */
-    .mid-scale-equalizer {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 78%;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    /* 白色直條刻度線 */
-    .scale-bar-line {
-      width: 2px;
-      height: 6px; /* 靜態時為等高的小刻度 */
-      background: #ffffff;
-      border-radius: 1px;
-      box-shadow: 0 0 2px rgba(255,255,255,0.7);
-      transition: height 0.12s ease;
-    }
-
-    /* 播放時白色刻度線跳動律動 */
-    .is-playing .scale-bar-line {
-      animation: scalePulse 0.55s infinite ease-in-out alternate;
-    }
-    .scale-bar-line:nth-child(1) { animation-delay: 0.05s; }
-    .scale-bar-line:nth-child(2) { animation-delay: 0.22s; }
-    .scale-bar-line:nth-child(3) { animation-delay: 0.41s; }
-    .scale-bar-line:nth-child(4) { animation-delay: 0.15s; }
-    .scale-bar-line:nth-child(5) { animation-delay: 0.33s; } /* 中央最高 */
-    .scale-bar-line:nth-child(6) { animation-delay: 0.18s; }
-    .scale-bar-line:nth-child(7) { animation-delay: 0.45s; }
-    .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
-    .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
-
-    @keyframes scalePulse {
-      0% { height: 4px; }
-      50% { height: 15px; }
-      100% { height: 7px; }
-    }
-
-    /* 隱藏原版轉輪內部黑塊，讓位給沙漏與聲波 */
-    .tape-window .spool, .tape-window .gap {
-      display: none !important;
-    }
-
-    /* ══════════ 按鍵主題色聯動 ══════════ */
-    .play-btn, .flip-btn {
-      background: var(--accent-color) !important;
-      color: var(--btn-icon-color) !important;
-      border: none !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
-      transition: background 0.3s ease, transform 0.1s ease;
-    }
-    .play-btn:hover, .flip-btn:hover {
-      filter: brightness(1.15);
-      transform: scale(1.05);
-    }
-    .play-btn svg, .flip-btn svg {
-      fill: var(--btn-icon-color) !important;
-      stroke: var(--btn-icon-color) !important;
-    }
-    #volSlider::-webkit-slider-thumb {
-      background: var(--accent-color) !important;
-    }
-
-    /* 隱藏原生多餘標籤 */
-    .tape-footer,
-    #cassetteBody > div[style*="height:10px"],
-    #cassetteBody > div[style*="height:8px"],
-    #cassetteBody > div[style*="height:6px"] {
-      display: none !important;
-    }
-    .badge-a, .badge-60 { display: none !important; }
-    #langBtn, .badge-b, .sb-header-right { display: none !important; }
-
-    .screw {
-      background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
-      box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
-    }
-
-    /* 進度條下移 ＆ 底部聲波柱 */
-    .tape-progress {
-      margin: 14px 16px 4px !important;
-      height: 14px !important;
-      background: rgba(0, 0, 0, 0.65) !important;
-      border-radius: 8px !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      cursor: pointer !important;
-    }
-    #progressFill {
-      height: 100% !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-      position: absolute !important;
-      top: 0; left: 0;
-      pointer-events: none;
-      transition: width 0.15s linear;
-    }
-    .sound-wave-container {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 4px;
-      box-sizing: border-box;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .wave-bar {
-      width: 3px;
-      height: 25%;
-      border-radius: 2px;
-      background: #444;
-      transition: height 0.15s ease, background 0.15s ease;
-    }
-    .is-playing .wave-bar.active {
-      background: linear-gradient(to top, #ff9800, #ff1744);
-      animation: soundJump 0.65s infinite ease-in-out alternate;
-    }
-    .wave-bar:nth-child(2n) { animation-delay: 0.12s !important; }
-    .wave-bar:nth-child(3n) { animation-delay: 0.28s !important; }
-    .wave-bar:nth-child(4n) { animation-delay: 0.42s !important; }
-    .wave-bar:nth-child(5n) { animation-delay: 0.05s !important; }
-    @keyframes soundJump {
-      0% { height: 20%; }
-      50% { height: 90%; }
-      100% { height: 40%; }
-    }
-
-    /* ══════════ Side B 控制面板 ══════════ */
-    .face-b {
-      pointer-events: auto !important;
-      z-index: 100 !important;
-    }
-    .side-b {
-      overflow-y: auto !important;
-      max-height: 100% !important;
-      pointer-events: auto !important;
-    }
-    .setting-group {
-      background: rgba(0, 0, 0, 0.6) !important;
-      border-radius: 8px !important;
-      padding: 10px 12px !important;
-      margin-top: 10px !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      pointer-events: auto !important;
-    }
-    .group-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffca28;
-      margin-bottom: 6px;
-    }
-    .full-input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #555;
-      color: #fff;
-      padding: 7px 9px;
-      border-radius: 5px;
-      font-size: 12px;
-      box-sizing: border-box;
-      outline: none;
-    }
-
-    .palette-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      align-items: center;
-    }
-    .palette-circle {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.8);
-      cursor: pointer !important;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-      transition: transform 0.15s ease;
-      position: relative;
-      z-index: 9999 !important;
-      box-sizing: border-box;
-    }
-    .palette-circle:hover {
-      transform: scale(1.2);
-      border-color: #fff;
-    }
-
-    /* 🌈 自訂取色器通用樣式 */
-    .custom-color-picker-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-      background: rgba(255,255,255,0.06);
-      padding: 6px 10px;
-      border-radius: 6px;
-    }
-    .picker-label {
-      font-size: 11px;
-      color: #ddd;
-      font-weight: 600;
-    }
-    .native-color-picker {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      width: 32px;
-      height: 32px;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      background: none;
-      padding: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-    .native-color-picker::-webkit-color-swatch-wrapper {
-      padding: 0;
-    }
-    .native-color-picker::-webkit-color-swatch {
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-    }
-
-    .upload-btn-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
-    .btn-custom-action {
-      background: #333;
-      color: #fff;
-      border: 1px solid #777;
-      padding: 6px 12px;
-      font-size: 11px;
-      border-radius: 4px;
-      cursor: pointer !important;
-      z-index: 9999 !important;
-    }
-    .btn-custom-action:hover {
-      background: #444;
-    }
-  </style>
-</head>
-<body>
-<div class="cassette-widget" id="cassette-player-wrapper">
-  <div class="scene">
-    <div class="flipper" id="flipper">
-      
-      <!-- ══════════ LADO A (正面) ══════════ -->
-      <div class="face face-a">
-        <div class="cassette" id="cassetteBody">
-          <span class="screw tl"></span><span class="screw tr"></span>
-          <span class="screw bl"></span><span class="screw br"></span>
-
-          <!-- 白底歌名標籤 -->
-          <div class="tape-label">
-            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
-          </div>
-
-          <!-- 一整塊貼紙色彩 -->
-          <div class="tape-stripe" id="tapeStripe">
-            <span class="badge-a">A</span>
-            <span class="badge-60">60</span>
-            
-            <!-- Maxell 造型中軸黑框視窗 -->
-            <div class="reel-plate">
-              <div class="reel"><div class="teeth"></div></div>
-              
-              <!-- 中間沙漏視窗 ＆ 白色聲波刻度 -->
-              <div class="tape-window">
-                <div class="mid-scale-equalizer">
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                </div>
-              </div>
-
-              <div class="reel"><div class="teeth"></div></div>
-            </div>
-          </div>
-
-          <div class="tape-footer" style="display:none !important;">
-            <div class="now-playing" id="nowPlaying"></div>
-          </div>
-
-          <!-- 下移的進度條 + 聲波 Equalizer -->
-          <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
-            <div class="fill" id="progressFill"></div>
-            <div class="sound-wave-container" id="soundWaveBox"></div>
-          </div>
-        </div>
-
-        <div class="tape-base" id="tapeControlBase">
-          <button class="hole-btn" id="btnPrev" title="上一首">
-            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
-          </button>
-          <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
-            <svg viewBox="0 0 24 24" id="iconPlay"><path d="M8 5v14l11-7z"/></svg>
-            <svg viewBox="0 0 24 24" id="iconPause" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
-          </button>
-          <button class="hole-btn" id="btnNext" title="下一首">
-            <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
-          </button>
-          <div class="vol-wrap">
-            <input type="range" id="volSlider" min="0" max="100" value="60">
-          </div>
-          <button class="hole-btn flip-btn" id="btnFlipB" title="換歌 / 設定">
-            B
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- ══════════ LADO B (設定面) ══════════ -->
-      <div class="face face-b">
-        <div class="side-b">
-          <div class="side-b-header">
-            <button class="back-btn" id="btnFlipA">
-              <span aria-hidden="true">◀</span> <span>返回正面</span>
-            </button>
-          </div>
-          <div class="video-window">
-            <div id="ytPlayer"></div>
-          </div>
-
-          <details class="sb-collapse" open>
-            <summary class="sb-summary">
-              <span>卡帶設定與外觀</span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </summary>
-            <div class="sb-body">
-              
-              <!-- 1. YouTube 音樂連結 -->
-              <div class="setting-group" style="margin-top:0;">
-                <div class="group-title">🎵 1. YouTube 音樂連結</div>
-                <div class="link-row">
-                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
-                  <button id="btnLoad">載入</button>
-                </div>
-              </div>
-
-              <!-- 2. 貼紙與按鈕色彩聯動 -->
-              <div class="setting-group">
-                <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
-                <div class="palette-grid">
-                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#fbc02d" style="background:#fbc02d;" title="亮麗黃"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#2e7d32" style="background:#2e7d32;" title="森林綠"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="蔚藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#3f51b5" style="background:#3f51b5;" title="靛青藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#8e24aa" style="background:#8e24aa;" title="夢幻紫"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
-                </div>
-                <!-- 貼紙自訂色域 -->
-                <div class="custom-color-picker-wrap">
-                  <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">🌈 貼紙自訂任意色域（點擊調色或輸入色票）</span>
-                </div>
-              </div>
-
-              <!-- 3. 卡帶外殼 ＆ 控制座聯動（含自訂色域） -->
-              <div class="setting-group">
-                <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
-                <div class="palette-grid">
-                  <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
-                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" style="background:#eae6df;" title="復古米白"></div>
-                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" style="background:#4a5568;" title="水泥冷灰"></div>
-                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" style="background:#1e293b;" title="午夜星空藍"></div>
-                  <div class="palette-circle color-case-btn" data-case="#2d3748" data-bar="#1a202c" style="background:#2d3748;" title="炭黑"></div>
-                  <div class="palette-circle color-case-btn" data-case="#f7f7f7" data-bar="#e5e5e5" style="background:#f7f7f7; border-color:#aaa;" title="陶瓷純白"></div>
-                </div>
-                <!-- 外殼自訂色域 -->
-                <div class="custom-color-picker-wrap">
-                  <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
-                  <span class="picker-label">🌈 外殼自訂任意色域（點擊調色或輸入色票）</span>
-                </div>
-              </div>
-
-              <!-- 4. 貼紙置入背景圖片 -->
-              <div class="setting-group">
-                <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
-                <div class="upload-btn-wrap">
-                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
-                  <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
-                  <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
-                </div>
-                <input type="text" id="stickerImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
-              </div>
-
-              <!-- 循環播放 -->
-              <div class="loop-row" style="margin-top:10px;">
-                <span class="lbl"><span>循環播放 (LOOP)</span></span>
-                <label class="switch">
-                  <input type="checkbox" id="loopToggle">
-                  <span class="track"></span>
-                </label>
-              </div>
-
-            </div>
-          </details>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════ 腳本邏輯 ══════════ -->
-<script>
-  (function() {
-    const params = new URLSearchParams(window.location.search);
-    const widgetId = params.get('id') || 'default';
-    const rawSetItem = localStorage.setItem.bind(localStorage);
-    const rawGetItem = localStorage.getItem.bind(localStorage);
-
-    localStorage.setItem = function(
+</html>
