@@ -65,29 +65,60 @@
       z-index: 20 !important; 
     }
 
+    /* ══════════ 卡帶外殼（1.6:1 飽滿大氣比例） ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
-      border-radius: 12px;
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.35), inset 0 -3px 8px rgba(0, 0, 0, 0.8);
-      border: 1.5px solid var(--case-border) !important;
-      padding: 10px 0 8px;
+      border-radius: 16px !important;
+      box-shadow: 
+        0 20px 35px rgba(0, 0, 0, 0.7), 
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.35), 
+        inset 0 -3px 8px rgba(0, 0, 0, 0.85) !important;
+      border: 2px solid var(--case-border) !important;
+      padding: 14px 0 16px !important;
+      position: relative !important;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 頂部標籤：復古筆記本橫線紋理 ══════════ */
+    /* ══════════ 螺絲釘：精確對齊外殼四個圓弧轉角 ══════════ */
+    .screw {
+      position: absolute !important;
+      width: 13px !important;
+      height: 13px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle at 35% 35%, #999 10%, #444 60%, #151515 100%) !important;
+      border: 1px solid #111 !important;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.8) !important;
+      z-index: 8 !important;
+    }
+    .screw::before, .screw::after {
+      content: "";
+      position: absolute;
+      background: #111;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .screw::before { width: 7px; height: 1.5px; }
+    .screw::after { width: 1.5px; height: 7px; }
+
+    .screw.tl { top: 9px !important; left: 10px !important; }
+    .screw.tr { top: 9px !important; right: 10px !important; }
+    .screw.bl { bottom: 9px !important; left: 10px !important; }
+    .screw.br { bottom: 9px !important; right: 10px !important; }
+
+    /* ══════════ 頂部白色標籤：復古筆記本橫線紋理（32px） ══════════ */
     .tape-label {
-      background-color: #fdfdfd;
+      background-color: #fdfdfd !important;
       background-image: repeating-linear-gradient(
         to bottom,
         transparent 0px,
         transparent 11px,
         #d1d5db 11px,
         #d1d5db 13px
-      );
+      ) !important;
       border: 1.5px solid #222 !important;
       border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 4px 14px 0 !important;
+      margin: 8px 18px 0 !important;
       padding: 0 12px !important;
       height: 32px !important;
       display: flex !important;
@@ -132,21 +163,22 @@
       outline: none;
     }
 
-    /* ══════════ 貼紙區域 ══════════ */
+    /* ══════════ 貼紙區域：垂直拉伸，展開參考圖的飽滿高度 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover;
       background-position: center;
-      margin: 0 14px;
-      padding: 14px 0 16px;
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35);
-      position: relative;
+      margin: 0 18px !important;
+      padding: 38px 0 42px !important;
+      border: none !important;
+      border-bottom-left-radius: 6px !important;
+      border-bottom-right-radius: 6px !important;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4) !important;
+      position: relative !important;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 中軸圓形孔 ＆ 平滑沙漏曲線視窗 ══════════ */
+    /* ══════════ 黑色中軸視窗（52px 高度不變，圓形轉軸 + 雙曲線平滑沙漏） ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -155,11 +187,12 @@
       position: relative !important;
       overflow: hidden !important;
       height: 52px !important;
+      width: 90% !important;
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      padding: 0 6px !important;
+      padding: 0 8px !important;
       box-sizing: border-box !important;
     }
 
@@ -284,15 +317,15 @@
 
     /* ══════════ 底部聲波進度條 ══════════ */
     .tape-progress {
-      margin: 14px 16px 4px;
-      height: 12px;
-      background: rgba(0, 0, 0, 0.65);
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
+      margin: 18px 20px 4px !important;
+      height: 12px !important;
+      background: rgba(0, 0, 0, 0.65) !important;
+      border-radius: 6px !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
     }
     #progressFill {
       height: 100%;
@@ -320,7 +353,6 @@
       background: #444;
       transition: height 0.15s ease, background 0.15s ease;
     }
-    /* 播放時：聲波動態漸層以貼紙顏色為主軸 */
     .is-playing .wave-bar.active {
       background: var(--accent-color) !important;
       filter: brightness(1.2);
@@ -473,7 +505,7 @@
       margin-top: 6px; 
     }
 
-   /* ══════════ 循環播放 (LOOP) 開關：鎖定完美置中 ══════════ */
+    /* ══════════ 循環播放 (LOOP) 開關：鎖定完美置中 ══════════ */
     .loop-row {
       display: flex !important;
       align-items: center !important;
@@ -513,7 +545,6 @@
       box-sizing: border-box !important;
       transition: background 0.25s ease, border-color 0.25s ease !important;
     }
-    /* 圓球本體：強制水平垂直置中定位 */
     .switch .track::before {
       position: absolute !important;
       content: "" !important;
@@ -528,48 +559,14 @@
       box-sizing: border-box !important;
       transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease !important;
     }
-    /* 開啟時狀態 */
     .switch input:checked + .track {
       background: rgba(255, 255, 255, 0.25) !important;
       border-color: #ffffff !important;
     }
     .switch input:checked + .track::before {
-      transform: translate(21px, -50%) !important; /* 保持垂直置中，僅水平平移 */
+      transform: translate(21px, -50%) !important;
       background-color: #ffffff !important;
       box-shadow: 0 0 6px rgba(255, 255, 255, 0.8) !important;
-    }
-      width: 0;
-      height: 0;
-    }
-    .switch .track {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-      border-radius: 20px !important;
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-    .switch .track::before {
-      position: absolute;
-      content: "";
-      height: 14px;
-      width: 14px;
-      left: 3px;
-      bottom: 2.5px;
-      background-color: #ffffff !important;
-      border-radius: 50% !important;
-      transition: transform 0.25s ease, background 0.25s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-    .switch input:checked + .track {
-      background: rgba(255, 255, 255, 0.2) !important;
-      border-color: #ffffff !important;
-    }
-    .switch input:checked + .track::before {
-      transform: translateX(20px);
-      background-color: #ffffff !important;
-      box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
     }
   </style>
 </head>
@@ -776,7 +773,6 @@
       return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     }
 
-    // 全面解析 YouTube Video ID（含 shorts、youtu.be、embed 等）
     function parseYouTubeID(url) {
       if (!url) return '';
       const str = url.trim();
@@ -834,7 +830,7 @@
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
-      // 影片載入
+      // YouTube 影片載入
       function executeLoadVideo() {
         const raw = linkInput?.value.trim() || '';
         const vid = parseYouTubeID(raw);
@@ -843,21 +839,19 @@
           return;
         }
 
-        // 存入快取供日後讀取
         localStorage.setItem('yt_url', raw);
         localStorage.setItem('yt_video_id', vid);
         rawSetItem('saved_youtube_id', vid);
 
-        // 主動呼叫 YouTube Iframe 實例載入影片
-        if (window.player && typeof window.player.loadVideoById === 'function') {
+        const p = window.player || (window.widget && window.widget.player);
+        if (p && typeof p.loadVideoById === 'function') {
           try {
-            window.player.loadVideoById(vid);
-            window.player.playVideo();
+            p.loadVideoById(vid);
+            p.playVideo();
           } catch(e) {
-            window.player.cueVideoById(vid);
+            p.cueVideoById(vid);
           }
         } else {
-          // 透過重載網址參數啟動外部模板預載
           const curUrl = new URL(window.location.href);
           curUrl.searchParams.set('v', vid);
           window.location.href = curUrl.toString();
@@ -895,19 +889,18 @@
 
       // 聲波輪詢監聽
       setInterval(() => {
-        const isPlaying = window.player && typeof window.player.getPlayerState === 'function' && window.player.getPlayerState() === 1;
+        const p = window.player || (window.widget && window.widget.player);
+        const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
         wrapper?.classList.toggle('is-playing', isPlaying);
 
         const percent = parseFloat(progressFill?.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
-
         const currentAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#e51d24';
 
         waveBars.forEach((bar, idx) => {
           const isActive = idx <= activeBarLimit;
           bar.classList.toggle('active', isActive);
-          // 聲波進度條顏色與貼紙顏色同步
-          bar.style.background = isActive ? (isPlaying ? currentAccent : currentAccent) : '#444';
+          bar.style.background = isActive ? currentAccent : '#444';
           bar.style.opacity = isActive ? '1' : '0.4';
         });
       }, 150);
@@ -972,8 +965,9 @@
 
       // 定時更新標題
       setInterval(() => {
-        if (window.player && typeof window.player.getVideoData === 'function') {
-          const songName = window.player.getVideoData()?.title;
+        const p = window.player || (window.widget && window.widget.player);
+        if (p && typeof p.getVideoData === 'function') {
+          const songName = p.getVideoData()?.title;
           if (songName && title && title.textContent !== songName) {
             title.textContent = songName;
             title.title = songName;
