@@ -21,7 +21,7 @@
       --btn-icon-color: #ffffff;
     }
 
-    /* ══════════ 核心 3D 翻轉與單一重疊修復（解決並排變成兩個的問題） ══════════ */
+    /* ══════════ 3D 翻轉結構 ══════════ */
     .scene {
       width: 100% !important;
       max-width: 480px !important;
@@ -53,7 +53,6 @@
       transform: rotateY(180deg) !important;
       z-index: 1 !important;
     }
-    /* 翻到 B 面時的層級切換 */
     .flipper.flipped .face-a {
       pointer-events: none !important;
       z-index: 1 !important;
@@ -63,30 +62,32 @@
       z-index: 5 !important;
     }
 
-    /* ══════════ 卡帶外殼 ══════════ */
+    /* ══════════ 卡帶外殼（完全還原原生飽滿豐厚比例） ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
-      border-radius: 12px !important;
+      border-radius: 14px !important;
       box-shadow: 
-        0 18px 30px rgba(0, 0, 0, 0.65),
+        0 20px 35px rgba(0, 0, 0, 0.65),
         inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
       border: 1.5px solid var(--case-border) !important;
-      padding-top: 10px !important;
-      padding-bottom: 8px !important;
+      padding-top: 14px !important;
+      padding-bottom: 16px !important; /* 充足高度，告別扁平壓縮 */
+      min-height: 230px !important;   /* 還原原本卡帶標準大尺寸 */
+      box-sizing: border-box !important;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 頂部白底標籤：精巧比例（留出大空間給底圖） ══════════ */
+    /* ══════════ 1. 扁平化：頂部白底歌名標籤 ══════════ */
     .tape-label {
       background: #ffffff !important;
       border: 1.5px solid #222 !important;
       border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 4px 14px 0 !important;
-      padding: 3px 10px !important;
-      height: 26px !important;
-      min-height: 26px !important;
+      margin: 0 16px 0 !important;
+      padding: 2px 10px !important;
+      height: 24px !important;        /* 明確扁平高度 */
+      min-height: 24px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -108,67 +109,75 @@
       width: 100% !important;
     }
 
-    /* ══════════ 貼紙區域：上下充分展開，大面積展示底圖 ══════════ */
+    /* ══════════ 貼紙主體：高度極致釋放，展示大面積圖片 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover !important;
       background-position: center !important;
-      margin: 0 14px !important;
-      padding: 16px 0 18px !important;
+      margin: 0 16px !important;
+      padding: 22px 0 24px !important; /* 上下大留白，完整展現插圖 */
       border: none !important;
-      border-bottom-left-radius: 6px !important;
-      border-bottom-right-radius: 6px !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
+      border-bottom-left-radius: 8px !important;
+      border-bottom-right-radius: 8px !important;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4) !important;
       position: relative !important;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 中間黑框視窗：精巧比例 ══════════ */
+    /* ══════════ 2. 扁平化 ＆ 圓弧邊緣：中軸黑框視窗 ══════════ */
     .reel-plate {
       background: #141414 !important;
-      border: 2px solid #252525 !important;
-      border-radius: 4px !important;
+      border: 2px solid #282828 !important;
+      border-radius: 10px !important; /* 外框柔和圓弧角 */
       box-shadow: 
         inset 0 3px 6px rgba(0,0,0,0.9),
         0 1px 2px rgba(255,255,255,0.15) !important;
       position: relative !important;
       overflow: hidden !important;
-      height: 52px !important;
+      height: 48px !important;        /* 明確扁平高度 */
+      min-height: 48px !important;
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
       box-sizing: border-box !important;
+      padding: 2px 6px !important;
     }
 
+    /* 轉輪也配合圓潤 */
     .reel {
       background: #0d0d0d !important;
       border: 1px solid #2a2a2a !important;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      width: 46px !important;
-      height: 46px !important;
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
     }
 
+    /* 中間沙漏透明視窗：圓弧倒角 */
     .tape-window {
       background: #0a0a0a !important;
       border-left: 2px solid #222 !important;
       border-right: 2px solid #222 !important;
+      border-radius: 6px !important; /* 內層也柔和圓弧 */
       position: relative !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       overflow: hidden !important;
-      height: 42px !important;
+      height: 38px !important;
       flex: 1 !important;
+      margin: 0 4px !important;
     }
 
-    /* 沙漏透光遮罩 */
+    /* 圓潤柔順的沙漏透光遮罩（圓弧倒角） */
     .tape-window::before {
       content: "";
       position: absolute;
       width: 32px;
       height: 100%;
       background: #444444;
-      clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%, 35% 50%);
+      clip-path: polygon(0 0, 100% 0, 68% 50%, 100% 100%, 0 100%, 32% 50%);
+      border-radius: 4px;
       opacity: 0.8;
       z-index: 1;
     }
@@ -192,7 +201,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 78%;
-      height: 14px;
+      height: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -203,7 +212,7 @@
       width: 2px;
       height: 5px;
       background: #ffffff;
-      border-radius: 1px;
+      border-radius: 2px; /* 聲波頂端圓角 */
       box-shadow: 0 0 2px rgba(255,255,255,0.7);
       transition: height 0.12s ease;
     }
@@ -221,18 +230,20 @@
     .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
     @keyframes scalePulse {
       0% { height: 3px; }
-      50% { height: 13px; }
+      50% { height: 11px; }
       100% { height: 5px; }
     }
 
     .tape-window .spool, .tape-window .gap { display: none !important; }
 
-    /* ══════════ 控制底座與按鈕 ══════════ */
+    /* ══════════ 控制底座與按鈕（還原完整尺寸） ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
-      border-radius: 8px !important;
+      border-radius: 10px !important;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
       border: 1px solid rgba(255,255,255,0.08) !important;
+      margin-top: 10px !important;
+      padding: 6px 14px !important;
       position: relative !important;
       z-index: 10 !important;
       pointer-events: auto !important;
@@ -259,7 +270,6 @@
       background: var(--accent-color) !important;
     }
 
-    /* 隱藏無用標籤 */
     .tape-footer,
     #cassetteBody > div[style*="height:10px"],
     #cassetteBody > div[style*="height:8px"],
@@ -274,12 +284,12 @@
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* 進度條下移 ＆ 底部聲波柱 */
+    /* 還原進度條的舒適間距 ＆ 聲波柱 */
     .tape-progress {
-      margin: 14px 16px 4px !important;
-      height: 12px !important;
+      margin: 18px 18px 2px !important; /* 充裕留白間距 */
+      height: 14px !important;
       background: rgba(0, 0, 0, 0.65) !important;
-      border-radius: 6px !important;
+      border-radius: 7px !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
       position: relative !important;
@@ -327,7 +337,7 @@
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B 操作面板 ══════════ */
+    /* ══════════ Side B 控制面板 ══════════ */
     .side-b {
       background: #11151c !important;
       border-radius: 12px !important;
@@ -449,17 +459,17 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底歌名標籤 -->
+          <!-- 白底歌名標籤（扁平化） -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 貼紙色彩區（上下高度大幅擴展） -->
+          <!-- 貼紙色彩區（完全展開豐滿） -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
             
-            <!-- Maxell 造型中軸黑框視窗 -->
+            <!-- 圓弧邊緣 ＆ 扁平化的中軸黑框視窗 -->
             <div class="reel-plate">
               <div class="reel"><div class="teeth"></div></div>
               
@@ -485,7 +495,7 @@
             <div class="now-playing" id="nowPlaying"></div>
           </div>
 
-          <!-- 下移進度條 + 聲波 Equalizer -->
+          <!-- 進度條 + 聲波 Equalizer -->
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
             <div class="sound-wave-container" id="soundWaveBox"></div>
@@ -672,7 +682,6 @@
       const nativeColorPicker = document.getElementById('nativeColorPicker');
       const caseColorPicker = document.getElementById('caseColorPicker');
 
-      // 翻轉狀態監聽（保證正面點擊與背面點擊完全隔離）
       if (btnFlipB) {
         btnFlipB.addEventListener('click', () => {
           flipper.classList.add('flipped');
@@ -702,122 +711,4 @@
         if (isPlaying) {
           wrapper.classList.add('is-playing');
         } else {
-          wrapper.classList.remove('is-playing');
-        }
-
-        const percent = parseFloat(progressFill.style.width) || 0;
-        const activeBarLimit = Math.floor((percent / 100) * barCount);
-        waveBars.forEach((bar, idx) => {
-          if (idx <= activeBarLimit) {
-            bar.classList.add('active');
-            if (!isPlaying) bar.style.background = '#ff9800';
-          } else {
-            bar.classList.remove('active');
-            bar.style.background = '#444';
-          }
-        });
-      }, 150);
-
-      // 3. 讀取快取
-      const savedAccent = localStorage.getItem('cfg_accent');
-      if (savedAccent) applyAccentColor(savedAccent);
-
-      const savedCase = localStorage.getItem('cfg_case_color');
-      const savedBar = localStorage.getItem('cfg_bar_color');
-      if (savedCase) applyCaseColor(savedCase, savedBar);
-
-      const savedImg = localStorage.getItem('cfg_tape_img');
-      if (savedImg) {
-        stripe.style.backgroundImage = `url("${savedImg}")`;
-        imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
-      }
-
-      // 4. 貼紙選色
-      document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          applyAccentColor(this.getAttribute('data-color'));
-          localStorage.removeItem('cfg_tape_img');
-          imgInput.value = '';
-          fileInput.value = '';
-        });
-      });
-
-      nativeColorPicker.addEventListener('input', function(e) {
-        applyAccentColor(e.target.value);
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
-      });
-
-      // 5. 外殼選色
-      document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          applyCaseColor(this.getAttribute('data-case'), this.getAttribute('data-bar'));
-        });
-      });
-
-      caseColorPicker.addEventListener('input', function(e) {
-        applyCaseColor(e.target.value);
-      });
-
-      // 6. 圖片上傳
-      fileInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const dataUrl = e.target.result;
-            stripe.style.backgroundImage = `url("${dataUrl}")`;
-            localStorage.setItem('cfg_tape_img', dataUrl);
-            imgInput.value = '(已上傳圖片)';
-          };
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      imgInput.addEventListener('change', () => {
-        const val = imgInput.value.trim();
-        if (val && !val.includes('(已上傳圖片)')) {
-          stripe.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('cfg_tape_img', val);
-        }
-      });
-
-      btnClearImg.addEventListener('click', (e) => {
-        e.preventDefault();
-        stripe.style.backgroundImage = 'none';
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
-      });
-
-      // 7. 歌名同步更新
-      const updateTitle = () => {
-        let songName = '';
-        if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
-          songName = nowPlaying.textContent.replace(/^♪\s*|\s*♪$/g, '').trim();
-        }
-        if (!songName && window.player && typeof window.player.getVideoData === 'function') {
-          const data = window.player.getVideoData();
-          if (data && data.title) songName = data.title;
-        }
-
-        if (songName) {
-          title.textContent = songName;
-          title.title = songName;
-        }
-      };
-      setInterval(updateTitle, 800);
-    });
-  })();
-</script>
-
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
-</body>
-</html>
+          wrapper
