@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro Red Cassette Player</title>
+  <title>Retro Cassette Player</title>
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,16 +21,19 @@
         inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
       border: 1px solid #111 !important;
+      padding-bottom: 6px !important;
     }
 
-    /* ══════════ 頂部歌名標籤：乾淨白底手寫籤 ══════════ */
+    /* ══════════ 上方白底歌名標籤（自動顯示歌名） ══════════ */
     .tape-label {
       background: #ffffff !important;
       border: 2px solid #222 !important;
-      border-radius: 4px !important;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+      border-radius: 4px 4px 0 0 !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
       margin: 12px 14px 0 !important;
-      padding: 4px 10px !important;
+      padding: 5px 12px !important;
+      position: relative !important;
+      z-index: 3 !important;
     }
     .tape-title {
       font-family: 'Caveat', 'Permanent Marker', cursive !important;
@@ -41,74 +44,90 @@
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
+      text-align: center !important;
       line-height: 1.2;
     }
 
-    /* ══════════ 中間整片純紅底色（無任何多餘英文） ══════════ */
+    /* ══════════ 一體化紅色區域（消除斷層） ══════════ */
     .tape-stripe {
-      background: #e51d24 !important; /* 經典飽和紅 */
+      background: #e51d24 !important;
+      background-size: cover !important;
+      background-position: center !important;
+      margin: 0 14px !important;
+      padding: 10px 0 0 !important;
       border-left: 2px solid #b31218 !important;
       border-right: 2px solid #b31218 !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3) !important;
-      margin: 0 14px !important;
-      padding: 10px 0 !important;
+      box-shadow: none !important;
       position: relative !important;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    /* 確保轉輪視窗深凹立體且鎖定中央 */
-    .reel-plate {
-      box-shadow: inset 0 3px 8px rgba(0,0,0,0.85) !important;
-      border: 2px solid rgba(0,0,0,0.4) !important;
-      border-radius: 6px !important;
-    }
-
-    /* 隱藏原版不需要的 A 與 60 小徽章 */
-    .badge-a, .badge-60 {
-      display: none !important;
-    }
-
-    /* ══════════ 下半部延伸全紅，完美收尾 ══════════ */
     .tape-footer {
       background: #e51d24 !important;
+      background-size: cover !important;
+      background-position: bottom center !important;
       margin: 0 14px !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
       border-left: 2px solid #b31218 !important;
       border-right: 2px solid #b31218 !important;
       border-bottom: 2px solid #b31218 !important;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.4) !important;
-      padding: 4px 10px 8px !important;
-      transition: background 0.3s ease;
-    }
-    .audio-tape {
-      display: none !important; /* 隱藏原本的 AUDIO TAPE 英文 */
-    }
-    .now-playing {
-      color: rgba(255, 255, 255, 0.95) !important;
-      font-size: 11px !important;
-      font-weight: 600 !important;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
+      padding: 0 0 12px !important; /* 消除內部多餘間距 */
+      margin-top: -1px !important; /* 完全貼合消除縫隙 */
+      transition: background-color 0.3s ease;
     }
 
-    /* 金屬螺絲光澤 */
+    /* 隱藏下方舊有歌名小字與標籤 */
+    .now-playing, .audio-tape, .badge-a, .badge-60 {
+      display: none !important;
+    }
+
+    /* 轉輪視窗居中立體感 */
+    .reel-plate {
+      box-shadow: inset 0 3px 8px rgba(0,0,0,0.85) !important;
+      border: 2px solid rgba(0,0,0,0.4) !important;
+      border-radius: 6px !important;
+    }
+
+    /* 螺絲光澤 */
     .screw {
       background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* Side B 調色盤面板 */
-    .custom-section {
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 6px;
-      padding: 10px;
+    /* ══════════ Side B 分區面板 ══════════ */
+    .setting-group {
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 8px;
+      padding: 12px;
       margin-top: 10px;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffca28;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .full-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      box-sizing: border-box;
+      outline: none;
     }
     .palette-row {
       display: flex;
       gap: 10px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
     .palette-circle {
       width: 26px;
@@ -131,12 +150,12 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底歌名貼紙 -->
+          <!-- 白底歌名貼紙（即時連動 YouTube 歌名） -->
           <div class="tape-label">
-            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">ABOUT US</div>
+            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">載入中...</div>
           </div>
 
-          <!-- 原汁原味轉輪結構（保證絕對居中） -->
+          <!-- 一體化紅色區域：轉輪 -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
@@ -151,16 +170,16 @@
             </div>
           </div>
 
-          <!-- 下方底座 -->
+          <!-- 一體化紅色區域：底部 -->
           <div class="tape-footer" id="tapeFooter">
-            <div class="now-playing" id="nowPlaying">ready to play ♪</div>
+            <div class="now-playing" id="nowPlaying"></div>
             <span class="audio-tape">AUDIO TAPE</span>
           </div>
 
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
           </div>
-          <div style="height:8px"></div>
+          <div style="height:6px"></div>
         </div>
 
         <div class="tape-base">
@@ -202,28 +221,36 @@
 
           <details class="sb-collapse" open>
             <summary class="sb-summary">
-              <span>設定 YouTube 與卡帶色</span>
+              <span>卡帶設定</span>
               <span class="chev" aria-hidden="true">▾</span>
             </summary>
             <div class="sb-body">
               
-              <div class="link-row">
-                <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
-                <button id="btnLoad">載入</button>
-              </div>
-
-              <!-- 經典底色自由換 -->
-              <div class="custom-section">
-                <div style="font-size:12px; font-weight:bold; color:#ffca28; margin-bottom:6px;">🎨 卡帶顏色（各頁獨立保存）：</div>
-                <div class="palette-row">
-                  <div class="palette-circle" style="background:#e51d24;" title="經典復古紅" onclick="setStickerColor('#e51d24', '#b31218')"></div>
-                  <div class="palette-circle" style="background:#1565c0;" title="復古深藍" onclick="setStickerColor('#1565c0', '#0d47a1')"></div>
-                  <div class="palette-circle" style="background:#2b2b2b;" title="黑魂深灰" onclick="setStickerColor('#2b2b2b', '#181818')"></div>
-                  <div class="palette-circle" style="background:#e8dfcf;" title="牛皮紙米黃" onclick="setStickerColor('#e8dfcf', '#c4b59f')"></div>
-                  <div class="palette-circle" style="background:#388e3c;" title="復古墨綠" onclick="setStickerColor('#388e3c', '#235926')"></div>
+              <!-- 獨立區塊 1：YouTube 音樂連結 -->
+              <div class="setting-group" style="margin-top:0;">
+                <div class="group-title">🎵 1. YouTube 音樂連結</div>
+                <div class="link-row">
+                  <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
+                  <button id="btnLoad">載入</button>
                 </div>
               </div>
 
+              <!-- 獨立區塊 2：貼紙圖片與底色自訂 -->
+              <div class="setting-group">
+                <div class="group-title">🖼️ 2. 貼紙底圖（置入圖片）</div>
+                <input type="text" id="stickerImgInput" class="full-input" placeholder="貼上圖片網址 (PNG / JPG)">
+                
+                <div style="font-size:11px; color:#aaa; margin-top:10px;">或選擇純色底色：</div>
+                <div class="palette-row">
+                  <div class="palette-circle" style="background:#e51d24;" title="經典熱血紅" onclick="setTapeColor('#e51d24', '#b31218')"></div>
+                  <div class="palette-circle" style="background:#1565c0;" title="復古深藍" onclick="setTapeColor('#1565c0', '#0d47a1')"></div>
+                  <div class="palette-circle" style="background:#2b2b2b;" title="黑魂深灰" onclick="setTapeColor('#2b2b2b', '#181818')"></div>
+                  <div class="palette-circle" style="background:#e8dfcf;" title="牛皮紙米黃" onclick="setTapeColor('#e8dfcf', '#c4b59f')"></div>
+                  <div class="palette-circle" style="background:#388e3c;" title="復古墨綠" onclick="setTapeColor('#388e3c', '#235926')"></div>
+                </div>
+              </div>
+
+              <!-- 循環播放 -->
               <div class="loop-row" style="margin-top:10px;">
                 <span class="lbl"><span>循環播放 (LOOP)</span></span>
                 <label class="switch">
@@ -241,7 +268,7 @@
   </div>
 </div>
 
-<!-- ══════════ 邏輯腳本 ══════════ -->
+<!-- ══════════ 腳本邏輯 ══════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -260,11 +287,18 @@
       const stripe = document.getElementById('tapeStripe');
       const footer = document.getElementById('tapeFooter');
       const title = document.getElementById('tapeTitle');
+      const imgInput = document.getElementById('stickerImgInput');
 
-      // 讀取該 ID 專屬底色
-      const savedBg = localStorage.getItem('retro_tape_bg');
-      const savedBorder = localStorage.getItem('retro_tape_border');
-      if (savedBg) {
+      // 讀取該卡帶的快取外觀
+      const savedImg = localStorage.getItem('custom_tape_img');
+      const savedBg = localStorage.getItem('custom_tape_bg');
+      const savedBorder = localStorage.getItem('custom_tape_border');
+
+      if (savedImg) {
+        stripe.style.backgroundImage = `url("${savedImg}")`;
+        footer.style.backgroundImage = `url("${savedImg}")`;
+        imgInput.value = savedImg;
+      } else if (savedBg) {
         stripe.style.backgroundColor = savedBg;
         footer.style.backgroundColor = savedBg;
       }
@@ -273,7 +307,21 @@
         footer.style.borderColor = savedBorder;
       }
 
-      // 自動讀取 YouTube 歌名填入白條
+      // 貼紙圖片輸入監聽
+      imgInput.addEventListener('change', () => {
+        const val = imgInput.value.trim();
+        if (val) {
+          stripe.style.backgroundImage = `url("${val}")`;
+          footer.style.backgroundImage = `url("${val}")`;
+          localStorage.setItem('custom_tape_img', val);
+        } else {
+          stripe.style.backgroundImage = 'none';
+          footer.style.backgroundImage = 'none';
+          localStorage.removeItem('custom_tape_img');
+        }
+      });
+
+      // 自動讀取 YouTube 歌名填入頂部白底標籤
       setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const data = window.player.getVideoData();
@@ -285,15 +333,19 @@
       }, 1000);
     });
 
-    window.setStickerColor = function(bg, border) {
+    window.setTapeColor = function(bg, border) {
       const stripe = document.getElementById('tapeStripe');
       const footer = document.getElementById('tapeFooter');
+      stripe.style.backgroundImage = 'none';
+      footer.style.backgroundImage = 'none';
       stripe.style.backgroundColor = bg;
       footer.style.backgroundColor = bg;
       stripe.style.borderColor = border;
       footer.style.borderColor = border;
-      localStorage.setItem('retro_tape_bg', bg);
-      localStorage.setItem('retro_tape_border', border);
+      localStorage.removeItem('custom_tape_img');
+      localStorage.setItem('custom_tape_bg', bg);
+      localStorage.setItem('custom_tape_border', border);
+      document.getElementById('stickerImgInput').value = '';
     };
   })();
 </script>
