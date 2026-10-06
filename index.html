@@ -3,209 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maxell Retro Cassette Player</title>
+  <title>TDK D-818 Retro Cassette Player</title>
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800;900&family=Permanent+Marker&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
-    /* ══════════════ 黑色重度立體磨砂外殼 ══════════════ */
+    /* ══════════ 黑色網紋磨砂外殼 ══════════ */
     #cassetteBody {
-      background: radial-gradient(circle at 50% 30%, #2a2a2a 0%, #151515 70%, #0d0d0d 100%) !important;
+      background: radial-gradient(circle at 50% 25%, #2c2c2c 0%, #181818 65%, #0e0e0e 100%) !important;
       border-radius: 12px !important;
       box-shadow: 
-        0 20px 35px rgba(0, 0, 0, 0.65),
-        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 18px 32px rgba(0, 0, 0, 0.65),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
-      border: 1px solid #111 !important;
-      padding: 14px 16px 10px !important;
-    }
-
-    /* ══════════════ 整張大貼紙（白色區域）支援置圖與切換底色 ══════════════ */
-    #stickerArea {
-      background-color: #f7f6f2;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-radius: 5px;
-      padding: 8px 10px 6px;
-      box-shadow: 
-        0 2px 6px rgba(0, 0, 0, 0.4),
-        inset 0 0 12px rgba(0, 0, 0, 0.06);
+      border: 1.5px solid #111 !important;
+      padding: 12px 14px 10px !important;
+      box-sizing: border-box !important;
       position: relative;
-      transition: background-color 0.25s ease;
     }
 
-    /* 頂部歌名白條與手寫字 */
-    .sticker-header {
+    /* ══════════ 整張卡帶貼紙外框 ══════════ */
+    .tape-label {
+      background: #e61b23 !important; /* 經典 TDK 飽和亮紅 */
+      border: 2px solid #b7151b !important;
+      border-radius: 6px !important;
+      box-shadow: 
+        0 2px 5px rgba(0,0,0,0.5),
+        inset 0 1px 1px rgba(255,255,255,0.4) !important;
+      padding: 6px 8px 8px !important;
+      margin: 0 auto !important;
+      width: calc(100% - 16px) !important;
+      box-sizing: border-box !important;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    /* 頂部白底手寫歌名標籤條 */
+    .white-title-strip {
+      background: #ffffff;
+      border: 1.5px solid #222;
+      border-radius: 3px;
+      padding: 3px 6px;
       display: flex;
       align-items: center;
       gap: 8px;
-      border-bottom: 2px solid #222;
-      padding-bottom: 3px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
       margin-bottom: 6px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 3px;
-      padding: 2px 6px;
     }
-    .badge-box-a {
+    .badge-a-square {
       background: #111;
       color: #fff;
       font-weight: 900;
-      font-size: 15px;
+      font-size: 14px;
       padding: 1px 6px;
-      border-radius: 3px;
+      border-radius: 2px;
       font-family: 'Barlow Condensed', sans-serif;
-      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+      line-height: 1.1;
     }
     .tape-title {
       flex: 1;
-      font-family: 'Permanent Marker', 'Caveat', cursive !important;
+      font-family: 'Caveat', 'Permanent Marker', cursive !important;
       font-size: 19px !important;
-      color: #00aa44 !important; /* 經典手繪綠色字體 */
+      font-weight: 700 !important;
+      color: #111 !important;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
-      line-height: 1.2;
-    }
-    .header-icons {
-      font-size: 9px;
-      color: #555;
-      letter-spacing: 1px;
-      font-family: 'Share Tech Mono', monospace;
+      line-height: 1.1;
     }
 
-    /* ══════════════ 紅色 Maxell 經典裝飾框 ══════════════ */
-    .red-frame-box {
-      border: 3.5px solid #d32f2f;
-      border-radius: 4px;
-      padding: 4px 6px 2px;
-      position: relative;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .frame-inner-grid {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
-    .brand-left {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px;
-      font-weight: 900;
-      color: #111;
-      letter-spacing: -0.5px;
-    }
-    .brand-right {
-      text-align: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      line-height: 1;
-    }
-    .brand-right .ur {
-      font-size: 13px;
-      font-weight: 900;
-      background: #111;
-      color: #fff;
-      padding: 1px 3px;
-      border-radius: 2px;
-      display: inline-block;
-    }
-    .brand-right .num {
-      font-size: 16px;
-      font-weight: 900;
-      color: #0d47a1;
-      margin-top: 1px;
-    }
-
-    /* 轉輪區域挖空深陷立體層次 */
+    /* ══════════ 保持原版轉輪精準居中 ══════════ */
     .tape-stripe {
-      background: #181818 !important;
+      background: #141414 !important;
+      border: 2px solid #2a2a2a !important;
       border-radius: 4px !important;
       box-shadow: 
-        inset 0 4px 8px rgba(0, 0, 0, 0.85),
-        inset 0 -1px 3px rgba(255, 255, 255, 0.2),
-        0 1px 2px rgba(255, 255, 255, 0.4) !important;
-      margin: 0 4px !important;
-      flex: 1;
-      max-width: 170px;
+        inset 0 4px 8px rgba(0,0,0,0.85),
+        0 1px 2px rgba(255,255,255,0.2) !important;
+      margin: 0 auto !important;
+      width: 170px !important;
+      position: relative;
+      z-index: 2;
     }
     .reel-plate {
       box-shadow: inset 0 2px 6px rgba(0,0,0,0.9) !important;
     }
 
-    /* 下方紅色刻度線 */
-    .scale-bar {
-      margin-top: 3px;
-      height: 9px;
-      background: repeating-linear-gradient(
-        90deg,
-        #d32f2f 0px,
-        #d32f2f 2px,
-        transparent 2px,
-        transparent 4px
-      );
+    /* ══════════ 貼紙兩側與底部的 TDK 復古文字 ══════════ */
+    .tape-mid-container {
       position: relative;
+      margin-top: 4px;
     }
-    .scale-label {
-      text-align: center;
+    .sticker-side-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      line-height: 1.1;
+      z-index: 1;
+    }
+    .sticker-side-left {
+      left: 4px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .dolby-box {
       font-size: 8px;
-      font-weight: 800;
-      color: #d32f2f;
+      letter-spacing: -0.2px;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+    .sticker-side-right {
+      right: 4px;
+      text-align: right;
+      font-size: 8px;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    /* 底部 D-818 與 TDK 銘牌 */
+    .sticker-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 6px;
+      padding: 0 4px;
+    }
+    .model-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    }
+    .brand-tdk {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
       letter-spacing: 1px;
-      margin-top: 1px;
-      font-family: 'Share Tech Mono', monospace;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
     }
 
     /* 螺絲金屬質感 */
     .screw {
-      background: radial-gradient(circle, #ddd 30%, #777 70%, #333 100%) !important;
-      box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.8) !important;
+      background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
+      box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* 隱藏原版不需要的冗餘文字 */
+    /* 隱藏原版不需要的冗餘圖示 */
     .badge-a, .badge-60, .audio-tape { display: none !important; }
-    .tape-footer { padding: 2px 0 0 !important; }
+    .tape-footer { padding: 4px 0 0 !important; }
     .now-playing { font-size: 11px !important; opacity: 0.85; }
 
-    /* Side B 控制面板自訂 */
+    /* Side B 樣式面板 */
     .custom-section {
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 6px;
       padding: 10px;
       margin-top: 10px;
       border: 1px solid rgba(255,255,255,0.15);
     }
-    .custom-title {
-      font-size: 12px;
-      font-weight: bold;
-      color: #ffca28;
-      margin-bottom: 6px;
-    }
-    .custom-input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #444;
-      color: #fff;
-      padding: 7px 9px;
-      border-radius: 4px;
-      font-size: 12px;
-      box-sizing: border-box;
-      margin-bottom: 8px;
-    }
     .palette-row {
       display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 4px;
+      gap: 10px;
+      margin-top: 6px;
     }
     .palette-circle {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       border: 2px solid #fff;
       cursor: pointer;
@@ -218,49 +191,57 @@
   <div class="scene">
     <div class="flipper" id="flipper">
       
-      <!-- ══════════════ LADO A (正面) ══════════════ -->
+      <!-- ══════════ 正面：LADO A ══════════ -->
       <div class="face face-a">
         <div class="cassette" id="cassetteBody">
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白色範圍整張貼紙 -->
-          <div id="stickerArea">
+          <!-- 經典紅色卡帶貼紙 -->
+          <div class="tape-label" id="redTapeLabel">
             
-            <!-- 頂部歌名區 (連動 YouTube) -->
-            <div class="sticker-header">
-              <span class="badge-box-a">A</span>
+            <!-- 頂部白底手寫歌名標籤 -->
+            <div class="white-title-strip">
+              <span class="badge-a-square">A</span>
               <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">ABOUT US</div>
-              <div class="header-icons">NR □YES □NO</div>
             </div>
 
-            <!-- 紅色經典框與轉輪 -->
-            <div class="red-frame-box" id="redFrame">
-              <div class="frame-inner-grid">
-                <div class="brand-left" id="brandTextLeft">maxell</div>
-                
-                <div class="tape-stripe" id="tapeStripe">
-                  <div class="reel-plate">
-                    <div class="reel"><div class="teeth"></div></div>
-                    <div class="tape-window">
-                      <div class="spool"></div>
-                      <div class="gap"></div>
-                      <div class="spool"></div>
-                    </div>
-                    <div class="reel"><div class="teeth"></div></div>
-                  </div>
-                </div>
+            <!-- 中間區塊：轉輪與兩側說明文字 -->
+            <div class="tape-mid-container">
+              
+              <!-- 左側音響標籤 -->
+              <div class="sticker-side-text sticker-side-left">
+                <div>Normal Bass</div>
+                <div class="dolby-box">DO DOLBY</div>
+              </div>
 
-                <div class="brand-right">
-                  <div class="ur">UR</div>
-                  <div class="num">90</div>
+              <!-- 轉輪視窗 (正中央定位) -->
+              <div class="tape-stripe" id="tapeStripe">
+                <div class="reel-plate">
+                  <div class="reel"><div class="teeth"></div></div>
+                  <div class="tape-window">
+                    <div class="spool"></div>
+                    <div class="gap"></div>
+                    <div class="spool"></div>
+                  </div>
+                  <div class="reel"><div class="teeth"></div></div>
                 </div>
               </div>
 
-              <!-- 下方刻度線 -->
-              <div class="scale-bar"></div>
-              <div class="scale-label">POSITION NORMAL</div>
+              <!-- 右側抗噪標籤 -->
+              <div class="sticker-side-text sticker-side-right">
+                <div>Noise Reduction</div>
+                <div>■ On □ Off</div>
+              </div>
+
             </div>
+
+            <!-- 底部型號與廠牌名稱 -->
+            <div class="sticker-bottom-row">
+              <div class="model-number">D-818</div>
+              <div class="brand-tdk">TDK</div>
+            </div>
+
           </div>
 
           <div class="tape-footer">
@@ -272,32 +253,32 @@
         </div>
 
         <div class="tape-base">
-          <button class="hole-btn" id="btnPrev" title="Anterior">
+          <button class="hole-btn" id="btnPrev" title="上一首">
             <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
-          <button class="hole-btn play-btn" id="btnPlay" title="Reproducir">
+          <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
             <svg viewBox="0 0 24 24" id="iconPlay"><path d="M8 5v14l11-7z"/></svg>
             <svg viewBox="0 0 24 24" id="iconPause" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
           </button>
-          <button class="hole-btn" id="btnNext" title="Siguiente">
+          <button class="hole-btn" id="btnNext" title="下一首">
             <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
           </button>
           <div class="vol-wrap">
             <input type="range" id="volSlider" min="0" max="100" value="60">
           </div>
-          <button class="hole-btn flip-btn" id="btnFlipB" title="設定 / 換曲">
+          <button class="hole-btn flip-btn" id="btnFlipB" title="換歌 / 設定">
             B
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
           </button>
         </div>
       </div>
 
-      <!-- ══════════════ LADO B (設定面) ══════════════ -->
+      <!-- ══════════ 背面：LADO B (設定面) ══════════ -->
       <div class="face face-b">
         <div class="side-b">
           <div class="side-b-header">
             <button class="back-btn" id="btnFlipA">
-              <span aria-hidden="true">◀</span> <span>返回卡帶正面</span>
+              <span aria-hidden="true">◀</span> <span>返回正面</span>
             </button>
             <div class="sb-header-right">
               <button class="lang-btn" id="langBtn">ES</button>
@@ -310,139 +291,19 @@
 
           <details class="sb-collapse" open>
             <summary class="sb-summary">
-              <span>卡帶設定與外觀</span>
+              <span>設定 YouTube 與貼紙色</span>
               <span class="chev" aria-hidden="true">▾</span>
             </summary>
             <div class="sb-body">
               
-              <!-- 音樂連結 -->
               <div class="link-row">
                 <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
                 <button id="btnLoad">載入</button>
               </div>
 
-              <!-- 自訂貼紙外觀區域 -->
+              <!-- 貼紙底色更換 (紅、藍、黑、白、金) -->
               <div class="custom-section">
-                <div class="custom-title">🎨 白色貼紙區域自訂 (不含轉輪)</div>
-                
-                <input type="text" id="stickerImgInput" class="custom-input" placeholder="貼上貼紙底圖網址 (例如自繪插畫 / PNG)">
-                
-                <div style="font-size:11px; color:#aaa; margin-bottom:4px;">經典貼紙底色：</div>
+                <div style="font-size:12px; font-weight:bold; color:#ffca28; margin-bottom:6px;">🎨 貼紙底色（各頁獨立保存）：</div>
                 <div class="palette-row">
-                  <div class="palette-circle" style="background:#f7f6f2;" title="經典象牙白" onclick="changeStickerColor('#f7f6f2')"></div>
-                  <div class="palette-circle" style="background:#eedcbe;" title="復古米黃" onclick="changeStickerColor('#eedcbe')"></div>
-                  <div class="palette-circle" style="background:#262626;" title="黑魂灰" onclick="changeStickerColor('#262626')"></div>
-                  <div class="palette-circle" style="background:#b7cbe3;" title="千禧粉藍" onclick="changeStickerColor('#b7cbe3')"></div>
-                  <div class="palette-circle" style="background:#e8c7ce;" title="復古淡粉" onclick="changeStickerColor('#e8c7ce')"></div>
-                </div>
-
-                <div style="font-size:11px; color:#aaa; margin-top:8px; margin-bottom:4px;">外框紅色線條配色：</div>
-                <div class="palette-row">
-                  <div class="palette-circle" style="background:#d32f2f;" title="經典紅框" onclick="changeBorderColor('#d32f2f')"></div>
-                  <div class="palette-circle" style="background:#1976d2;" title="深藍框" onclick="changeBorderColor('#1976d2')"></div>
-                  <div class="palette-circle" style="background:#388e3c;" title="森林綠框" onclick="changeBorderColor('#388e3c')"></div>
-                  <div class="palette-circle" style="background:#fbc02d;" title="金黃框" onclick="changeBorderColor('#fbc02d')"></div>
-                  <div class="palette-circle" style="background:#8e24aa;" title="霓虹紫框" onclick="changeBorderColor('#8e24aa')"></div>
-                </div>
-              </div>
-
-              <!-- 循環播放 -->
-              <div class="loop-row" style="margin-top:10px;">
-                <span class="lbl"><span>循環播放 (LOOP)</span></span>
-                <label class="switch">
-                  <input type="checkbox" id="loopToggle">
-                  <span class="track"></span>
-                </label>
-              </div>
-
-            </div>
-          </details>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ 邏輯腳本 ══════════════ -->
-<script>
-  (function() {
-    const params = new URLSearchParams(window.location.search);
-    const widgetId = params.get('id') || 'default';
-    const rawSetItem = localStorage.setItem.bind(localStorage);
-    const rawGetItem = localStorage.getItem.bind(localStorage);
-
-    localStorage.setItem = function(key, val) {
-      return rawSetItem(widgetId + '_' + key, val);
-    };
-    localStorage.getItem = function(key) {
-      return rawGetItem(widgetId + '_' + key);
-    };
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const sticker = document.getElementById('stickerArea');
-      const redFrame = document.getElementById('redFrame');
-      const title = document.getElementById('tapeTitle');
-      const imgInput = document.getElementById('stickerImgInput');
-
-      // 讀取該 ID 專屬的外觀快取
-      const savedImg = localStorage.getItem('sticker_bg_img');
-      const savedBg = localStorage.getItem('sticker_bg_color');
-      const savedBorder = localStorage.getItem('sticker_border_color');
-
-      if (savedImg) {
-        sticker.style.backgroundImage = `url("${savedImg}")`;
-        imgInput.value = savedImg;
-      } else if (savedBg) {
-        sticker.style.backgroundColor = savedBg;
-      }
-      if (savedBorder) {
-        redFrame.style.borderColor = savedBorder;
-      }
-
-      imgInput.addEventListener('change', () => {
-        const val = imgInput.value.trim();
-        if (val) {
-          sticker.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('sticker_bg_img', val);
-        } else {
-          sticker.style.backgroundImage = 'none';
-          localStorage.removeItem('sticker_bg_img');
-        }
-      });
-
-      // 自動將 YouTube 影片歌名填入 ABOUT US 欄位
-      setInterval(() => {
-        if (window.player && typeof window.player.getVideoData === 'function') {
-          const data = window.player.getVideoData();
-          if (data && data.title && data.title !== "") {
-            title.textContent = data.title;
-            title.title = data.title;
-          }
-        }
-      }, 1000);
-    });
-
-    window.changeStickerColor = function(color) {
-      const sticker = document.getElementById('stickerArea');
-      sticker.style.backgroundImage = 'none';
-      sticker.style.backgroundColor = color;
-      localStorage.removeItem('sticker_bg_img');
-      localStorage.setItem('sticker_bg_color', color);
-      document.getElementById('stickerImgInput').value = '';
-    };
-
-    window.changeBorderColor = function(color) {
-      const redFrame = document.getElementById('redFrame');
-      redFrame.style.borderColor = color;
-      localStorage.setItem('sticker_border_color', color);
-    };
-  })();
-</script>
-
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
-</body>
-</html>
+                  <div class="palette-circle" style="background:#e61b23;" title="經典 TDK 熱血紅" onclick="setStickerColor('#e61b23', '#b7151b')"></div>
+                  <div class="palette-circle" style="background:#
