@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
-    /* ══════════ 全域動態色彩變數 ══════════ */
     :root {
       --case-color: #1a1a1a;
       --case-border: #0a0a0a;
@@ -21,171 +20,143 @@
       --btn-icon-color: #ffffff;
     }
 
-    /* ══════════ 核心 3D 翻轉與單一重疊修復（解決並排變成兩個的問題） ══════════ */
-    .scene {
-      width: 100% !important;
-      max-width: 480px !important;
-      margin: 0 auto !important;
-      position: relative !important;
-      perspective: 1000px !important;
+    #cassette-player-wrapper .scene {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      perspective: 1000px;
     }
     .flipper {
-      position: relative !important;
-      width: 100% !important;
-      transform-style: preserve-3d !important;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .face {
-      width: 100% !important;
-      backface-visibility: hidden !important;
-      -webkit-backface-visibility: hidden !important;
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .face-a {
-      position: relative !important;
-      z-index: 2 !important;
-      transform: rotateY(0deg) !important;
+      position: relative;
+      z-index: 2;
+      transform: rotateY(0deg);
     }
     .face-b {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      height: 100% !important;
-      transform: rotateY(180deg) !important;
-      z-index: 1 !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      transform: rotateY(180deg);
+      z-index: 1;
     }
-    /* 翻到 B 面時的層級切換 */
-    .flipper.flipped .face-a {
-      pointer-events: none !important;
-      z-index: 1 !important;
-    }
-    .flipper.flipped .face-b {
-      pointer-events: auto !important;
-      z-index: 5 !important;
-    }
+    .flipper.flipped .face-a { pointer-events: none; z-index: 1; }
+    .flipper.flipped .face-b { pointer-events: auto; z-index: 5; }
 
-    /* ══════════ 卡帶外殼 ══════════ */
     #cassetteBody {
       background: var(--case-color) !important;
-      border-radius: 12px !important;
-      box-shadow: 
-        0 18px 30px rgba(0, 0, 0, 0.65),
-        inset 0 1px 2px rgba(255, 255, 255, 0.35),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
+      border-radius: 12px;
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.35), inset 0 -3px 8px rgba(0, 0, 0, 0.8);
       border: 1.5px solid var(--case-border) !important;
-      padding-top: 10px !important;
-      padding-bottom: 8px !important;
+      padding: 10px 0 8px;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 頂部白底標籤：精巧比例（留出大空間給底圖） ══════════ */
     .tape-label {
-      background: #ffffff !important;
-      border: 1.5px solid #222 !important;
-      border-radius: 4px 4px 0 0 !important;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-      margin: 4px 14px 0 !important;
-      padding: 3px 10px !important;
-      height: 26px !important;
-      min-height: 26px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
-      z-index: 5 !important;
-      box-sizing: border-box !important;
+      background: #ffffff;
+      border: 1.5px solid #222;
+      border-radius: 4px 4px 0 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      margin: 4px 14px 0;
+      padding: 3px 10px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
+      box-sizing: border-box;
     }
     .tape-title {
-      font-family: 'Zen Maru Gothic', 'Caveat', 'Permanent Marker', sans-serif !important;
-      font-size: 15px !important;
-      font-weight: 700 !important;
-      color: #111111 !important;
+      font-family: 'Zen Maru Gothic', 'Caveat', 'Permanent Marker', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
       letter-spacing: 0.3px;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      text-align: center !important;
-      line-height: 1 !important;
-      width: 100% !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      width: 100%;
     }
 
-    /* ══════════ 貼紙區域：上下充分展開，大面積展示底圖 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
-      background-size: cover !important;
-      background-position: center !important;
-      margin: 0 14px !important;
-      padding: 16px 0 18px !important;
-      border: none !important;
-      border-bottom-left-radius: 6px !important;
-      border-bottom-right-radius: 6px !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
-      position: relative !important;
+      background-size: cover;
+      background-position: center;
+      margin: 0 14px;
+      padding: 16px 0 18px;
+      border: none;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.35);
+      position: relative;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 中間黑框視窗：精巧比例 ══════════ */
     .reel-plate {
-      background: #141414 !important;
-      border: 2px solid #252525 !important;
-      border-radius: 4px !important;
-      box-shadow: 
-        inset 0 3px 6px rgba(0,0,0,0.9),
-        0 1px 2px rgba(255,255,255,0.15) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      height: 52px !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      align-items: center !important;
-      box-sizing: border-box !important;
+      background: #141414;
+      border: 2px solid #252525;
+      border-radius: 4px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+      height: 52px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
     }
-
     .reel {
-      background: #0d0d0d !important;
-      border: 1px solid #2a2a2a !important;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      width: 46px !important;
-      height: 46px !important;
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+      width: 46px;
+      height: 46px;
     }
-
     .tape-window {
-      background: #0a0a0a !important;
-      border-left: 2px solid #222 !important;
-      border-right: 2px solid #222 !important;
-      position: relative !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      height: 42px !important;
-      flex: 1 !important;
+      background: #0a0a0a;
+      border-left: 2px solid #222;
+      border-right: 2px solid #222;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: 42px;
+      flex: 1;
     }
-
-    /* 沙漏透光遮罩 */
     .tape-window::before {
       content: "";
       position: absolute;
       width: 32px;
       height: 100%;
-      background: #444444;
+      background: #444;
       clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%, 35% 50%);
       opacity: 0.8;
       z-index: 1;
     }
-
     .tape-window::after {
       content: "";
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: 
-        radial-gradient(circle at -4px 50%, #666 0%, transparent 14px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #666 0%, transparent 14px);
+      inset: 0;
+      background: radial-gradient(circle at -4px 50%, #666 0%, transparent 14px), radial-gradient(circle at calc(100% + 4px) 50%, #666 0%, transparent 14px);
       opacity: 0.55;
       z-index: 1;
       pointer-events: none;
     }
 
-    /* 垂直白色動態聲波刻度 */
     .mid-scale-equalizer {
       position: absolute;
       top: 50%;
@@ -202,14 +173,12 @@
     .scale-bar-line {
       width: 2px;
       height: 5px;
-      background: #ffffff;
+      background: #fff;
       border-radius: 1px;
       box-shadow: 0 0 2px rgba(255,255,255,0.7);
       transition: height 0.12s ease;
     }
-    .is-playing .scale-bar-line {
-      animation: scalePulse 0.55s infinite ease-in-out alternate;
-    }
+    .is-playing .scale-bar-line { animation: scalePulse 0.55s infinite ease-in-out alternate; }
     .scale-bar-line:nth-child(1) { animation-delay: 0.05s; }
     .scale-bar-line:nth-child(2) { animation-delay: 0.22s; }
     .scale-bar-line:nth-child(3) { animation-delay: 0.41s; }
@@ -219,31 +188,27 @@
     .scale-bar-line:nth-child(7) { animation-delay: 0.45s; }
     .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
     .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
+
     @keyframes scalePulse {
       0% { height: 3px; }
       50% { height: 13px; }
       100% { height: 5px; }
     }
 
-    .tape-window .spool, .tape-window .gap { display: none !important; }
-
-    /* ══════════ 控制底座與按鈕 ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
-      border-radius: 8px !important;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
-      border: 1px solid rgba(255,255,255,0.08) !important;
-      position: relative !important;
-      z-index: 10 !important;
-      pointer-events: auto !important;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 10;
       transition: background 0.3s ease;
     }
-
     .play-btn, .flip-btn {
       background: var(--accent-color) !important;
       color: var(--btn-icon-color) !important;
-      border: none !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
       transition: background 0.3s ease, transform 0.1s ease;
     }
     .play-btn:hover, .flip-btn:hover {
@@ -253,51 +218,32 @@
     .play-btn svg, .flip-btn svg {
       fill: var(--btn-icon-color) !important;
       stroke: var(--btn-icon-color) !important;
-      pointer-events: none !important;
+      pointer-events: none;
     }
-    #volSlider::-webkit-slider-thumb {
-      background: var(--accent-color) !important;
-    }
+    #volSlider::-webkit-slider-thumb { background: var(--accent-color) !important; }
 
-    /* 隱藏無用標籤 */
-    .tape-footer,
-    #cassetteBody > div[style*="height:10px"],
-    #cassetteBody > div[style*="height:8px"],
-    #cassetteBody > div[style*="height:6px"] {
-      display: none !important;
-    }
-    .badge-a, .badge-60 { display: none !important; }
-    #langBtn, .badge-b, .sb-header-right { display: none !important; }
-
-    .screw {
-      background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
-      box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
-    }
-
-    /* 進度條下移 ＆ 底部聲波柱 */
     .tape-progress {
-      margin: 14px 16px 4px !important;
-      height: 12px !important;
-      background: rgba(0, 0, 0, 0.65) !important;
-      border-radius: 6px !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      cursor: pointer !important;
+      margin: 14px 16px 4px;
+      height: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
     #progressFill {
-      height: 100% !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-      position: absolute !important;
-      top: 0; left: 0;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      position: absolute;
+      inset: 0 auto auto 0;
       pointer-events: none;
       transition: width 0.15s linear;
     }
     .sound-wave-container {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -317,39 +263,34 @@
       background: linear-gradient(to top, #ff9800, #ff1744);
       animation: soundJump 0.65s infinite ease-in-out alternate;
     }
-    .wave-bar:nth-child(2n) { animation-delay: 0.12s !important; }
-    .wave-bar:nth-child(3n) { animation-delay: 0.28s !important; }
-    .wave-bar:nth-child(4n) { animation-delay: 0.42s !important; }
-    .wave-bar:nth-child(5n) { animation-delay: 0.05s !important; }
+    .wave-bar:nth-child(2n) { animation-delay: 0.12s; }
+    .wave-bar:nth-child(3n) { animation-delay: 0.28s; }
+    .wave-bar:nth-child(4n) { animation-delay: 0.42s; }
+    .wave-bar:nth-child(5n) { animation-delay: 0.05s; }
+
     @keyframes soundJump {
       0% { height: 20%; }
       50% { height: 90%; }
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B 操作面板 ══════════ */
     .side-b {
-      background: #11151c !important;
-      border-radius: 12px !important;
-      padding: 12px !important;
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65) !important;
-      border: 1.5px solid #222 !important;
-      overflow-y: auto !important;
-      max-height: 100% !important;
+      background: #11151c;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65);
+      border: 1.5px solid #222;
+      overflow-y: auto;
+      max-height: 100%;
     }
     .setting-group {
-      background: rgba(0, 0, 0, 0.6) !important;
-      border-radius: 8px !important;
-      padding: 10px 12px !important;
-      margin-top: 10px !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
-    .group-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffca28;
-      margin-bottom: 6px;
-    }
+    .group-title { font-size: 12px; font-weight: 700; color: #ffca28; margin-bottom: 6px; }
     .full-input {
       width: 100%;
       background: #111;
@@ -361,13 +302,11 @@
       box-sizing: border-box;
       outline: none;
     }
-
     .palette-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 6px;
-      margin-bottom: 6px;
+      margin: 6px 0;
       align-items: center;
     }
     .palette-circle {
@@ -375,16 +314,12 @@
       height: 26px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.8);
-      cursor: pointer !important;
+      cursor: pointer;
       box-shadow: 0 2px 5px rgba(0,0,0,0.6);
       transition: transform 0.15s ease;
       box-sizing: border-box;
     }
-    .palette-circle:hover {
-      transform: scale(1.2);
-      border-color: #fff;
-    }
-
+    .palette-circle:hover { transform: scale(1.2); border-color: #fff; }
     .custom-color-picker-wrap {
       display: flex;
       align-items: center;
@@ -394,15 +329,10 @@
       padding: 6px 10px;
       border-radius: 6px;
     }
-    .picker-label {
-      font-size: 11px;
-      color: #ddd;
-      font-weight: 600;
-    }
+    .picker-label { font-size: 11px; color: #ddd; font-weight: 600; }
     .native-color-picker {
-      -webkit-appearance: none;
-      -moz-appearance: none;
       appearance: none;
+      -webkit-appearance: none;
       width: 32px;
       height: 32px;
       border: none;
@@ -413,17 +343,8 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
     .native-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
-    .native-color-picker::-webkit-color-swatch {
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-    }
-
-    .upload-btn-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
+    .native-color-picker::-webkit-color-swatch { border: 2px solid #fff; border-radius: 50%; }
+    .upload-btn-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
     .btn-custom-action {
       background: #333;
       color: #fff;
@@ -431,11 +352,9 @@
       padding: 6px 12px;
       font-size: 11px;
       border-radius: 4px;
-      cursor: pointer !important;
+      cursor: pointer;
     }
-    .btn-custom-action:hover {
-      background: #444;
-    }
+    .btn-custom-action:hover { background: #444; }
   </style>
 </head>
 <body>
@@ -443,23 +362,17 @@
   <div class="scene">
     <div class="flipper" id="flipper">
       
-      <!-- ══════════ LADO A (正面) ══════════ -->
+      <!-- LADO A (正面) -->
       <div class="face face-a">
         <div class="cassette" id="cassetteBody">
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底歌名標籤 -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 貼紙色彩區（上下高度大幅擴展） -->
           <div class="tape-stripe" id="tapeStripe">
-            <span class="badge-a">A</span>
-            <span class="badge-60">60</span>
-            
-            <!-- Maxell 造型中軸黑框視窗 -->
             <div class="reel-plate">
               <div class="reel"><div class="teeth"></div></div>
               
@@ -481,11 +394,6 @@
             </div>
           </div>
 
-          <div class="tape-footer" style="display:none !important;">
-            <div class="now-playing" id="nowPlaying"></div>
-          </div>
-
-          <!-- 下移進度條 + 聲波 Equalizer -->
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
             <div class="sound-wave-container" id="soundWaveBox"></div>
@@ -513,7 +421,7 @@
         </div>
       </div>
 
-      <!-- ══════════ LADO B (設定面) ══════════ -->
+      <!-- LADO B (設定面) -->
       <div class="face face-b">
         <div class="side-b">
           <div class="side-b-header">
@@ -532,7 +440,6 @@
             </summary>
             <div class="sb-body">
               
-              <!-- 1. YouTube 音樂連結 -->
               <div class="setting-group" style="margin-top:0;">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
@@ -541,7 +448,6 @@
                 </div>
               </div>
 
-              <!-- 2. 貼紙與按鈕色彩聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
                 <div class="palette-grid">
@@ -562,7 +468,6 @@
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼 ＆ 控制座聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
@@ -579,7 +484,6 @@
                 </div>
               </div>
 
-              <!-- 4. 貼紙置入背景圖片 -->
               <div class="setting-group">
                 <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
                 <div class="upload-btn-wrap">
@@ -590,7 +494,6 @@
                 <input type="text" id="stickerImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
               </div>
 
-              <!-- 循環播放 -->
               <div class="loop-row" style="margin-top:10px;">
                 <span class="lbl"><span>循環播放 (LOOP)</span></span>
                 <label class="switch">
@@ -608,7 +511,6 @@
   </div>
 </div>
 
-<!-- ══════════ 腳本邏輯 ══════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -616,115 +518,91 @@
     const rawSetItem = localStorage.setItem.bind(localStorage);
     const rawGetItem = localStorage.getItem.bind(localStorage);
 
-    localStorage.setItem = function(key, val) {
-      return rawSetItem(widgetId + '_' + key, val);
-    };
-    localStorage.getItem = function(key) {
-      return rawGetItem(widgetId + '_' + key);
-    };
+    localStorage.setItem = (key, val) => rawSetItem(`${widgetId}_${key}`, val);
+    localStorage.getItem = (key) => rawGetItem(`${widgetId}_${key}`);
 
     function isLightColor(hex) {
       if (!hex || !hex.startsWith('#')) return false;
       const c = hex.substring(1);
-      const rgb = parseInt(c.length === 3 ? c.split('').map(x=>x+x).join('') : c, 16);
-      const r = (rgb >> 16) & 0xff;
-      const g = (rgb >>  8) & 0xff;
-      const b = (rgb >>  0) & 0xff;
-      const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      const rgb = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
+      const luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * (rgb & 0xff);
       return luma > 160;
-    }
-
-    function applyAccentColor(color) {
-      const root = document.documentElement;
-      const stripe = document.getElementById('tapeStripe');
-      root.style.setProperty('--accent-color', color);
-      root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
-      stripe.style.backgroundImage = 'none';
-      localStorage.setItem('cfg_accent', color);
-      document.getElementById('nativeColorPicker').value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
-    }
-
-    function applyCaseColor(color, barColor = null) {
-      const root = document.documentElement;
-      const caseBorder = isLightColor(color) ? '#c0c0c0' : '#0a0a0a';
-      const actualBarColor = barColor || (isLightColor(color) ? '#dedede' : '#11151c');
-      root.style.setProperty('--case-color', color);
-      root.style.setProperty('--control-bar-bg', actualBarColor);
-      root.style.setProperty('--case-border', caseBorder);
-      localStorage.setItem('cfg_case_color', color);
-      localStorage.setItem('cfg_bar_color', actualBarColor);
-      document.getElementById('caseColorPicker').value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       const stripe = document.getElementById('tapeStripe');
       const title = document.getElementById('tapeTitle');
-      const nowPlaying = document.getElementById('nowPlaying');
       const imgInput = document.getElementById('stickerImgInput');
       const fileInput = document.getElementById('fileUploadInput');
-      const btnClearImg = document.getElementById('btnClearImg');
       const soundWaveBox = document.getElementById('soundWaveBox');
       const progressFill = document.getElementById('progressFill');
       const wrapper = document.getElementById('cassette-player-wrapper');
       const flipper = document.getElementById('flipper');
-      const btnFlipB = document.getElementById('btnFlipB');
-      const btnFlipA = document.getElementById('btnFlipA');
       const nativeColorPicker = document.getElementById('nativeColorPicker');
       const caseColorPicker = document.getElementById('caseColorPicker');
 
-      // 翻轉狀態監聽（保證正面點擊與背面點擊完全隔離）
-      if (btnFlipB) {
-        btnFlipB.addEventListener('click', () => {
-          flipper.classList.add('flipped');
-        });
-      }
-      if (btnFlipA) {
-        btnFlipA.addEventListener('click', () => {
-          flipper.classList.remove('flipped');
-        });
+      function applyAccentColor(color, clearCustomImg = false) {
+        const root = document.documentElement;
+        root.style.setProperty('--accent-color', color);
+        root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
+        localStorage.setItem('cfg_accent', color);
+        nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+
+        if (clearCustomImg) {
+          stripe.style.backgroundImage = 'none';
+          localStorage.removeItem('cfg_tape_img');
+          imgInput.value = '';
+          fileInput.value = '';
+        }
       }
 
-      // 1. 生成 38 根聲波柱
+      function applyCaseColor(color, barColor = null) {
+        const root = document.documentElement;
+        const actualBarColor = barColor || (isLightColor(color) ? '#dedede' : '#11151c');
+        root.style.setProperty('--case-color', color);
+        root.style.setProperty('--control-bar-bg', actualBarColor);
+        root.style.setProperty('--case-border', isLightColor(color) ? '#c0c0c0' : '#0a0a0a');
+        localStorage.setItem('cfg_case_color', color);
+        localStorage.setItem('cfg_bar_color', actualBarColor);
+        caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
+      }
+
+      // 翻轉控制
+      document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
+      document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
+
+      // 建立聲波柱
       const barCount = 38;
+      const fragment = document.createDocumentFragment();
       for (let i = 0; i < barCount; i++) {
         const bar = document.createElement('div');
         bar.className = 'wave-bar';
-        soundWaveBox.appendChild(bar);
+        fragment.appendChild(bar);
       }
+      soundWaveBox.appendChild(fragment);
       const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
 
-      // 2. 聲波律動監聽
+      // 聲波輪詢（輕量化防抖）
       setInterval(() => {
-        let isPlaying = false;
-        if (window.player && typeof window.player.getPlayerState === 'function') {
-          isPlaying = (window.player.getPlayerState() === 1);
-        }
-        if (isPlaying) {
-          wrapper.classList.add('is-playing');
-        } else {
-          wrapper.classList.remove('is-playing');
-        }
+        const isPlaying = window.player && typeof window.player.getPlayerState === 'function' && window.player.getPlayerState() === 1;
+        wrapper.classList.toggle('is-playing', isPlaying);
 
         const percent = parseFloat(progressFill.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
+
         waveBars.forEach((bar, idx) => {
-          if (idx <= activeBarLimit) {
-            bar.classList.add('active');
-            if (!isPlaying) bar.style.background = '#ff9800';
-          } else {
-            bar.classList.remove('active');
-            bar.style.background = '#444';
-          }
+          const isActive = idx <= activeBarLimit;
+          bar.classList.toggle('active', isActive);
+          bar.style.background = isActive ? (isPlaying ? '' : '#ff9800') : '#444';
         });
       }, 150);
 
-      // 3. 讀取快取
+      // 快取載入
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) applyAccentColor(savedAccent);
 
       const savedCase = localStorage.getItem('cfg_case_color');
-      const savedBar = localStorage.getItem('cfg_bar_color');
-      if (savedCase) applyCaseColor(savedCase, savedBar);
+      if (savedCase) applyCaseColor(savedCase, localStorage.getItem('cfg_bar_color'));
 
       const savedImg = localStorage.getItem('cfg_tape_img');
       if (savedImg) {
@@ -732,43 +610,28 @@
         imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 4. 貼紙選色
+      // 色彩切換綁定
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', (e) => {
           e.preventDefault();
-          e.stopPropagation();
-          applyAccentColor(this.getAttribute('data-color'));
-          localStorage.removeItem('cfg_tape_img');
-          imgInput.value = '';
-          fileInput.value = '';
+          applyAccentColor(btn.dataset.color, true);
         });
       });
+      nativeColorPicker.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
 
-      nativeColorPicker.addEventListener('input', function(e) {
-        applyAccentColor(e.target.value);
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
-      });
-
-      // 5. 外殼選色
       document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', (e) => {
           e.preventDefault();
-          e.stopPropagation();
-          applyCaseColor(this.getAttribute('data-case'), this.getAttribute('data-bar'));
+          applyCaseColor(btn.dataset.case, btn.dataset.bar);
         });
       });
+      caseColorPicker.addEventListener('input', (e) => applyCaseColor(e.target.value));
 
-      caseColorPicker.addEventListener('input', function(e) {
-        applyCaseColor(e.target.value);
-      });
-
-      // 6. 圖片上傳
+      // 圖片上傳
       fileInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
+        if (this.files?.[0]) {
           const reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = (e) => {
             const dataUrl = e.target.result;
             stripe.style.backgroundImage = `url("${dataUrl}")`;
             localStorage.setItem('cfg_tape_img', dataUrl);
@@ -786,31 +649,21 @@
         }
       });
 
-      btnClearImg.addEventListener('click', (e) => {
+      document.getElementById('btnClearImg').addEventListener('click', (e) => {
         e.preventDefault();
-        stripe.style.backgroundImage = 'none';
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
+        applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
-      // 7. 歌名同步更新
-      const updateTitle = () => {
-        let songName = '';
-        if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
-          songName = nowPlaying.textContent.replace(/^♪\s*|\s*♪$/g, '').trim();
+      // 標題更新
+      setInterval(() => {
+        if (window.player && typeof window.player.getVideoData === 'function') {
+          const songName = window.player.getVideoData()?.title;
+          if (songName && title.textContent !== songName) {
+            title.textContent = songName;
+            title.title = songName;
+          }
         }
-        if (!songName && window.player && typeof window.player.getVideoData === 'function') {
-          const data = window.player.getVideoData();
-          if (data && data.title) songName = data.title;
-        }
-
-        if (songName) {
-          title.textContent = songName;
-          title.title = songName;
-        }
-      };
-      setInterval(updateTitle, 800);
+      }, 1000);
     });
   })();
 </script>
