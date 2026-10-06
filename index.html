@@ -182,7 +182,7 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 黑色中軸視窗 ══════════ */
+    /* ══════════ 黑色中軸視窗（收窄至 74%） ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -365,7 +365,7 @@
       transform: scale(1.15) !important;
     }
 
-    /* ══════════ 播放控制底座（重排緊湊版） ══════════ */
+    /* ══════════ 播放控制底座（音量靠左、核心居中、循環靠右） ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 28px !important;
@@ -379,13 +379,6 @@
       padding: 6px 16px !important;
       margin-top: 10px !important;
       transition: background 0.3s ease;
-    }
-
-    /* 左側核心播放按鈕組（緊湊間距） */
-    .playback-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .hole-btn {
@@ -409,37 +402,14 @@
       transform: scale(0.95) !important;
     }
 
-    .ctrl-icon-btn {
-      width: 32px;
-      height: 32px;
-      color: rgba(255, 255, 255, 0.95) !important;
-    }
-    .ctrl-icon-btn svg {
-      fill: currentColor !important;
-    }
-
-    /* 中央實心主播放鍵 */
-    .play-btn {
-      width: 44px !important;
-      height: 44px !important;
-      border-radius: 50% !important;
-      background: var(--accent-color) !important;
-      color: var(--btn-icon-color) !important;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.4) !important;
-      flex-shrink: 0;
-    }
-    .play-btn svg {
-      fill: var(--btn-icon-color) !important;
-    }
-
-    /* 右側音量模組（音量圖標與滑桿綁定在一起） */
+    /* 左側音量模組 */
     .volume-module {
       display: flex;
       align-items: center;
       gap: 6px;
       flex: 1;
       max-width: 135px;
-      margin: 0 10px 0 16px;
+      margin-right: 12px;
     }
     .vol-btn {
       width: 26px;
@@ -475,12 +445,43 @@
       transform: scale(1.25);
     }
 
+    /* 正中間核心播放控制組 */
+    .playback-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-icon-btn {
+      width: 32px;
+      height: 32px;
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .ctrl-icon-btn svg {
+      fill: currentColor !important;
+    }
+
+    /* 中央實心主播放鍵 */
+    .play-btn {
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 50% !important;
+      background: var(--accent-color) !important;
+      color: var(--btn-icon-color) !important;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4) !important;
+      flex-shrink: 0;
+    }
+    .play-btn svg {
+      fill: var(--btn-icon-color) !important;
+    }
+
     /* 最右側純無框循環 Loop 鍵 */
     .clean-loop-btn {
       width: 32px !important;
       height: 32px !important;
       color: rgba(255, 255, 255, 0.95) !important;
       flex-shrink: 0;
+      margin-left: 12px;
     }
     .clean-loop-btn svg {
       fill: currentColor !important;
@@ -735,36 +736,9 @@
           </div>
         </div>
 
-        <!-- 播放控制底座（核心播放靠左、音量組合靠右、純無框循環鍵在最右） -->
+        <!-- 播放控制底座（音量靠左、核心居中、循環靠右） -->
         <div class="tape-base" id="tapeControlBase">
-          <!-- 左側核心控制群組 -->
-          <div class="playback-controls">
-            <!-- 1. 上一首按鈕 -->
-            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
-              </svg>
-            </button>
-
-            <!-- 2. 播放 / 暫停按鈕 -->
-            <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
-              <svg viewBox="0 0 24 24" id="iconPlay" width="24" height="24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              <svg viewBox="0 0 24 24" id="iconPause" width="24" height="24" fill="currentColor" style="display:none;">
-                <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
-              </svg>
-            </button>
-
-            <!-- 3. 下一首按鈕 -->
-            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
-              </svg>
-            </button>
-          </div>
-
-          <!-- 右側音量模組（音量鍵緊鄰滑桿） -->
+          <!-- 1. 最左側：音量模組（音量圖標緊鄰滑桿） -->
           <div class="volume-module">
             <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
               <svg viewBox="0 0 24 24" id="iconVolHigh" width="20" height="20" fill="currentColor">
@@ -779,7 +753,29 @@
             </div>
           </div>
 
-          <!-- 最右側翻面按鍵（純無框循環 Loop 雙向箭頭圖標） -->
+          <!-- 2. 正中間：核心播放控制組 -->
+          <div class="playback-controls">
+            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+              </svg>
+            </button>
+            <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
+              <svg viewBox="0 0 24 24" id="iconPlay" width="24" height="24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" id="iconPause" width="24" height="24" fill="currentColor" style="display:none;">
+                <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+              </svg>
+            </button>
+            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 3. 最右側：純無框循環 Loop 鍵 -->
           <button class="hole-btn clean-loop-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
@@ -835,7 +831,6 @@
                   <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
                   <span class="picker-label">🌈 貼紙自訂任意色域</span>
                 </div>
-              </div>
 
               <!-- 3. 卡帶外殼與控制座底色 -->
               <div class="setting-group">
