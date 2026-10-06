@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro Cassette Player</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Retro Cassette & Vinyl Player</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
 
@@ -32,11 +31,12 @@
       --control-bar-bg: #11151c;
       --accent-color: #e51d24; 
       --btn-icon-color: #ffffff;
+      --vinyl-cover-bg: #f5f5f5;
     }
 
     .cassette-widget {
       width: 100%;
-      max-width: 440px;
+      max-width: 450px;
       padding: 10px;
     }
 
@@ -86,7 +86,13 @@
       z-index: 10;
     }
 
-    /* 卡帶外殼  */
+    /* ════════════════════════════════════════════
+       款式一：復古卡帶模式 (Cassette View)
+    ════════════════════════════════════════════ */
+    .cassette-mode-view {
+      display: block;
+    }
+
     .cassette {
       background: var(--case-color);
       border-radius: 16px;
@@ -101,7 +107,6 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* 四角螺絲釘 */
     .screw {
       position: absolute;
       width: 12px;
@@ -127,20 +132,18 @@
     .screw.bl { bottom: 10px; left: 9px; }
     .screw.br { bottom: 10px; right: 9px; }
 
-    /*貼紙*/
     .tape-sticker-container {
       background-color: var(--accent-color);
       background-size: cover;
       background-position: center;
-      margin: 0 26px; 
-      padding: 7px 8px 18px; 
+      margin: 0 26px;
+      padding: 7px 8px 18px;
       border-radius: 8px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.4);
       position: relative;
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════手寫標籤條） ══════════ */
     .tape-label {
       background-color: #fdfdfd;
       background-image: repeating-linear-gradient(
@@ -153,8 +156,8 @@
       border: 1.5px solid #222;
       border-radius: 4px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-      margin: 0 auto 14px; 
-      width: 96%; 
+      margin: 0 auto 14px;
+      width: 96%;
       height: 34px;
       display: flex;
       align-items: center;
@@ -162,10 +165,9 @@
       position: relative;
     }
 
-    /*手寫標題 */
     .tape-title {
       font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif;
-      font-size: 30px; /* 字體再放大 */
+      font-size: 24px;
       font-weight: 700;
       color: #111111;
       letter-spacing: 0.5px;
@@ -178,14 +180,11 @@
       line-height: 1;
     }
 
-    /*  中軸黑框視窗 */
     .reel-plate {
       background: #0d0d0d;
       border: 2px solid #202020;
       border-radius: 12px;
-      box-shadow: 
-        inset 0 3px 7px rgba(0,0,0,0.95),
-        0 1px 2px rgba(255,255,255,0.12);
+      box-shadow: inset 0 3px 7px rgba(0,0,0,0.95), 0 1px 2px rgba(255,255,255,0.12);
       height: 52px;
       width: 86%;
       margin: 0 auto;
@@ -196,14 +195,11 @@
       position: relative;
     }
 
-    /* 左右黑色圓形底座 */
     .reel {
       background: radial-gradient(circle, #080808 60%, #151515 100%);
       border: 1.5px solid #1a1a1a;
       border-radius: 50%;
-      box-shadow: 
-        inset 0 3px 6px rgba(0,0,0,0.95),
-        0 1px 2px rgba(255,255,255,0.06);
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.95), 0 1px 2px rgba(255,255,255,0.06);
       width: 44px;
       height: 44px;
       flex-shrink: 0;
@@ -239,10 +235,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: repeating-conic-gradient(
-        #ffffff 0deg 20deg,
-        transparent 20deg 60deg
-      );
+      background: repeating-conic-gradient(#ffffff 0deg 20deg, transparent 20deg 60deg);
       mask-image: radial-gradient(circle, transparent 4.5px, black 5px, black 9px, transparent 9.5px);
       -webkit-mask-image: radial-gradient(circle, transparent 4.5px, black 5px, black 9px, transparent 9.5px);
     }
@@ -256,7 +249,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* ══════════ 收腰沙漏 ══════════ */
     .tape-window {
       background: #080808;
       border-left: 2px solid #1a1a1a;
@@ -298,7 +290,6 @@
       pointer-events: none;
     }
 
-    /* 垂直白色動態聲波刻度 */
     .mid-scale-equalizer {
       position: absolute;
       top: 50%;
@@ -337,7 +328,6 @@
       100% { height: 5px; }
     }
 
-    /* ══════════ 梯形區域 ══════════ */
     .trapezoid-wrapper {
       position: relative;
       width: 82%;
@@ -368,6 +358,199 @@
       cursor: pointer;
     }
 
+    /* ════════════════════════════════════════════
+       款式二：極簡黑膠唱片機 (Vinyl View)
+    ════════════════════════════════════════════ */
+    .vinyl-mode-view {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 250px;
+      margin-bottom: 8px;
+    }
+
+    /* 上方懸浮歌名條 */
+    .vinyl-top-title-bar {
+      position: absolute;
+      top: -6px;
+      left: 10px;
+      right: 10px;
+      background: rgba(18, 18, 18, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 4px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .vinyl-title-text {
+      font-family: 'Zen Maru Gothic', 'Caveat', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
+    /* 唱片機外框容器 */
+    .vinyl-deck {
+      position: absolute;
+      top: 32px;
+      left: 0;
+      width: 100%;
+      height: 215px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* 左側方形唱片封套（白色/自選顏色/置入圖片區） */
+    .vinyl-sleeve {
+      width: 215px;
+      height: 215px;
+      background-color: var(--vinyl-cover-bg);
+      background-size: cover;
+      background-position: center;
+      border-radius: 6px;
+      box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.65), 
+        0 1px 3px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 4;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+
+    /* 封套封面手繪/設計排版 */
+    .vinyl-sleeve-art {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      color: #111;
+      line-height: 1.1;
+      pointer-events: none;
+    }
+    .vinyl-sleeve-bar {
+      width: 28px;
+      height: 3px;
+      background: #111;
+      margin-bottom: 6px;
+    }
+    .vinyl-sleeve-txt {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* 右側外露黑膠唱片盤 */
+    .vinyl-record-disc {
+      position: absolute;
+      right: 18px;
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        #111 0%,
+        #0a0a0a 28%,
+        #1a1a1a 29%,
+        #050505 31%,
+        #1f1f1f 34%,
+        #000000 48%,
+        #222222 51%,
+        #050505 53%,
+        #1c1c1c 65%,
+        #050505 78%,
+        #151515 92%,
+        #000000 100%
+      );
+      box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.8), 
+        inset 0 0 10px rgba(255, 255, 255, 0.08);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* 唱片中央標籤貼紙 (Label) */
+    .vinyl-disc-label {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+      transition: background-color 0.3s ease;
+    }
+
+    /* 唱片中央小孔 */
+    .vinyl-disc-label::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.4);
+    }
+
+    /* 唱片溝槽立體高光反射 (Vinyl Grooves) */
+    .vinyl-record-disc::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        transparent 0deg,
+        rgba(255, 255, 255, 0.12) 45deg,
+        transparent 90deg,
+        rgba(255, 255, 255, 0.12) 225deg,
+        transparent 270deg
+      );
+      pointer-events: none;
+    }
+
+    /* 播放時：唱片往右滑出 ＋ 持續旋轉 */
+    .is-playing .vinyl-record-disc {
+      transform: translateX(18px);
+    }
+    .is-playing .vinyl-record-disc .vinyl-rotate-layer {
+      animation: spinVinyl 2.8s linear infinite;
+    }
+
+    .vinyl-rotate-layer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ════════════════════════════════════════════
+       公共底座控制台
+    ════════════════════════════════════════════ */
     .sound-wave-container {
       position: absolute;
       inset: 0;
@@ -393,7 +576,6 @@
       transform: scale(1.15);
     }
 
-    /* ══════════ 控制底座 ══════════ */
     .tape-base {
       background: var(--control-bar-bg);
       border-radius: 28px;
@@ -475,7 +657,9 @@
 
     .clean-loop-btn { width: 28px; height: 28px; }
 
-    /* ══════════ Side B：後台面板 ══════════ */
+    /* ════════════════════════════════════════════
+       Side B：後台面板
+    ════════════════════════════════════════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -537,6 +721,35 @@
     }
     .back-btn:hover, #btnLoad:hover, .btn-custom-action:hover {
       background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* 播放器造型模式切換按鈕 */
+    .theme-mode-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .theme-tab-btn {
+      flex: 1;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #aaa;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .theme-tab-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #fff;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .palette-grid {
@@ -628,62 +841,78 @@
       
       <!-- LADO A (正面) -->
       <div class="face face-a">
-        <div class="cassette" id="cassetteBody">
-          <span class="screw tl"></span><span class="screw tr"></span>
-          <span class="screw bl"></span><span class="screw br"></span>
+        
+        <!-- ══════════ 款式 1：經典卡帶模式 ══════════ -->
+        <div class="cassette-mode-view" id="cassetteModeView">
+          <div class="cassette" id="cassetteBody">
+            <span class="screw tl"></span><span class="screw tr"></span>
+            <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- ══════ 彩色貼紙 ══════ -->
-          <div class="tape-sticker-container" id="tapeStripe">
-            
-            <!-- 歌名標籤 -->
-            <div class="tape-label">
-              <div class="tape-title" id="tapeTitle">Playlist</div>
-            </div>
-
-            <!-- 中軸黑框視窗 -->
-            <div class="reel-plate">
-              <!-- 左齒輪 -->
-              <div class="reel">
-                <div class="reel-core">
-                  <div class="reel-teeth"></div>
-                </div>
+            <div class="tape-sticker-container" id="tapeStripe">
+              <div class="tape-label">
+                <div class="tape-title common-song-title">Playlist</div>
               </div>
 
-              <!-- 中間沙漏視窗 -->
-              <div class="tape-window">
-                <div class="mid-scale-equalizer">
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
-                  <div class="scale-bar-line"></div>
+              <div class="reel-plate">
+                <div class="reel">
+                  <div class="reel-core"><div class="reel-teeth"></div></div>
                 </div>
-              </div>
 
-              <!-- 右齒輪 -->
-              <div class="reel">
-                <div class="reel-core">
-                  <div class="reel-teeth"></div>
+                <div class="tape-window">
+                  <div class="mid-scale-equalizer">
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-line"></div>
+                  </div>
+                </div>
+
+                <div class="reel">
+                  <div class="reel-core"><div class="reel-teeth"></div></div>
                 </div>
               </div>
             </div>
 
-          </div>
-
-          <!-- 梯形區域 -->
-          <div class="trapezoid-wrapper">
-            <span class="screw center-screw"></span>
-            <div class="tape-progress" id="tapeProgress">
-              <div class="sound-wave-container" id="soundWaveBox"></div>
+            <div class="trapezoid-wrapper">
+              <span class="screw center-screw"></span>
+              <div class="tape-progress" id="tapeProgress">
+                <div class="sound-wave-container" id="soundWaveBox"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- 播放控制底座 -->
+        <!-- ══════════ 款式 2：黑膠唱片機模式 ══════════ -->
+        <div class="vinyl-mode-view" id="vinylModeView">
+          <!-- 上方歌名條 -->
+          <div class="vinyl-top-title-bar">
+            <div class="vinyl-title-text common-song-title">Playlist</div>
+          </div>
+
+          <div class="vinyl-deck">
+            <!-- 左側唱片封面封套（自訂底色與自訂圖片） -->
+            <div class="vinyl-sleeve" id="vinylSleeve">
+              <div class="vinyl-sleeve-art">
+                <div class="vinyl-sleeve-bar"></div>
+                <div class="vinyl-sleeve-txt">VINYL RECORD</div>
+              </div>
+            </div>
+
+            <!-- 右側黑膠唱片（播放旋轉） -->
+            <div class="vinyl-record-disc">
+              <div class="vinyl-rotate-layer">
+                <div class="vinyl-disc-label" id="vinylDiscLabel"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ 底部統一播放控制台 ══════════ -->
         <div class="tape-base" id="tapeControlBase">
           <div class="volume-module">
             <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
@@ -743,12 +972,21 @@
 
           <details class="sb-collapse" open>
             <summary class="sb-summary" style="cursor:pointer; font-size:13px; font-weight:bold; margin-bottom:8px;">
-              <span>卡帶設定與外觀</span>
+              <span>播放器設定與外觀</span>
             </summary>
             <div class="sb-body">
               
-              <!-- 1. YouTube 音樂連結 -->
+              <!-- 0. 播放器造型款式切換 -->
               <div class="setting-group" style="margin-top:0;">
+                <div class="group-title">🎛️ 造型模式切換</div>
+                <div class="theme-mode-tabs">
+                  <button type="button" class="theme-tab-btn active" id="tabCassette">📼 復古錄音卡帶</button>
+                  <button type="button" class="theme-tab-btn" id="tabVinyl">💿 經典黑膠唱片</button>
+                </div>
+              </div>
+
+              <!-- 1. YouTube 音樂連結 -->
+              <div class="setting-group">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
                   <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址或 ID">
@@ -756,9 +994,9 @@
                 </div>
               </div>
 
-              <!-- 2. 貼紙底色 ＆ 按鍵色彩聯動 -->
+              <!-- 2. 主題色與貼紙/封套色 -->
               <div class="setting-group">
-                <div class="group-title"> 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
+                <div class="group-title">🎨 2. 主題色 ＆ 貼紙 / 唱片封套底色</div>
                 <div class="palette-grid">
                   <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
                   <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
@@ -773,13 +1011,13 @@
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">貼紙自訂任意色域</span>
+                  <span class="picker-label">🌈 自訂任意色域</span>
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼與控制座底色 -->
-              <div class="setting-group">
-                <div class="group-title"> 3. 卡帶外殼與控制座底色</div>
+              <!-- 3. 卡帶外殼底色 (卡帶模式專用) -->
+              <div class="setting-group" id="groupCaseColor">
+                <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
                   <div class="palette-circle color-case-btn" data-case="#5e1215" data-bar="#38090b" style="background:#5e1215;" title="深酒紅"></div>
                   <div class="palette-circle color-case-btn" data-case="#6d320c" data-bar="#451e06" style="background:#6d320c;" title="焦茶橙"></div>
@@ -794,15 +1032,15 @@
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
-                  <span class="picker-label"> 外殼自訂任意色域</span>
+                  <span class="picker-label">🌈 外殼自訂任意色域</span>
                 </div>
               </div>
 
-              <!-- 4. 貼紙置入圖片 -->
+              <!-- 4. 置入自訂封面 / 貼紙圖片 -->
               <div class="setting-group">
-                <div class="group-title"> 4. 貼紙置入圖片</div>
+                <div class="group-title">🖼️ 4. 置入圖片 (支援卡帶貼紙 ＆ 唱片封套)</div>
                 <div class="upload-btn-wrap">
-                  <label class="btn-custom-action" for="fileUploadInput"> 從電腦選擇圖片</label>
+                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
                   <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
                   <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
                 </div>
@@ -920,9 +1158,10 @@
       if (ytPlayer && typeof ytPlayer.getVideoData === 'function') {
         const d = ytPlayer.getVideoData();
         if (d && d.title) {
-          const t = document.getElementById('tapeTitle');
-          t.textContent = d.title;
-          t.title = d.title;
+          document.querySelectorAll('.common-song-title').forEach(el => {
+            el.textContent = d.title;
+            el.title = d.title;
+          });
         }
       }
     }
@@ -940,6 +1179,8 @@
       const iconVolMuted = document.getElementById('iconVolMuted');
       const loopToggle = document.getElementById('loopToggle');
       const stripe = document.getElementById('tapeStripe');
+      const vinylSleeve = document.getElementById('vinylSleeve');
+      const vinylDiscLabel = document.getElementById('vinylDiscLabel');
       const imgInput = document.getElementById('stickerImgInput');
       const fileInput = document.getElementById('fileUploadInput');
       const btnClearImg = document.getElementById('btnClearImg');
@@ -947,6 +1188,34 @@
       const caseColorPicker = document.getElementById('caseColorPicker');
       const soundWaveBox = document.getElementById('soundWaveBox');
       const tapeProgress = document.getElementById('tapeProgress');
+
+      const tabCassette = document.getElementById('tabCassette');
+      const tabVinyl = document.getElementById('tabVinyl');
+      const cassetteModeView = document.getElementById('cassetteModeView');
+      const vinylModeView = document.getElementById('vinylModeView');
+      const groupCaseColor = document.getElementById('groupCaseColor');
+
+      // 模式切換邏輯
+      function setPlayerTheme(theme) {
+        if (theme === 'vinyl') {
+          cassetteModeView.style.display = 'none';
+          vinylModeView.style.display = 'block';
+          tabVinyl.classList.add('active');
+          tabCassette.classList.remove('active');
+          groupCaseColor.style.display = 'none';
+        } else {
+          cassetteModeView.style.display = 'block';
+          vinylModeView.style.display = 'none';
+          tabCassette.classList.add('active');
+          tabVinyl.classList.remove('active');
+          groupCaseColor.style.display = 'block';
+        }
+        localStore.set('player_mode', theme);
+      }
+
+      tabCassette.addEventListener('click', () => setPlayerTheme('cassette'));
+      tabVinyl.addEventListener('click', () => setPlayerTheme('vinyl'));
+      setPlayerTheme(localStore.get('player_mode') || 'cassette');
 
       document.getElementById('btnFlipB').addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA').addEventListener('click', () => flipper.classList.remove('flipped'));
@@ -1064,15 +1333,18 @@
         });
       }, 250);
 
-      // ══════════ 顏色與圖片更換處理（全域強制生效） ══════════
+      // 顏色與圖片更換處理
       function applyAccent(color, clearImg = false) {
         document.documentElement.style.setProperty('--accent-color', color);
+        document.documentElement.style.setProperty('--vinyl-cover-bg', color);
         document.documentElement.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111' : '#fff');
         localStore.set('cfg_accent', color);
         if (nativeColorPicker) nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
 
         if (clearImg) {
           stripe.style.backgroundImage = 'none';
+          vinylSleeve.style.backgroundImage = 'none';
+          vinylDiscLabel.style.backgroundImage = 'none';
           localStore.remove('cfg_tape_img');
           if (imgInput) imgInput.value = '';
           if (fileInput) fileInput.value = '';
@@ -1087,7 +1359,6 @@
         if (caseColorPicker) caseColorPicker.value = cColor.startsWith('#') && cColor.length === 7 ? color : '#1a1a1a';
       }
 
-      // 還原配色快取
       const savedAccent = localStore.get('cfg_accent');
       if (savedAccent) applyAccent(savedAccent);
 
@@ -1096,12 +1367,13 @@
       if (savedCase) applyCase(savedCase, savedBar || '#11151c');
 
       const savedImg = localStore.get('cfg_tape_img');
-      if (savedImg && stripe) {
+      if (savedImg) {
         stripe.style.backgroundImage = `url("${savedImg}")`;
+        vinylSleeve.style.backgroundImage = `url("${savedImg}")`;
+        vinylDiscLabel.style.backgroundImage = `url("${savedImg}")`;
         if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 貼紙選色監聽（委派綁定，確保可點擊）
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1113,7 +1385,6 @@
         applyAccent(e.target.value, true);
       };
 
-      // 外殼選色監聽
       document.querySelectorAll('.color-case-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1125,13 +1396,14 @@
         applyCase(e.target.value, '#11151c');
       };
 
-      // 圖片上傳
       fileInput.onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
           reader.onload = (e) => {
             const d = e.target.result;
             stripe.style.backgroundImage = `url("${d}")`;
+            vinylSleeve.style.backgroundImage = `url("${d}")`;
+            vinylDiscLabel.style.backgroundImage = `url("${d}")`;
             localStore.set('cfg_tape_img', d);
             imgInput.value = '(已上傳圖片)';
           };
@@ -1143,6 +1415,8 @@
         const val = this.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
           stripe.style.backgroundImage = `url("${val}")`;
+          vinylSleeve.style.backgroundImage = `url("${val}")`;
+          vinylDiscLabel.style.backgroundImage = `url("${val}")`;
           localStore.set('cfg_tape_img', val);
         }
       };
