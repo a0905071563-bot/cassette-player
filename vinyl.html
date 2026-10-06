@@ -28,24 +28,29 @@
 
     :root {
       --jacket-bg: #f8f8f8;
-      --disc-body-color: #121212; /* 黑膠本體顏色（預設經典黑） */
-      --disc-label-bg: #e67e22;   /* 中央圓標顏色 */
+      --disc-body-color: #121212; 
+      --disc-label-bg: #e67e22;   
       --control-bar-bg: #11151c;
-      --accent-color: #e67e22;   /* 播放按鈕主題色 */
-      --title-color: #e67e22;    /* 標題文字顏色 */
+      --accent-color: #e67e22;   
+      --title-color: #e67e22;    
       --btn-icon-color: #ffffff;
     }
 
     .vinyl-widget {
       width: 100%;
-      max-width: 460px;
+      max-width: 480px;
       padding: 12px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .scene {
       width: 100%;
       perspective: 1000px;
+      display: flex;
+      justify-content: center;
     }
 
     .flipper {
@@ -69,12 +74,16 @@
       position: relative;
       z-index: 2;
       transform: rotateY(0deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .face-b {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100%;
       height: 100%;
       transform: rotateY(180deg);
       z-index: 1;
@@ -89,17 +98,22 @@
       z-index: 10;
     }
 
-    /* ══════════ 黑膠唱片機展示區（整組置中，徹底移除外陰影） ══════════ */
-    .vinyl-stage {
-      position: relative;
-      width: 370px; /* 封套 250px + 露出半片 120px = 370px 組合尺寸 */
-      height: 250px;
-      margin: 0 auto; /* 嚴格水平置中 */
+    /* ══════════ 黑膠唱片機展示區（真正嚴格居中） ══════════ */
+    .vinyl-stage-wrapper {
+      width: 100%;
       display: flex;
+      justify-content: center;
       align-items: center;
     }
 
-    /* ══════════ 右側黑膠唱片本體（可換色/換圖 + 璀璨明亮高光 + 無陰影） ══════════ */
+    .vinyl-stage {
+      position: relative;
+      width: 370px; /* 封套 250px + 露出半片 120px = 370px */
+      height: 250px;
+      margin: 0 auto;
+    }
+
+    /* ══════════ 右側黑膠唱片本體 ══════════ */
     .vinyl-disc {
       position: absolute;
       right: 0;
@@ -111,9 +125,8 @@
       background-color: var(--disc-body-color);
       background-size: cover;
       background-position: center;
-      /* 同心圓溝槽 */
       background-image: repeating-radial-gradient(circle at center, transparent 0px, transparent 2px, rgba(255,255,255,0.06) 3px, transparent 4px);
-      box-shadow: none !important; /* 徹底去除陰影 */
+      box-shadow: none !important;
       z-index: 1;
       display: flex;
       align-items: center;
@@ -121,7 +134,7 @@
       overflow: hidden;
     }
 
-    /* 加強版璀璨黑膠反光高光 (Super Bright Vinyl Specular Highlight) */
+    /* 璀璨黑膠反光高光 */
     .vinyl-disc::before {
       content: "";
       position: absolute;
@@ -140,7 +153,7 @@
       z-index: 2;
     }
 
-    /* 唱片中央圓標（可換色/換圖） */
+    /* 唱片中央圓標 */
     .disc-label {
       width: 82px;
       height: 82px;
@@ -148,7 +161,7 @@
       background-color: var(--disc-label-bg);
       background-size: cover;
       background-position: center;
-      box-shadow: none !important; /* 去除陰影 */
+      box-shadow: none !important;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -157,7 +170,6 @@
       transition: background-color 0.3s ease;
     }
 
-    /* 中央小孔洞 */
     .disc-hole {
       width: 12px;
       height: 12px;
@@ -167,7 +179,6 @@
       z-index: 4;
     }
 
-    /* 播放時順時針旋轉 */
     .is-playing .vinyl-disc {
       animation: spinVinyl 3.5s linear infinite;
     }
@@ -177,7 +188,7 @@
       to { transform: translateY(-50%) rotate(360deg); }
     }
 
-    /* ══════════ 左側方形唱片封套（無陰影） ══════════ */
+    /* ══════════ 左側方形唱片封套 ══════════ */
     .vinyl-jacket {
       position: absolute;
       left: 0;
@@ -189,7 +200,7 @@
       background-size: cover;
       background-position: center;
       border-radius: 6px;
-      box-shadow: none !important; /* 徹底去除陰影 */
+      box-shadow: none !important;
       z-index: 3;
       padding: 10px;
       display: flex;
@@ -199,20 +210,20 @@
       overflow: hidden;
     }
 
-    /* ══════════ 標題底框：更透明（80%高透）、更壓縮扁平 ══════════ */
+    /* ══════════ 標題底框（80%高透度 + 扁平壓縮） ══════════ */
     .jacket-header {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 3px;
       z-index: 4;
-      background: rgba(255, 255, 255, 0.2) !important; /* 80% 高透明度 */
+      background: rgba(255, 255, 255, 0.2) !important;
       backdrop-filter: blur(8px) !important;
       -webkit-backdrop-filter: blur(8px) !important;
-      padding: 4px 8px !important; /* 大幅壓扁上下內距 */
+      padding: 4px 8px !important;
       border-radius: 5px;
       border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: none !important; /* 去除陰影 */
+      box-shadow: none !important;
     }
 
     .header-row {
@@ -232,7 +243,7 @@
 
     .song-title-text {
       font-family: 'Montserrat', 'Zen Maru Gothic', sans-serif;
-      font-size: 12px; /* 緊湊細膩 */
+      font-size: 12px;
       font-weight: 800;
       color: var(--title-color) !important;
       text-transform: uppercase;
@@ -245,7 +256,6 @@
       transition: color 0.3s ease;
     }
 
-    /* 歌名旁邊的動態聲波 */
     .header-waveform {
       display: flex;
       align-items: center;
@@ -278,7 +288,6 @@
       100% { height: 4px; }
     }
 
-    /* 封套下方進度條（無陰影） */
     .jacket-progress-wrap {
       width: 100%;
       height: 4px;
@@ -298,18 +307,19 @@
       transition: width 0.15s linear, background-color 0.3s ease;
     }
 
-    /* ══════════ 控制底座（置中、無陰影） ══════════ */
+    /* ══════════ 控制底座 ══════════ */
     .tape-base {
       background: var(--control-bar-bg);
       border-radius: 28px;
-      box-shadow: none !important; /* 徹底去除陰影 */
+      box-shadow: none !important;
       border: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 6px 26px;
-      margin: 14px auto 0;
+      margin-top: 14px;
       width: 100%;
+      max-width: 440px;
       height: 48px;
       position: relative;
       transition: background 0.3s ease;
@@ -534,40 +544,42 @@
       
       <!-- LADO A (正面) -->
       <div class="face face-a">
-        <div class="vinyl-stage">
-          
-          <!-- 右側黑膠唱片（璀璨高光 + 無陰影 + 可自訂盤面顏色與圖片） -->
-          <div class="vinyl-disc" id="vinylDisc">
-            <div class="disc-label" id="discLabel">
-              <div class="disc-hole"></div>
-            </div>
-          </div>
-
-          <!-- 左側唱片封套（平口邊緣 + 無陰影） -->
-          <div class="vinyl-jacket" id="vinylJacket">
+        <div class="vinyl-stage-wrapper">
+          <div class="vinyl-stage">
             
-            <!-- 80% 高透磨砂玻璃標題區（高度壓縮扁平） -->
-            <div class="jacket-header">
-              <div class="header-decor-line"></div>
-              <div class="header-row">
-                <div class="song-title-text" id="songTitle">VINYL PLAYLIST</div>
-                <div class="header-waveform">
-                  <div class="mini-wave-bar"></div>
-                  <div class="mini-wave-bar"></div>
-                  <div class="mini-wave-bar"></div>
-                  <div class="mini-wave-bar"></div>
-                  <div class="mini-wave-bar"></div>
-                  <div class="mini-wave-bar"></div>
-                </div>
+            <!-- 右側黑膠唱片 -->
+            <div class="vinyl-disc" id="vinylDisc">
+              <div class="disc-label" id="discLabel">
+                <div class="disc-hole"></div>
               </div>
             </div>
 
-            <!-- 下方進度條 -->
-            <div class="jacket-progress-wrap" id="jacketProgress">
-              <div class="jacket-progress-fill" id="progressFill"></div>
-            </div>
-          </div>
+            <!-- 左側唱片封套 -->
+            <div class="vinyl-jacket" id="vinylJacket">
+              
+              <!-- 80% 高透磨砂玻璃標題區 -->
+              <div class="jacket-header">
+                <div class="header-decor-line"></div>
+                <div class="header-row">
+                  <div class="song-title-text" id="songTitle">VINYL PLAYLIST</div>
+                  <div class="header-waveform">
+                    <div class="mini-wave-bar"></div>
+                    <div class="mini-wave-bar"></div>
+                    <div class="mini-wave-bar"></div>
+                    <div class="mini-wave-bar"></div>
+                    <div class="mini-wave-bar"></div>
+                    <div class="mini-wave-bar"></div>
+                  </div>
+                </div>
+              </div>
 
+              <!-- 下方進度條 -->
+              <div class="jacket-progress-wrap" id="jacketProgress">
+                <div class="jacket-progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
         <!-- 播放控制底座 -->
@@ -662,7 +674,7 @@
                 </div>
               </div>
 
-              <!-- 3. 黑膠唱片盤面 (Disc Body) 改色與置圖 -->
+              <!-- 3. 黑膠唱片盤面 (Disc Body) 外觀 -->
               <div class="setting-group">
                 <div class="group-title">💿 3. 黑膠唱片盤面 (Vinyl Body) 外觀</div>
                 <div class="palette-grid">
@@ -706,7 +718,7 @@
                 </div>
               </div>
 
-              <!-- 5. 封套底色與封面圖片 -->
+              <!-- 5. 封套底色與封面圖片（已移除網址輸入框） -->
               <div class="setting-group">
                 <div class="group-title">🖼️ 5. 封套封面外觀</div>
                 <div class="palette-grid">
@@ -726,7 +738,6 @@
                   <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
                   <button type="button" class="btn-custom-action" id="btnClearImg">移除封面圖片</button>
                 </div>
-                <input type="text" id="jacketImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
               </div>
 
               <!-- 循環播放 -->
@@ -862,7 +873,6 @@
       const jacket = document.getElementById('vinylJacket');
       const vinylDisc = document.getElementById('vinylDisc');
       const discLabel = document.getElementById('discLabel');
-      const jacketImgInput = document.getElementById('jacketImgInput');
       const fileInput = document.getElementById('fileUploadInput');
       const fileLabelInput = document.getElementById('fileLabelInput');
       const fileDiscBodyInput = document.getElementById('fileDiscBodyInput');
@@ -981,7 +991,6 @@
       }, 250);
 
       // ══════════ 外觀與色彩控制邏輯 ══════════
-      // 1. 標題與按鍵主題色
       function applyThemeColor(color) {
         document.documentElement.style.setProperty('--accent-color', color);
         document.documentElement.style.setProperty('--title-color', color);
@@ -990,7 +999,6 @@
         if (themeColorPicker) themeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e67e22';
       }
 
-      // 2. 黑膠唱片盤面顏色
       function applyDiscBodyColor(color, clearImg = false) {
         document.documentElement.style.setProperty('--disc-body-color', color);
         localStore.set('cfg_disc_body_color', color);
@@ -1003,7 +1011,6 @@
         }
       }
 
-      // 3. 黑膠中央圓標顏色
       function applyLabelColor(color, clearImg = false) {
         document.documentElement.style.setProperty('--disc-label-bg', color);
         localStore.set('cfg_label_color', color);
@@ -1016,7 +1023,6 @@
         }
       }
 
-      // 4. 封套底色
       function applyJacketColor(color, clearImg = false) {
         document.documentElement.style.setProperty('--jacket-bg', color);
         localStore.set('cfg_jacket_bg', color);
@@ -1025,7 +1031,6 @@
         if (clearImg) {
           jacket.style.backgroundImage = 'none';
           localStore.remove('cfg_jacket_img');
-          if (jacketImgInput) jacketImgInput.value = '';
           if (fileInput) fileInput.value = '';
         }
       }
@@ -1056,10 +1061,9 @@
       const savedJacketImg = localStore.get('cfg_jacket_img');
       if (savedJacketImg && jacket) {
         jacket.style.backgroundImage = `url("${savedJacketImg}")`;
-        if (jacketImgInput) jacketImgInput.value = savedJacketImg.startsWith('data:') ? '(自訂上傳圖片)' : savedJacketImg;
       }
 
-      // 監聽：主題色按鈕
+      // 監聽按鈕
       document.querySelectorAll('.color-theme-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1070,7 +1074,6 @@
         applyThemeColor(e.target.value);
       };
 
-      // 監聽：唱片盤面色按鈕
       document.querySelectorAll('.color-disc-body-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1081,7 +1084,6 @@
         applyDiscBodyColor(e.target.value, true);
       };
 
-      // 監聽：圓標色按鈕
       document.querySelectorAll('.color-label-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1092,7 +1094,6 @@
         applyLabelColor(e.target.value, true);
       };
 
-      // 監聽：封套色按鈕
       document.querySelectorAll('.color-jacket-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -1103,7 +1104,7 @@
         applyJacketColor(e.target.value, true);
       };
 
-      // 唱片盤面圖片上傳 (Picture Disc)
+      // 圖片上傳
       fileDiscBodyInput.onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
@@ -1120,7 +1121,6 @@
         applyDiscBodyColor(localStore.get('cfg_disc_body_color') || '#121212', true);
       };
 
-      // 圓標圖片上傳
       fileLabelInput.onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
@@ -1137,7 +1137,6 @@
         applyLabelColor(localStore.get('cfg_label_color') || '#e67e22', true);
       };
 
-      // 封面圖片上傳
       fileInput.onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
@@ -1145,17 +1144,8 @@
             const d = e.target.result;
             jacket.style.backgroundImage = `url("${d}")`;
             localStore.set('cfg_jacket_img', d);
-            jacketImgInput.value = '(已上傳圖片)';
           };
           reader.readAsDataURL(this.files[0]);
-        }
-      };
-
-      jacketImgInput.onchange = function() {
-        const val = this.value.trim();
-        if (val && !val.includes('(已上傳圖片)')) {
-          jacket.style.backgroundImage = `url("${val}")`;
-          localStore.set('cfg_jacket_img', val);
         }
       };
 
