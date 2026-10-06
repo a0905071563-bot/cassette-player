@@ -21,19 +21,19 @@
         inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
       border: 1px solid #111 !important;
-      padding-bottom: 6px !important;
+      padding-bottom: 12px !important;
     }
 
-    /* ══════════ 上方白底歌名標籤（自動顯示歌名） ══════════ */
+    /* ══════════ 頂部白底手寫歌名標籤 ══════════ */
     .tape-label {
       background: #ffffff !important;
       border: 2px solid #222 !important;
       border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
       margin: 12px 14px 0 !important;
-      padding: 5px 12px !important;
+      padding: 6px 12px !important;
       position: relative !important;
-      z-index: 3 !important;
+      z-index: 5 !important;
     }
     .tape-title {
       font-family: 'Caveat', 'Permanent Marker', cursive !important;
@@ -48,49 +48,43 @@
       line-height: 1.2;
     }
 
-    /* ══════════ 一體化紅色區域（消除斷層） ══════════ */
+    /* ══════════ 整片平整一體化紅底（消除階梯突起） ══════════ */
     .tape-stripe {
       background: #e51d24 !important;
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
-      padding: 10px 0 0 !important;
+      padding: 12px 0 12px !important; /* 上下均勻包覆轉輪 */
       border-left: 2px solid #b31218 !important;
       border-right: 2px solid #b31218 !important;
-      box-shadow: none !important;
+      border-bottom: 2px solid #b31218 !important;
+      border-bottom-left-radius: 6px !important;
+      border-bottom-right-radius: 6px !important;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
       position: relative !important;
       transition: background-color 0.3s ease;
     }
 
-    .tape-footer {
-      background: #e51d24 !important;
-      background-size: cover !important;
-      background-position: bottom center !important;
-      margin: 0 14px !important;
-      border-bottom-left-radius: 6px !important;
-      border-bottom-right-radius: 6px !important;
-      border-left: 2px solid #b31218 !important;
-      border-right: 2px solid #b31218 !important;
-      border-bottom: 2px solid #b31218 !important;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
-      padding: 0 0 12px !important; /* 消除內部多餘間距 */
-      margin-top: -1px !important; /* 完全貼合消除縫隙 */
-      transition: background-color 0.3s ease;
-    }
-
-    /* 隱藏下方舊有歌名小字與標籤 */
-    .now-playing, .audio-tape, .badge-a, .badge-60 {
+    /* 完全隱藏原本會突出來造成階梯斷層的 footer 與多餘間隔 */
+    .tape-footer,
+    #cassetteBody > div[style*="height:10px"],
+    #cassetteBody > div[style*="height:8px"],
+    #cassetteBody > div[style*="height:6px"] {
       display: none !important;
     }
 
-    /* 轉輪視窗居中立體感 */
+    .badge-a, .badge-60 {
+      display: none !important;
+    }
+
+    /* 轉輪居中與立體深凹 */
     .reel-plate {
       box-shadow: inset 0 3px 8px rgba(0,0,0,0.85) !important;
       border: 2px solid rgba(0,0,0,0.4) !important;
       border-radius: 6px !important;
     }
 
-    /* 螺絲光澤 */
+    /* 螺絲立體光澤 */
     .screw {
       background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
@@ -150,12 +144,12 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底歌名貼紙（即時連動 YouTube 歌名） -->
+          <!-- 白底歌名標籤：預設顯示 Playlist，載入後自動替換為真實歌名 -->
           <div class="tape-label">
-            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">載入中...</div>
+            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 一體化紅色區域：轉輪 -->
+          <!-- 一整塊平整紅色貼紙：完美包裹轉輪 -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
@@ -170,16 +164,14 @@
             </div>
           </div>
 
-          <!-- 一體化紅色區域：底部 -->
-          <div class="tape-footer" id="tapeFooter">
+          <!-- 隱藏但保留在背景，供 JS 抓取歌名 -->
+          <div class="tape-footer" style="display:none !important;">
             <div class="now-playing" id="nowPlaying"></div>
-            <span class="audio-tape">AUDIO TAPE</span>
           </div>
 
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
           </div>
-          <div style="height:6px"></div>
         </div>
 
         <div class="tape-base">
@@ -235,7 +227,7 @@
                 </div>
               </div>
 
-              <!-- 獨立區塊 2：貼紙圖片與底色自訂 -->
+              <!-- 獨立區塊 2：貼紙圖片與純色自訂（完全分開） -->
               <div class="setting-group">
                 <div class="group-title">🖼️ 2. 貼紙底圖（置入圖片）</div>
                 <input type="text" id="stickerImgInput" class="full-input" placeholder="貼上圖片網址 (PNG / JPG)">
@@ -285,8 +277,8 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const stripe = document.getElementById('tapeStripe');
-      const footer = document.getElementById('tapeFooter');
       const title = document.getElementById('tapeTitle');
+      const nowPlaying = document.getElementById('nowPlaying');
       const imgInput = document.getElementById('stickerImgInput');
 
       // 讀取該卡帶的快取外觀
@@ -296,15 +288,12 @@
 
       if (savedImg) {
         stripe.style.backgroundImage = `url("${savedImg}")`;
-        footer.style.backgroundImage = `url("${savedImg}")`;
         imgInput.value = savedImg;
       } else if (savedBg) {
         stripe.style.backgroundColor = savedBg;
-        footer.style.backgroundColor = savedBg;
       }
       if (savedBorder) {
         stripe.style.borderColor = savedBorder;
-        footer.style.borderColor = savedBorder;
       }
 
       // 貼紙圖片輸入監聽
@@ -312,36 +301,40 @@
         const val = imgInput.value.trim();
         if (val) {
           stripe.style.backgroundImage = `url("${val}")`;
-          footer.style.backgroundImage = `url("${val}")`;
           localStorage.setItem('custom_tape_img', val);
         } else {
           stripe.style.backgroundImage = 'none';
-          footer.style.backgroundImage = 'none';
           localStorage.removeItem('custom_tape_img');
         }
       });
 
-      // 自動讀取 YouTube 歌名填入頂部白底標籤
-      setInterval(() => {
-        if (window.player && typeof window.player.getVideoData === 'function') {
-          const data = window.player.getVideoData();
-          if (data && data.title && data.title !== "") {
-            title.textContent = data.title;
-            title.title = data.title;
-          }
+      // 雙重即時抓取歌名：
+      // 1. 同步原組件 nowPlaying 的文字（Piano 等歌曲名稱）
+      // 2. 或直接抓取 YouTube API 的 title
+      const updateTitle = () => {
+        let songName = '';
+        if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
+          songName = nowPlaying.textContent.replace(/^♪\s*|\s*♪$/g, '').trim();
         }
-      }, 1000);
+        if (!songName && window.player && typeof window.player.getVideoData === 'function') {
+          const data = window.player.getVideoData();
+          if (data && data.title) songName = data.title;
+        }
+
+        if (songName) {
+          title.textContent = songName;
+          title.title = songName;
+        }
+      };
+
+      setInterval(updateTitle, 800);
     });
 
     window.setTapeColor = function(bg, border) {
       const stripe = document.getElementById('tapeStripe');
-      const footer = document.getElementById('tapeFooter');
       stripe.style.backgroundImage = 'none';
-      footer.style.backgroundImage = 'none';
       stripe.style.backgroundColor = bg;
-      footer.style.backgroundColor = bg;
       stripe.style.borderColor = border;
-      footer.style.borderColor = border;
       localStorage.removeItem('custom_tape_img');
       localStorage.setItem('custom_tape_bg', bg);
       localStorage.setItem('custom_tape_border', border);
@@ -353,6 +346,4 @@
 <script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
 <script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
 <script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
-</body>
-</html>
+<script src="https
