@@ -40,49 +40,18 @@
 
       /* 控制底座通用 */
       --control-bar-bg: #11151c;
-      --active-theme-color: #e51d24;
+      --active-theme-color: #e67e22;
       --btn-icon-color: #ffffff;
     }
 
     .app-widget {
       width: 100%;
       max-width: 480px;
-      padding: 10px;
+      padding: 12px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    /* 頂部切換款式導航列 */
-    .style-switch-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding: 0 4px;
-    }
-
-    .style-toggle-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(4px);
-    }
-    .style-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: scale(1.03);
     }
 
     .scene {
@@ -143,7 +112,7 @@
     #cassetteModel {
       width: 100%;
       max-width: 440px;
-      display: block;
+      display: none;
     }
 
     .cassette {
@@ -444,26 +413,25 @@
     }
 
     /* ════════════════════════════════════════════════
-       款式二：黑膠唱片 (Vinyl Style) - 嚴格居中
+       款式二：黑膠唱片 (Vinyl Style) - 完美向右校正居中
     ════════════════════════════════════════════════ */
     #vinylModel {
       width: 100%;
-      display: none;
+      display: block;
     }
 
+    /* 外層舞台：向右位移 55px，將封套+唱片的整體幾何中心精準壓在 Play 鍵垂直線上 */
     .vinyl-stage-wrapper {
-      position: relative;
       width: 100%;
       height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 55px; /* 精準向右平移，徹底解決偏左問題 */
     }
 
-    /* 核心對齊計算：組合寬度 370px，其中心點在 185px。
-       以 50% 減去 185px 即可絕對將幾何中心對準 Play 鍵！ */
     .vinyl-stage {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-185px);
+      position: relative;
       width: 370px;
       height: 250px;
     }
@@ -763,6 +731,39 @@
       position: relative;
     }
 
+    /* 內部雙按鈕款式切換器 */
+    .style-selector-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .style-option-btn {
+      flex: 1;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .style-option-btn.active {
+      background: var(--active-theme-color) !important;
+      border-color: var(--active-theme-color) !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .style-option-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
     .setting-group {
       background: rgba(255, 255, 255, 0.04);
       border-radius: 8px;
@@ -889,14 +890,6 @@
 </head>
 <body>
 <div class="app-widget" id="appWidget">
-  
-  <!-- 頂部切換款式按鈕 -->
-  <div class="style-switch-bar">
-    <button type="button" class="style-toggle-btn" id="btnToggleStyle">
-      <span id="styleIcon">💿</span>
-      <span id="styleText">切換為黑膠模式</span>
-    </button>
-  </div>
 
   <div class="scene">
     <div class="flipper" id="flipper">
@@ -947,7 +940,7 @@
           </div>
         </div>
 
-        <!-- 款式二：黑膠唱片（嚴格置中） -->
+        <!-- 款式二：黑膠唱片（向右精確位移至絕對居中） -->
         <div id="vinylModel">
           <div class="vinyl-stage-wrapper">
             <div class="vinyl-stage">
@@ -981,7 +974,7 @@
           </div>
         </div>
 
-        <!-- 播放控制底座（通用核心） -->
+        <!-- 播放控制底座 -->
         <div class="tape-base" id="tapeControlBase">
           <div class="volume-module">
             <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
@@ -1045,19 +1038,32 @@
             </summary>
             <div class="sb-body">
               
-              <!-- 1. YouTube 音樂連結 -->
+              <!-- 1. 款式切換按鍵（設定面內嵌雙按鈕） -->
               <div class="setting-group" style="margin-top:0;">
-                <div class="group-title">🎵 1. YouTube 音樂連結</div>
+                <div class="group-title">🎛️ 1. 播放器款式切換</div>
+                <div class="style-selector-row">
+                  <button type="button" class="style-option-btn" id="optCassette">
+                    <span>📼</span> <span>卡帶模式</span>
+                  </button>
+                  <button type="button" class="style-option-btn active" id="optVinyl">
+                    <span>💿</span> <span>黑膠模式</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 2. YouTube 音樂連結 -->
+              <div class="setting-group">
+                <div class="group-title">🎵 2. YouTube 音樂連結</div>
                 <div class="link-row">
                   <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址或 ID">
                   <button type="button" id="btnLoad">載入</button>
                 </div>
               </div>
 
-              <!-- 2. 當前款式專屬外觀設定 -->
-              <div id="cassetteSettings">
+              <!-- 3. 卡帶專屬設定區 -->
+              <div id="cassetteSettings" style="display:none;">
                 <div class="setting-group">
-                  <div class="group-title">🎨 2. 卡帶貼紙與按鈕色彩聯動</div>
+                  <div class="group-title">🎨 3. 卡帶貼紙與按鈕色彩聯動</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
                     <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
@@ -1082,7 +1088,7 @@
                 </div>
 
                 <div class="setting-group">
-                  <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
+                  <div class="group-title">🎛️ 4. 卡帶外殼與控制座底色</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
                     <div class="palette-circle color-case-btn" data-case="#5e1215" data-bar="#38090b" style="background:#5e1215;" title="深酒紅"></div>
@@ -1097,10 +1103,10 @@
                 </div>
               </div>
 
-              <!-- 黑膠專用設定 -->
-              <div id="vinylSettings" style="display:none;">
+              <!-- 4. 黑膠專屬設定區 -->
+              <div id="vinylSettings">
                 <div class="setting-group">
-                  <div class="group-title">🎨 2. 黑膠主題與標題字體色</div>
+                  <div class="group-title">🎨 3. 黑膠主題與標題字體色</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-theme-btn" data-color="#e67e22" style="background:#e67e22;" title="溫暖橘"></div>
                     <div class="palette-circle color-theme-btn" data-color="#e51d24" style="background:#e51d24;" title="熱血紅"></div>
@@ -1118,7 +1124,7 @@
                 </div>
 
                 <div class="setting-group">
-                  <div class="group-title">💿 3. 黑膠盤面 (Vinyl Body) 外觀</div>
+                  <div class="group-title">💿 4. 黑膠盤面 (Vinyl Body) 外觀</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-disc-body-btn" data-color="#121212" style="background:#121212;" title="經典黑膠"></div>
                     <div class="palette-circle color-disc-body-btn" data-color="#b0b5bc" style="background:#b0b5bc;" title="璀璨金屬銀"></div>
@@ -1137,7 +1143,7 @@
                 </div>
 
                 <div class="setting-group">
-                  <div class="group-title">🏷️ 4. 黑膠中央圓標 (Disc Label) 外觀</div>
+                  <div class="group-title">🏷️ 5. 黑膠中央圓標 (Disc Label) 外觀</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-label-btn" data-color="#e67e22" style="background:#e67e22;" title="復古橘"></div>
                     <div class="palette-circle color-label-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
@@ -1157,7 +1163,7 @@
                 </div>
 
                 <div class="setting-group">
-                  <div class="group-title">🖼️ 5. 封套封面外觀</div>
+                  <div class="group-title">🖼️ 6. 封套封面外觀</div>
                   <div class="palette-grid">
                     <div class="palette-circle color-jacket-btn" data-color="#222222" style="background:#222222;" title="深色封套"></div>
                     <div class="palette-circle color-jacket-btn" data-color="#f8f8f8" style="background:#f8f8f8; border-color:#999;" title="純白卡紙"></div>
@@ -1226,9 +1232,9 @@
     let isReady = false;
     let isLooping = localStore.get('yt_loop') === 'true';
 
-    // 播放器初始化
+    // 播放器初始化（使用高穩定性 Lo-Fi 音樂）
     window.onYouTubeIframeAPIReady = function() {
-      const initialId = localStore.get('yt_video_id') || 'jfKfPfyJRdk';
+      const initialId = localStore.get('yt_video_id') || '5qap5aO4i9A'; // 高穩定播放
       ytPlayer = new YT.Player('playerPlaceholder', {
         height: '100%',
         width: '100%',
@@ -1295,46 +1301,43 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      // ══════════ 款式切換核心邏輯 ══════════
-      const btnToggleStyle = document.getElementById('btnToggleStyle');
-      const styleIcon = document.getElementById('styleIcon');
-      const styleText = document.getElementById('styleText');
+      // ══════════ Side B 款式切換按鈕 ══════════
+      const optCassette = document.getElementById('optCassette');
+      const optVinyl = document.getElementById('optVinyl');
       const cassetteModel = document.getElementById('cassetteModel');
       const vinylModel = document.getElementById('vinylModel');
       const cassetteSettings = document.getElementById('cassetteSettings');
       const vinylSettings = document.getElementById('vinylSettings');
 
-      let currentStyle = localStore.get('player_style') || 'cassette'; // 'cassette' 或 'vinyl'
+      let currentStyle = localStore.get('player_style') || 'vinyl'; // 預設黑膠
 
-      function updateStyleDisplay() {
-        if (currentStyle === 'vinyl') {
+      function setStyle(style) {
+        currentStyle = style;
+        localStore.set('player_style', style);
+        if (style === 'vinyl') {
           cassetteModel.style.display = 'none';
           vinylModel.style.display = 'block';
           cassetteSettings.style.display = 'none';
           vinylSettings.style.display = 'block';
-          styleIcon.textContent = '📼';
-          styleText.textContent = '切換為卡帶模式';
+          optVinyl.classList.add('active');
+          optCassette.classList.remove('active');
           document.documentElement.style.setProperty('--active-theme-color', localStore.get('cfg_vinyl_theme') || '#e67e22');
         } else {
           cassetteModel.style.display = 'block';
           vinylModel.style.display = 'none';
           cassetteSettings.style.display = 'block';
           vinylSettings.style.display = 'none';
-          styleIcon.textContent = '💿';
-          styleText.textContent = '切換為黑膠模式';
+          optCassette.classList.add('active');
+          optVinyl.classList.remove('active');
           document.documentElement.style.setProperty('--active-theme-color', localStore.get('cfg_accent') || '#e51d24');
         }
-        localStore.set('player_style', currentStyle);
       }
 
-      btnToggleStyle.addEventListener('click', () => {
-        currentStyle = (currentStyle === 'cassette') ? 'vinyl' : 'cassette';
-        updateStyleDisplay();
-      });
+      optCassette.addEventListener('click', () => setStyle('cassette'));
+      optVinyl.addEventListener('click', () => setStyle('vinyl'));
+      setStyle(currentStyle);
 
-      updateStyleDisplay();
-
-      // ══════════ 翻面控制 ══════════
+      // 翻轉卡帶
       const flipper = document.getElementById('flipper');
       document.getElementById('btnFlipB').addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA').addEventListener('click', () => flipper.classList.remove('flipped'));
@@ -1396,7 +1399,7 @@
         iconVolMuted.style.display = val === 0 ? 'block' : 'none';
       });
 
-      // 換歌載入
+      // 載入音樂
       const linkInput = document.getElementById('linkInput');
       const btnLoad = document.getElementById('btnLoad');
 
@@ -1426,7 +1429,7 @@
       linkInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLoad(); });
       if (localStore.get('yt_url')) linkInput.value = localStore.get('yt_url');
 
-      // 循環設定
+      // 循環播放
       const loopToggle = document.getElementById('loopToggle');
       loopToggle.checked = isLooping;
       loopToggle.addEventListener('change', () => {
@@ -1434,25 +1437,22 @@
         localStore.set('yt_loop', isLooping);
       });
 
-      // 卡帶進度條點擊
-      const tapeProgress = document.getElementById('tapeProgress');
-      tapeProgress.addEventListener('click', (e) => {
+      // 進度條跳轉
+      document.getElementById('tapeProgress').addEventListener('click', (e) => {
         if (!isReady || !ytPlayer) return;
-        const rect = tapeProgress.getBoundingClientRect();
+        const rect = e.currentTarget.getBoundingClientRect();
         const ratio = (e.clientX - rect.left) / rect.width;
         if (ytPlayer.getDuration()) ytPlayer.seekTo(ratio * ytPlayer.getDuration(), true);
       });
 
-      // 黑膠進度條點擊
-      const jacketProgress = document.getElementById('jacketProgress');
-      jacketProgress.addEventListener('click', (e) => {
+      document.getElementById('jacketProgress').addEventListener('click', (e) => {
         if (!isReady || !ytPlayer) return;
-        const rect = jacketProgress.getBoundingClientRect();
+        const rect = e.currentTarget.getBoundingClientRect();
         const ratio = (e.clientX - rect.left) / rect.width;
         if (ytPlayer.getDuration()) ytPlayer.seekTo(ratio * ytPlayer.getDuration(), true);
       });
 
-      // 動態生成卡帶聲波柱
+      // 38 根卡帶聲波柱
       const soundWaveBox = document.getElementById('soundWaveBox');
       const barCount = 38;
       for (let i = 0; i < barCount; i++) {
@@ -1463,35 +1463,29 @@
       const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
       const progressFill = document.getElementById('progressFill');
 
-      // 播放輪詢監聽
+      // 播放進度監聽
       setInterval(() => {
         if (!isReady || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
         const cur = ytPlayer.getCurrentTime() || 0;
         const dur = ytPlayer.getDuration() || 1;
         const percent = (cur / dur) * 100;
 
-        // 更新黑膠進度條
         progressFill.style.width = `${percent}%`;
 
-        // 更新卡帶聲波柱
         const activeLimit = Math.floor((percent / 100) * barCount);
         waveBars.forEach((b, idx) => {
           b.classList.toggle('active', idx <= activeLimit);
         });
       }, 250);
 
-      // ════════════════════════════════════════════════
-      // 外觀控制：卡帶
-      // ════════════════════════════════════════════════
+      // ══════════ 外觀：卡帶 ══════════
       const tapeStripe = document.getElementById('tapeStripe');
       const nativeColorPicker = document.getElementById('nativeColorPicker');
       const fileUploadInput = document.getElementById('fileUploadInput');
 
       function applyCassetteAccent(color, clearImg = false) {
         document.documentElement.style.setProperty('--accent-color', color);
-        if (currentStyle === 'cassette') {
-          document.documentElement.style.setProperty('--active-theme-color', color);
-        }
+        if (currentStyle === 'cassette') document.documentElement.style.setProperty('--active-theme-color', color);
         localStore.set('cfg_accent', color);
         if (nativeColorPicker) nativeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
 
@@ -1514,18 +1508,12 @@
       if (localStore.get('cfg_tape_img')) tapeStripe.style.backgroundImage = `url("${localStore.get('cfg_tape_img')}")`;
 
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.onclick = function(e) {
-          e.preventDefault();
-          applyCassetteAccent(this.getAttribute('data-color'), true);
-        };
+        btn.onclick = function(e) { e.preventDefault(); applyCassetteAccent(this.getAttribute('data-color'), true); };
       });
       nativeColorPicker.oninput = function(e) { applyCassetteAccent(e.target.value, true); };
 
       document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.onclick = function(e) {
-          e.preventDefault();
-          applyCaseColor(this.getAttribute('data-case'), this.getAttribute('data-bar'));
-        };
+        btn.onclick = function(e) { e.preventDefault(); applyCaseColor(this.getAttribute('data-case'), this.getAttribute('data-bar')); };
       });
       document.getElementById('caseColorPicker').oninput = function(e) { applyCaseColor(e.target.value, '#11151c'); };
 
@@ -1544,18 +1532,14 @@
         applyCassetteAccent(localStore.get('cfg_accent') || '#e51d24', true);
       };
 
-      // ════════════════════════════════════════════════
-      // 外觀控制：黑膠
-      // ════════════════════════════════════════════════
+      // ══════════ 外觀：黑膠 ══════════
       const vinylDisc = document.getElementById('vinylDisc');
       const discLabel = document.getElementById('discLabel');
       const vinylJacket = document.getElementById('vinylJacket');
 
       function applyVinylTheme(color) {
         document.documentElement.style.setProperty('--vinyl-theme-color', color);
-        if (currentStyle === 'vinyl') {
-          document.documentElement.style.setProperty('--active-theme-color', color);
-        }
+        if (currentStyle === 'vinyl') document.documentElement.style.setProperty('--active-theme-color', color);
         localStore.set('cfg_vinyl_theme', color);
         document.getElementById('themeColorPicker').value = color.startsWith('#') && color.length === 7 ? color : '#e67e22';
       }
@@ -1598,7 +1582,6 @@
       if (localStore.get('cfg_jacket_bg')) applyJacketColor(localStore.get('cfg_jacket_bg'));
       if (localStore.get('cfg_jacket_img')) vinylJacket.style.backgroundImage = `url("${localStore.get('cfg_jacket_img')}")`;
 
-      // 監聽黑膠色彩
       document.querySelectorAll('.color-theme-btn').forEach(btn => {
         btn.onclick = function(e) { e.preventDefault(); applyVinylTheme(this.getAttribute('data-color')); };
       });
@@ -1619,7 +1602,7 @@
       });
       document.getElementById('jacketColorPicker').oninput = function(e) { applyJacketColor(e.target.value, true); };
 
-      // 上傳黑膠圖片
+      // 圖片上傳
       document.getElementById('fileDiscBodyInput').onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
