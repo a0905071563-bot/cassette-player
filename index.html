@@ -14,17 +14,16 @@
   <style>
     /* ══════════ 全域動態色彩變數 ══════════ */
     :root {
-      --case-bg: radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%);
-      --case-border: #111111;
+      --case-color: #1a1a1a;
+      --case-border: #0a0a0a;
       --control-bar-bg: #11151c;
       --accent-color: #e51d24; 
-      --btn-icon-color: #ffffff; /* 播放圖示顏色（自適應深淺） */
-      --btn-hover-color: #ff3b30;
+      --btn-icon-color: #ffffff;
     }
 
     /* ══════════ 卡帶外殼 ＆ 黑色控制底座 聯動改色 ══════════ */
     #cassetteBody {
-      background: var(--case-bg) !important;
+      background: var(--case-color) !important;
       border-radius: 12px !important;
       box-shadow: 
         0 18px 30px rgba(0, 0, 0, 0.65),
@@ -73,13 +72,119 @@
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
-      padding: 12px 0 12px !important;
+      padding: 10px 0 !important;
       border: none !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
       box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
       position: relative !important;
       transition: background-color 0.3s ease;
+    }
+
+    /* ══════════ Maxell 造型中軸黑框視窗 ══════════ */
+    .reel-plate {
+      background: #141414 !important;
+      border: 3px solid #222 !important;
+      border-radius: 4px !important;
+      box-shadow: 
+        inset 0 3px 8px rgba(0,0,0,0.9),
+        0 1px 2px rgba(255,255,255,0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    /* 左右轉輪方框凹槽 */
+    .reel {
+      background: #0d0d0d !important;
+      border: 1px solid #2a2a2a !important;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.8) !important;
+    }
+
+    /* 中間透明視窗：沙漏弧形遮罩 */
+    .tape-window {
+      background: #0a0a0a !important;
+      border-left: 2px solid #222 !important;
+      border-right: 2px solid #222 !important;
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+    }
+
+    /* 沙漏型透光弧面質感 */
+    .tape-window::before {
+      content: "";
+      position: absolute;
+      width: 38px;
+      height: 100%;
+      background: #555555;
+      clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%, 35% 50%);
+      opacity: 0.85;
+      z-index: 1;
+    }
+
+    /* 左右兩側黑膠弧形邊緣 */
+    .tape-window::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at -4px 50%, #777 0%, transparent 18px),
+        radial-gradient(circle at calc(100% + 4px) 50%, #777 0%, transparent 18px);
+      opacity: 0.6;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ══════════ 中間白色刻度線變身「垂直動態聲波」 ══════════ */
+    .mid-scale-equalizer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 78%;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* 白色直條刻度線 */
+    .scale-bar-line {
+      width: 2px;
+      height: 6px; /* 靜態時為等高的小刻度 */
+      background: #ffffff;
+      border-radius: 1px;
+      box-shadow: 0 0 2px rgba(255,255,255,0.7);
+      transition: height 0.12s ease;
+    }
+
+    /* 播放時白色刻度線跳動律動 */
+    .is-playing .scale-bar-line {
+      animation: scalePulse 0.55s infinite ease-in-out alternate;
+    }
+    .scale-bar-line:nth-child(1) { animation-delay: 0.05s; }
+    .scale-bar-line:nth-child(2) { animation-delay: 0.22s; }
+    .scale-bar-line:nth-child(3) { animation-delay: 0.41s; }
+    .scale-bar-line:nth-child(4) { animation-delay: 0.15s; }
+    .scale-bar-line:nth-child(5) { animation-delay: 0.33s; } /* 中央最高 */
+    .scale-bar-line:nth-child(6) { animation-delay: 0.18s; }
+    .scale-bar-line:nth-child(7) { animation-delay: 0.45s; }
+    .scale-bar-line:nth-child(8) { animation-delay: 0.28s; }
+    .scale-bar-line:nth-child(9) { animation-delay: 0.08s; }
+
+    @keyframes scalePulse {
+      0% { height: 4px; }
+      50% { height: 15px; }
+      100% { height: 7px; }
+    }
+
+    /* 隱藏原版轉輪內部黑塊，讓位給沙漏與聲波 */
+    .tape-window .spool, .tape-window .gap {
+      display: none !important;
     }
 
     /* ══════════ 按鍵主題色聯動 ══════════ */
@@ -112,18 +217,12 @@
     .badge-a, .badge-60 { display: none !important; }
     #langBtn, .badge-b, .sb-header-right { display: none !important; }
 
-    /* 轉輪立體深凹 */
-    .reel-plate {
-      box-shadow: inset 0 3px 8px rgba(0,0,0,0.85) !important;
-      border: 2px solid rgba(0,0,0,0.4) !important;
-      border-radius: 6px !important;
-    }
     .screw {
       background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* ══════════ 進度條下移 ＆ 聲波柱 ══════════ */
+    /* 進度條下移 ＆ 底部聲波柱 */
     .tape-progress {
       margin: 14px 16px 4px !important;
       height: 14px !important;
@@ -212,7 +311,6 @@
       outline: none;
     }
 
-    /* 色盤排版（支援多色自動折行） */
     .palette-grid {
       display: flex;
       flex-wrap: wrap;
@@ -238,7 +336,7 @@
       border-color: #fff;
     }
 
-    /* 🌈 自訂取色器（色域）樣式 */
+    /* 🌈 自訂取色器通用樣式 */
     .custom-color-picker-wrap {
       display: flex;
       align-items: center;
@@ -315,13 +413,26 @@
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
+            
+            <!-- Maxell 造型中軸黑框視窗 -->
             <div class="reel-plate">
               <div class="reel"><div class="teeth"></div></div>
+              
+              <!-- 中間沙漏視窗 ＆ 白色聲波刻度 -->
               <div class="tape-window">
-                <div class="spool"></div>
-                <div class="gap"></div>
-                <div class="spool"></div>
+                <div class="mid-scale-equalizer">
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                  <div class="scale-bar-line"></div>
+                </div>
               </div>
+
               <div class="reel"><div class="teeth"></div></div>
             </div>
           </div>
@@ -386,11 +497,9 @@
                 </div>
               </div>
 
-              <!-- 2. 紅橙黃綠藍靛紫黑白灰 + 色域取色器 -->
+              <!-- 2. 貼紙與按鈕色彩聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
-                
-                <!-- 基礎 10 大配色盤 -->
                 <div class="palette-grid">
                   <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
                   <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
@@ -403,22 +512,28 @@
                   <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
                   <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
                 </div>
-
-                <!-- 🌈 自訂色域（全彩調色盤） -->
+                <!-- 貼紙自訂色域 -->
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">🌈 自訂任意色域（點擊挑選或輸入色票）</span>
+                  <span class="picker-label">🌈 貼紙自訂任意色域（點擊調色或輸入色票）</span>
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼 ＆ 控制座聯動 -->
+              <!-- 3. 卡帶外殼 ＆ 控制座聯動（含自訂色域） -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
-                  <div class="palette-circle color-case-btn" data-case="radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%)" data-bar="#11151c" data-border="#111" style="background:#1a1a1a;" title="經典黑魂"></div>
-                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" data-border="#c7c3ba" style="background:#eae6df;" title="復古米白"></div>
-                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" data-border="#1a202c" style="background:#4a5568;" title="水泥冷灰"></div>
-                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" data-border="#020617" style="background:#1e293b;" title="午夜星空藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
+                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" style="background:#eae6df;" title="復古米白"></div>
+                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" style="background:#4a5568;" title="水泥冷灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" style="background:#1e293b;" title="午夜星空藍"></div>
+                  <div class="palette-circle color-case-btn" data-case="#2d3748" data-bar="#1a202c" style="background:#2d3748;" title="炭黑"></div>
+                  <div class="palette-circle color-case-btn" data-case="#f7f7f7" data-bar="#e5e5e5" style="background:#f7f7f7; border-color:#aaa;" title="陶瓷純白"></div>
+                </div>
+                <!-- 外殼自訂色域 -->
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
+                  <span class="picker-label">🌈 外殼自訂任意色域（點擊調色或輸入色票）</span>
                 </div>
               </div>
 
@@ -459,198 +574,4 @@
     const rawSetItem = localStorage.setItem.bind(localStorage);
     const rawGetItem = localStorage.getItem.bind(localStorage);
 
-    localStorage.setItem = function(key, val) {
-      return rawSetItem(widgetId + '_' + key, val);
-    };
-    localStorage.getItem = function(key) {
-      return rawGetItem(widgetId + '_' + key);
-    };
-
-    // 判斷顏色深淺，自適應深淺圖示
-    function isLightColor(hex) {
-      if (!hex || !hex.startsWith('#')) return false;
-      const c = hex.substring(1);
-      const rgb = parseInt(c.length === 3 ? c.split('').map(x=>x+x).join('') : c, 16);
-      const r = (rgb >> 16) & 0xff;
-      const g = (rgb >>  8) & 0xff;
-      const b = (rgb >>  0) & 0xff;
-      const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-      return luma > 160;
-    }
-
-    function applyAccentColor(color) {
-      const root = document.documentElement;
-      const stripe = document.getElementById('tapeStripe');
-      root.style.setProperty('--accent-color', color);
-      root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
-      stripe.style.backgroundImage = 'none'; // 切換純色時清空圖片背景
-      localStorage.setItem('cfg_accent', color);
-      document.getElementById('nativeColorPicker').value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const root = document.documentElement;
-      const stripe = document.getElementById('tapeStripe');
-      const title = document.getElementById('tapeTitle');
-      const nowPlaying = document.getElementById('nowPlaying');
-      const imgInput = document.getElementById('stickerImgInput');
-      const fileInput = document.getElementById('fileUploadInput');
-      const btnClearImg = document.getElementById('btnClearImg');
-      const soundWaveBox = document.getElementById('soundWaveBox');
-      const progressFill = document.getElementById('progressFill');
-      const wrapper = document.getElementById('cassette-player-wrapper');
-      const nativeColorPicker = document.getElementById('nativeColorPicker');
-
-      // 1. 生成 38 根聲波柱
-      const barCount = 38;
-      for (let i = 0; i < barCount; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wave-bar';
-        soundWaveBox.appendChild(bar);
-      }
-      const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
-
-      // 2. 聲波律動與播放進度追蹤
-      setInterval(() => {
-        let isPlaying = false;
-        if (window.player && typeof window.player.getPlayerState === 'function') {
-          isPlaying = (window.player.getPlayerState() === 1);
-        }
-        if (isPlaying) {
-          wrapper.classList.add('is-playing');
-        } else {
-          wrapper.classList.remove('is-playing');
-        }
-
-        const percent = parseFloat(progressFill.style.width) || 0;
-        const activeBarLimit = Math.floor((percent / 100) * barCount);
-        waveBars.forEach((bar, idx) => {
-          if (idx <= activeBarLimit) {
-            bar.classList.add('active');
-            if (!isPlaying) bar.style.background = '#ff9800';
-          } else {
-            bar.classList.remove('active');
-            bar.style.background = '#444';
-          }
-        });
-      }, 150);
-
-      // 3. 讀取並套用外觀快取
-      const savedAccent = localStorage.getItem('cfg_accent');
-      if (savedAccent) {
-        applyAccentColor(savedAccent);
-      }
-
-      const savedCaseBg = localStorage.getItem('cfg_case_bg');
-      const savedBarBg = localStorage.getItem('cfg_bar_bg');
-      const savedCaseBorder = localStorage.getItem('cfg_case_border');
-      if (savedCaseBg) {
-        root.style.setProperty('--case-bg', savedCaseBg);
-        root.style.setProperty('--control-bar-bg', savedBarBg || '#11151c');
-        root.style.setProperty('--case-border', savedCaseBorder || '#111');
-      }
-
-      const savedImg = localStorage.getItem('cfg_tape_img');
-      if (savedImg) {
-        stripe.style.backgroundImage = `url("${savedImg}")`;
-        imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
-      }
-
-      // 4. 基礎 10 色按鈕監聽
-      document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const color = this.getAttribute('data-color');
-          applyAccentColor(color);
-          localStorage.removeItem('cfg_tape_img');
-          imgInput.value = '';
-          fileInput.value = '';
-        });
-      });
-
-      // 5. 🌈 自訂色域 Color Picker 監聽
-      nativeColorPicker.addEventListener('input', function(e) {
-        const pickedColor = e.target.value;
-        applyAccentColor(pickedColor);
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
-      });
-
-      // 6. 外殼與底座更換監聽
-      document.querySelectorAll('.color-case-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const caseBg = this.getAttribute('data-case');
-          const barBg = this.getAttribute('data-bar');
-          const cBorder = this.getAttribute('data-border');
-          root.style.setProperty('--case-bg', caseBg);
-          root.style.setProperty('--control-bar-bg', barBg);
-          root.style.setProperty('--case-border', cBorder);
-          localStorage.setItem('cfg_case_bg', caseBg);
-          localStorage.setItem('cfg_bar_bg', barBg);
-          localStorage.setItem('cfg_case_border', cBorder);
-        });
-      });
-
-      // 7. 圖片上傳 (Base64)
-      fileInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const dataUrl = e.target.result;
-            stripe.style.backgroundImage = `url("${dataUrl}")`;
-            localStorage.setItem('cfg_tape_img', dataUrl);
-            imgInput.value = '(已上傳圖片)';
-          };
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      // 8. 圖片 URL
-      imgInput.addEventListener('change', () => {
-        const val = imgInput.value.trim();
-        if (val && !val.includes('(已上傳圖片)')) {
-          stripe.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('cfg_tape_img', val);
-        }
-      });
-
-      // 9. 移除圖片按鈕
-      btnClearImg.addEventListener('click', (e) => {
-        e.preventDefault();
-        stripe.style.backgroundImage = 'none';
-        localStorage.removeItem('cfg_tape_img');
-        imgInput.value = '';
-        fileInput.value = '';
-      });
-
-      // 10. 即時讀取歌名填入頂部標籤
-      const updateTitle = () => {
-        let songName = '';
-        if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
-          songName = nowPlaying.textContent.replace(/^♪\s*|\s*♪$/g, '').trim();
-        }
-        if (!songName && window.player && typeof window.player.getVideoData === 'function') {
-          const data = window.player.getVideoData();
-          if (data && data.title) songName = data.title;
-        }
-
-        if (songName) {
-          title.textContent = songName;
-          title.title = songName;
-        }
-      };
-      setInterval(updateTitle, 800);
-    });
-  })();
-</script>
-
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-detector.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/base.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/shared/js/widget-params.js"></script>
-<script src="https://www.kanpekiuniverse.com/widgets/music/casete/script.js"></script>
-</body>
-</html>
+    localStorage.setItem = function(
