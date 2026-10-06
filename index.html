@@ -40,13 +40,16 @@
     }
     .face-a {
       position: relative;
+      width: 100%;
       z-index: 2;
       transform: rotateY(0deg);
     }
     .face-b {
-      position: absolute;
-      inset: 0 auto auto 0;
-      height: 100%;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
       transform: rotateY(180deg);
       z-index: 1;
       pointer-events: none;
@@ -304,7 +307,7 @@
       height: 100%;
       width: 0%;
       pointer-events: none;
-      display: none; /* 實際由小圓點顯示，隱藏透明空白層 */
+      display: none;
     }
     .sound-wave-container {
       position: absolute;
