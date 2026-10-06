@@ -7,8 +7,7 @@
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- 引入復古手寫字體 Caveat 與 Permanent Marker -->
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
@@ -64,8 +63,7 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ══════════ 標籤貼紙：經典白底手寫卡帶風格 ══════════ */
-  /* ══════════ 頂部標籤：復古筆記本橫線紋理 ══════════ */
+   /* ══════════ 頂部標籤：復古筆記本橫線紋理 ══════════ */
 .tape-label {
   background-color: #fdfdfd;
   /* 筆記本淺灰色橫線紋理（灰白相間條紋） */
@@ -125,94 +123,72 @@
   margin: 0 24px !important;          /* 留出左右邊界，避免遮擋左側 A 標籤 */
   outline: none;
 }
-    /* ══════════ 貼紙區域 ══════════ */
-    .tape-stripe {
-      background-color: var(--accent-color) !important;
-      background-size: cover;
-      background-position: center;
-      margin: 0 14px;
-      padding: 14px 0 16px;
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.35);
-      position: relative;
-      transition: background-color 0.3s ease;
-    }
 
-    /* ══════════ 中軸圓形孔 ＆ 平滑沙漏曲線視窗 ══════════ */
     .reel-plate {
-      background: #111111 !important;
-      border: 2px solid #222222 !important;
-      border-radius: 6px !important;
-      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      height: 52px !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 6px !important;
-      box-sizing: border-box !important;
-    }
-
-    /* 讓齒輪轉軸內圈呈現正圓形挖槽 */
-    .reel {
-      background: #080808 !important;
-      border: 2px solid #2a2a2a !important;
-      border-radius: 50% !important;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1) !important;
-      width: 44px !important;
-      height: 44px !important;
-      flex-shrink: 0;
+      background: #141414;
+      border: 2px solid #252525;
+      border-radius: 4px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+      height: 52px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: center;
+      box-sizing: border-box;
     }
-
-    .tape-window {
-      background: #080808 !important;
-      border-left: 2px solid #1f1f1f;
-      border-right: 2px solid #1f1f1f;
-      position: relative !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      height: 44px !important;
-      flex: 1 !important;
-      margin: 0 4px;
+    .reel {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+      width: 46px;
+      height: 46px;
     }
+  /* ══════════ 中間視窗：平滑曲線沙漏與黑色圓孔 ══════════ */
+.tape-window {
+  background: #383838 !important;     /* 沙漏透光區底色（半透深灰） */
+  border-left: 2px solid #222 !important;
+  border-right: 2px solid #222 !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  height: 42px !important;
+  flex: 1 !important;
+}
 
-    /* 平滑曲線沙漏透光區 (使用 SVG 雙曲線遮罩取代生硬的直線折角) */
-    .tape-window::before {
-      content: "";
-      position: absolute;
-      width: 36px;
-      height: 100%;
-      background: #3e3e3e;
-      /* 上下開口寬、中段收腰自然平滑過渡 */
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 Q65,50 100,100 L0,100 Q35,50 0,0 Z' fill='%23000'/%3E%3C/svg%3E");
-      mask-size: 100% 100%;
-      -webkit-mask-size: 100% 100%;
-      opacity: 0.85;
-      z-index: 1;
-    }
+/* 左右兩側的黑底圓弧造型：利用徑向遮罩自然切出圓潤收腰的平滑弧線 */
+.tape-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    /* 左側向內凹的圓形黑底 */
+    radial-gradient(circle at -6px 50%, transparent 22px, #0a0a0a 23px),
+    /* 右側向內凹的圓形黑底 */
+    radial-gradient(circle at calc(100% + 6px) 50%, transparent 22px, #0a0a0a 23px);
+  background-size: 51% 100%;
+  background-position: left top, right top;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
 
-    /* 左右兩側磁帶卷軸邊緣弧度漸變 */
-    .tape-window::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at -4px 50%, #444 0%, transparent 16px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #444 0%, transparent 16px);
-      opacity: 0.6;
-      z-index: 1;
-      pointer-events: none;
-    }
-
+/* 玻璃高光反光層（增加卡帶塑膠透鏡質感） */
+.tape-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.02) 45%, 
+    transparent 50%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
     .mid-scale-equalizer {
       position: absolute;
       top: 50%;
@@ -229,7 +205,7 @@
     .scale-bar-line {
       width: 2px;
       height: 5px;
-      background: #ffffff;
+      background: #fff;
       border-radius: 1px;
       box-shadow: 0 0 2px rgba(255,255,255,0.7);
       transition: height 0.12s ease;
@@ -251,7 +227,6 @@
       100% { height: 5px; }
     }
 
-    /* ══════════ 控制底座 ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 8px;
@@ -425,18 +400,14 @@
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
 
-          <!-- 白底復古手寫標題標籤 -->
           <div class="tape-label">
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 貼紙區 -->
           <div class="tape-stripe" id="tapeStripe">
             <div class="reel-plate">
-              <!-- 左圓形齒輪孔 -->
               <div class="reel"><div class="teeth"></div></div>
               
-              <!-- 雙曲線平滑沙漏視窗 -->
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -451,12 +422,10 @@
                 </div>
               </div>
 
-              <!-- 右圓形齒輪孔 -->
               <div class="reel"><div class="teeth"></div></div>
             </div>
           </div>
 
-          <!-- 進度條與聲波跳動 -->
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
             <div class="sound-wave-container" id="soundWaveBox"></div>
@@ -527,23 +496,27 @@
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
-                  <span class="picker-label">🌈 貼紙自訂任意色域</span>
+                  <span class="picker-label">🌈 貼紙自訂任意色域（點擊調色或輸入色票）</span>
                 </div>
               </div>
 
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
-                  <div class="palette-circle color-case-btn" data-case="#1a1a1a" data-bar="#11151c" style="background:#1a1a1a;" title="經典黑魂"></div>
-                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" style="background:#eae6df;" title="復古米白"></div>
-                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" style="background:#4a5568;" title="水泥冷灰"></div>
-                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" style="background:#1e293b;" title="午夜星空藍"></div>
-                  <div class="palette-circle color-case-btn" data-case="#2d3748" data-bar="#1a202c" style="background:#2d3748;" title="炭黑"></div>
-                  <div class="palette-circle color-case-btn" data-case="#f7f7f7" data-bar="#e5e5e5" style="background:#f7f7f7; border-color:#aaa;" title="陶瓷純白"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#fbc02d" style="background:#fbc02d;" title="亮麗黃"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#2e7d32" style="background:#2e7d32;" title="森林綠"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="蔚藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#3f51b5" style="background:#3f51b5;" title="靛青藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#8e24aa" style="background:#8e24aa;" title="夢幻紫"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
                 </div>
                 <div class="custom-color-picker-wrap">
-                  <input type="color" id="caseColorPicker" class="native-color-picker" value="#1a1a1a">
-                  <span class="picker-label">🌈 外殼自訂任意色域</span>
+                  <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
+                  <span class="picker-label">🌈 貼紙自訂任意色域（點擊調色或輸入色票）</span>
                 </div>
               </div>
 
@@ -630,9 +603,11 @@
         caseColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#1a1a1a';
       }
 
+      // 翻轉控制
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
+      // 建立聲波柱
       const barCount = 38;
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < barCount; i++) {
@@ -643,6 +618,7 @@
       soundWaveBox.appendChild(fragment);
       const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
 
+      // 聲波輪詢（輕量化防抖）
       setInterval(() => {
         const isPlaying = window.player && typeof window.player.getPlayerState === 'function' && window.player.getPlayerState() === 1;
         wrapper.classList.toggle('is-playing', isPlaying);
@@ -657,6 +633,7 @@
         });
       }, 150);
 
+      // 快取載入
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) applyAccentColor(savedAccent);
 
@@ -669,6 +646,7 @@
         imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
+      // 色彩切換綁定
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
@@ -685,6 +663,7 @@
       });
       caseColorPicker.addEventListener('input', (e) => applyCaseColor(e.target.value));
 
+      // 圖片上傳
       fileInput.addEventListener('change', function() {
         if (this.files?.[0]) {
           const reader = new FileReader();
@@ -711,6 +690,7 @@
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
+      // 標題更新
       setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const songName = window.player.getVideoData()?.title;
