@@ -880,7 +880,7 @@
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
       });
 
-      // 歌名
+      // 歌名更新輪詢
       setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const songName = window.player.getVideoData()?.title;
