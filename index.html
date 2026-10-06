@@ -86,7 +86,7 @@
       z-index: 10;
     }
 
-    /* ══════════ 卡帶本體 ══════════ */
+    /* ══════════ 卡帶外殼 ══════════ */
     .cassette {
       background: var(--case-color);
       border-radius: 16px;
@@ -194,28 +194,34 @@
       transition: background-color 0.3s ease;
     }
 
-    /* 黑色中軸視窗 (圓弧邊緣) */
+    /* ══════════ 原版造型中軸黑框視窗 ══════════ */
     .reel-plate {
-      background: #111111;
-      border: 2px solid #222222;
-      border-radius: 10px;
-      box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.15);
-      height: 50px;
-      width: 76%;
+      background: #0d0d0d;
+      border: 2px solid #202020;
+      border-radius: 12px;
+      box-shadow: 
+        inset 0 3px 7px rgba(0,0,0,0.95),
+        0 1px 2px rgba(255,255,255,0.12);
+      height: 52px;
+      width: 78%;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
+      padding: 0 5px;
+      position: relative;
     }
 
+    /* 左右黑色圓形凹陷底座 */
     .reel {
-      background: #080808;
-      border: 2px solid #2a2a2a;
+      background: radial-gradient(circle, #080808 60%, #151515 100%);
+      border: 1.5px solid #1a1a1a;
       border-radius: 50%;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 2px rgba(255,255,255,0.1);
-      width: 42px;
-      height: 42px;
+      box-shadow: 
+        inset 0 3px 6px rgba(0,0,0,0.95),
+        0 1px 2px rgba(255,255,255,0.06);
+      width: 44px;
+      height: 44px;
       flex-shrink: 0;
       position: relative;
       display: flex;
@@ -223,66 +229,95 @@
       justify-content: center;
     }
 
+    /* 原版 6 顆小齒牙（Teeth）圍繞中心孔洞 */
+    .reel-core {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 中央黑色孔洞 */
+    .reel-core::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #0a0a0a;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+      z-index: 2;
+    }
+
+    /* 6 顆小白色凸齒 */
     .reel-teeth {
       position: absolute;
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: 
-        radial-gradient(circle, transparent 9px, #fff 10px, #fff 13px, transparent 14px),
-        repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 60deg);
-      opacity: 0.85;
+      background: repeating-conic-gradient(
+        #ffffff 0deg 20deg,
+        transparent 20deg 60deg
+      );
+      mask-image: radial-gradient(circle, transparent 4.5px, black 5px, black 9px, transparent 9.5px);
+      -webkit-mask-image: radial-gradient(circle, transparent 4.5px, black 5px, black 9px, transparent 9.5px);
     }
 
+    /* 播放時旋轉小齒牙 */
     .is-playing .reel-teeth {
-      animation: spinReel 2.2s linear infinite;
+      animation: spinTeeth 2s linear infinite;
     }
 
-    @keyframes spinReel {
+    @keyframes spinTeeth {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
 
-    /* 中間透明沙漏視窗 (圓弧曲線) */
+    /* ══════════ 中間沙漏與黑膠捲（圓潤弧形） ══════════ */
     .tape-window {
       background: #080808;
-      border-left: 2px solid #1f1f1f;
-      border-right: 2px solid #1f1f1f;
-      border-radius: 6px;
+      border-left: 2px solid #1a1a1a;
+      border-right: 2px solid #1a1a1a;
+      border-radius: 8px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      height: 42px;
+      height: 44px;
       flex: 1;
       margin: 0 4px;
     }
 
+    /* 中間透光沙漏（向內收腰平滑曲線） */
     .tape-window::before {
       content: "";
       position: absolute;
       width: 36px;
       height: 100%;
-      background: #444444;
-      mask-image: radial-gradient(circle at -4px 50%, transparent 16px, black 17px),
-                  radial-gradient(circle at calc(100% + 4px) 50%, transparent 16px, black 17px);
-      -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 16px, black 17px),
-                          radial-gradient(circle at calc(100% + 4px) 50%, transparent 16px, black 17px);
+      background: #3a3a3a;
+      mask-image: radial-gradient(circle at -3px 50%, transparent 16px, black 17px),
+                  radial-gradient(circle at calc(100% + 3px) 50%, transparent 16px, black 17px);
+      -webkit-mask-image: radial-gradient(circle at -3px 50%, transparent 16px, black 17px),
+                          radial-gradient(circle at calc(100% + 3px) 50%, transparent 16px, black 17px);
       mask-composite: intersect;
       -webkit-mask-composite: source-in;
-      opacity: 0.85;
+      opacity: 0.9;
       z-index: 1;
     }
 
+    /* 左右兩側黑膠帶圓弧凸起 */
     .tape-window::after {
       content: "";
       position: absolute;
       inset: 0;
       background: 
-        radial-gradient(circle at -4px 50%, #444 0%, transparent 16px),
-        radial-gradient(circle at calc(100% + 4px) 50%, #444 0%, transparent 16px);
-      opacity: 0.6;
+        radial-gradient(circle at -2px 50%, #444 0%, #111 16px, transparent 17px),
+        radial-gradient(circle at calc(100% + 2px) 50%, #444 0%, #111 16px, transparent 17px);
+      opacity: 0.7;
       z-index: 1;
       pointer-events: none;
     }
@@ -293,7 +328,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 78%;
+      width: 80%;
       height: 14px;
       display: flex;
       align-items: center;
@@ -486,11 +521,6 @@
       margin: 8px 0;
       position: relative;
     }
-    #ytPlayerFrame {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
 
     .setting-group {
       background: rgba(255, 255, 255, 0.04);
@@ -634,8 +664,17 @@
 
           <!-- 貼紙區 -->
           <div class="tape-stripe" id="tapeStripe">
+            
+            <!-- 原版造型中軸黑框視窗 -->
             <div class="reel-plate">
-              <div class="reel"><div class="reel-teeth"></div></div>
+              <!-- 左齒輪：黑底盤 + 6 顆小齒牙圍繞中央圓孔 -->
+              <div class="reel">
+                <div class="reel-core">
+                  <div class="reel-teeth"></div>
+                </div>
+              </div>
+
+              <!-- 中間沙漏與黑膠捲 -->
               <div class="tape-window">
                 <div class="mid-scale-equalizer">
                   <div class="scale-bar-line"></div>
@@ -649,8 +688,15 @@
                   <div class="scale-bar-line"></div>
                 </div>
               </div>
-              <div class="reel"><div class="reel-teeth"></div></div>
+
+              <!-- 右齒輪：黑底盤 + 6 顆小齒牙圍繞中央圓孔 -->
+              <div class="reel">
+                <div class="reel-core">
+                  <div class="reel-teeth"></div>
+                </div>
+              </div>
             </div>
+
           </div>
 
           <!-- 梯形下巴區域 -->
@@ -716,7 +762,6 @@
             </button>
           </div>
 
-          <!-- YouTube 播放器容器 -->
           <div class="video-window">
             <div id="playerPlaceholder"></div>
           </div>
@@ -807,7 +852,6 @@
   </div>
 </div>
 
-<!-- ══════════ 100% 獨立自給自足核心腳本 ══════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -840,9 +884,8 @@
     let isReady = false;
     let isLooping = localStore.get('yt_loop') === 'true';
 
-    // 載入官方 YouTube IFrame API
     window.onYouTubeIframeAPIReady = function() {
-      const initialId = localStore.get('yt_video_id') || 'jfKfPfyJRdk'; // 預設放鬆音樂
+      const initialId = localStore.get('yt_video_id') || 'jfKfPfyJRdk';
       ytPlayer = new YT.Player('playerPlaceholder', {
         height: '100%',
         width: '100%',
@@ -869,9 +912,7 @@
     function onPlayerReady(event) {
       isReady = true;
       const vol = parseInt(localStore.get('yt_volume') || '60', 10);
-      try {
-        ytPlayer.setVolume(vol);
-      } catch(e) {}
+      try { ytPlayer.setVolume(vol); } catch(e) {}
       document.getElementById('volSlider').value = vol;
       refreshTitle();
     }
@@ -935,7 +976,6 @@
       document.getElementById('btnFlipB').addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA').addEventListener('click', () => flipper.classList.remove('flipped'));
 
-      // 播放 / 暫停
       btnPlay.addEventListener('click', () => {
         if (!isReady || !ytPlayer) return;
         const state = ytPlayer.getPlayerState();
@@ -946,7 +986,6 @@
         }
       });
 
-      // 重播 / 快轉
       btnPrev.addEventListener('click', () => {
         if (isReady && ytPlayer) ytPlayer.seekTo(0);
       });
@@ -957,7 +996,6 @@
         }
       });
 
-      // 音量控制
       let lastVol = 60;
       btnMute.addEventListener('click', () => {
         if (!isReady || !ytPlayer) return;
@@ -987,7 +1025,6 @@
         iconVolMuted.style.display = val === 0 ? 'block' : 'none';
       });
 
-      // 載入 YouTube 影片
       function doLoad() {
         const raw = linkInput.value.trim();
         const vid = parseYouTubeID(raw);
@@ -1019,14 +1056,12 @@
       const savedUrl = localStore.get('yt_url');
       if (savedUrl) linkInput.value = savedUrl;
 
-      // 循環播放設定
       loopToggle.checked = isLooping;
       loopToggle.addEventListener('change', () => {
         isLooping = loopToggle.checked;
         localStore.set('yt_loop', isLooping);
       });
 
-      // 38 根聲波小孔
       const barCount = 38;
       for (let i = 0; i < barCount; i++) {
         const b = document.createElement('div');
@@ -1035,7 +1070,6 @@
       }
       const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
 
-      // 點擊進度條跳轉
       tapeProgress.addEventListener('click', (e) => {
         if (!isReady || !ytPlayer) return;
         const rect = tapeProgress.getBoundingClientRect();
@@ -1044,7 +1078,6 @@
         if (dur > 0) ytPlayer.seekTo(ratio * dur, true);
       });
 
-      // 進度條輪詢更新
       setInterval(() => {
         if (!isReady || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
         const cur = ytPlayer.getCurrentTime() || 0;
@@ -1056,7 +1089,6 @@
         });
       }, 250);
 
-      // 配色
       function applyAccent(color, clearImg = false) {
         document.documentElement.style.setProperty('--accent-color', color);
         document.documentElement.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111' : '#fff');
@@ -1076,7 +1108,7 @@
         document.documentElement.style.setProperty('--control-bar-bg', bColor);
         localStore.set('cfg_case_color', cColor);
         localStore.set('cfg_bar_color', bColor);
-        caseColorPicker.value = cColor.startsWith('#') && cColor.length === 7 ? cColor : '#1a1a1a';
+        caseColorPicker.value = cColor.startsWith('#') && cColor.length === 7 ? color : '#1a1a1a';
       }
 
       const savedAccent = localStore.get('cfg_accent');
@@ -1102,7 +1134,6 @@
       });
       caseColorPicker.addEventListener('input', (e) => applyCase(e.target.value, '#11151c'));
 
-      // 圖片上傳
       fileInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
