@@ -7,21 +7,41 @@
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
-    /* ══════════ 黑色網紋磨砂外殼 ══════════ */
+    /* ══════════ 全域動態色彩變數（預設：紅黑） ══════════ */
+    :root {
+      --case-bg: radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%);
+      --case-border: #111111;
+      --control-bar-bg: #11151c;
+      --accent-color: #e51d24; /* 貼紙主色與按鍵主題色 */
+      --accent-border: #b31218;
+      --btn-hover-color: #ff3b30;
+    }
+
+    /* ══════════ 卡帶外殼 ＆ 黑色控制底座 聯動改色 ══════════ */
     #cassetteBody {
-      background: radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%) !important;
+      background: var(--case-bg) !important;
       border-radius: 12px !important;
       box-shadow: 
         0 18px 30px rgba(0, 0, 0, 0.65),
         inset 0 1px 2px rgba(255, 255, 255, 0.35),
         inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
-      border: 1px solid #111 !important;
+      border: 1.5px solid var(--case-border) !important;
       padding-bottom: 8px !important;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* 控制條底座外框 */
+    .tape-base {
+      background: var(--control-bar-bg) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      transition: background 0.3s ease;
     }
 
     /* ══════════ 頂部白底手寫歌名標籤 ══════════ */
@@ -36,8 +56,8 @@
       z-index: 5 !important;
     }
     .tape-title {
-      font-family: 'Caveat', 'Permanent Marker', cursive !important;
-      font-size: 20px !important;
+      font-family: 'Zen Maru Gothic', 'Caveat', 'Permanent Marker', sans-serif !important;
+      font-size: 19px !important;
       font-weight: 700 !important;
       color: #111111 !important;
       letter-spacing: 0.5px;
@@ -48,24 +68,45 @@
       line-height: 1.2;
     }
 
-    /* ══════════ 整片平整一體化紅底 ══════════ */
+    /* ══════════ 一體化貼紙色彩 ══════════ */
     .tape-stripe {
-      background: #e51d24 !important;
+      background-color: var(--accent-color) !important;
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
       padding: 12px 0 12px !important;
-      border-left: 2px solid #b31218 !important;
-      border-right: 2px solid #b31218 !important;
-      border-bottom: 2px solid #b31218 !important;
+      border-left: 2px solid var(--accent-border) !important;
+      border-right: 2px solid var(--accent-border) !important;
+      border-bottom: 2px solid var(--accent-border) !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
       box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
       position: relative !important;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* 消除原生突出的階梯與冗餘區塊 */
+    /* ══════════ 播放按鈕 ＆ B 翻面按鍵 聯動貼紙色彩 ══════════ */
+    .play-btn, .flip-btn {
+      background: var(--accent-color) !important;
+      color: #ffffff !important;
+      border: 1px solid var(--accent-border) !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+    .play-btn:hover, .flip-btn:hover {
+      background: var(--btn-hover-color) !important;
+      transform: scale(1.05);
+    }
+    .play-btn svg, .flip-btn svg {
+      fill: #ffffff !important;
+      stroke: #ffffff !important;
+    }
+    /* 音量拉桿滑塊顏色 */
+    #volSlider::-webkit-slider-thumb {
+      background: var(--accent-color) !important;
+    }
+
+    /* 隱藏不必要的原版層級斷層 */
     .tape-footer,
     #cassetteBody > div[style*="height:10px"],
     #cassetteBody > div[style*="height:8px"],
@@ -81,15 +122,14 @@
       border-radius: 6px !important;
     }
 
-    /* 螺絲立體光澤 */
     .screw {
       background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* ══════════ 進度條下移 ＆ 聲波化設計 ══════════ */
+    /* ══════════ 進度條下移 ＆ 聲波柱 ══════════ */
     .tape-progress {
-      margin: 14px 16px 4px !important; /* 明顯下移，與紅底拉開舒適間距 */
+      margin: 14px 16px 4px !important;
       height: 14px !important;
       background: rgba(0, 0, 0, 0.65) !important;
       border-radius: 8px !important;
@@ -99,24 +139,18 @@
       overflow: hidden !important;
       cursor: pointer !important;
     }
-
-    /* 原生填滿條隱藏，改由聲波容器代為呈現 */
     #progressFill {
       height: 100% !important;
-      background: rgba(229, 29, 36, 0.15) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
       position: absolute !important;
       top: 0; left: 0;
       pointer-events: none;
       transition: width 0.15s linear;
     }
-
-    /* 聲波音波柱容器 */
     .sound-wave-container {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -125,67 +159,69 @@
       pointer-events: none;
       z-index: 2;
     }
-
-    /* 每一根聲波柱 */
     .wave-bar {
       width: 3px;
       height: 25%;
       border-radius: 2px;
-      background: #444; /* 未播放部分暗灰 */
+      background: #444;
       transition: height 0.15s ease, background 0.15s ease;
     }
-
-    /* 播放時跳動的聲波柱動畫 */
     .is-playing .wave-bar.active {
       background: linear-gradient(to top, #ff9800, #ff1744);
       animation: soundJump 0.65s infinite ease-in-out alternate;
     }
-
-    /* 錯開每個聲波柱的跳動頻率，看起來更真實自然 */
     .wave-bar:nth-child(2n) { animation-delay: 0.12s !important; }
     .wave-bar:nth-child(3n) { animation-delay: 0.28s !important; }
     .wave-bar:nth-child(4n) { animation-delay: 0.42s !important; }
     .wave-bar:nth-child(5n) { animation-delay: 0.05s !important; }
-
     @keyframes soundJump {
       0% { height: 20%; }
       50% { height: 90%; }
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B 操作面板（強化點擊層級） ══════════ */
+    /* ══════════ Side B 操作面板層級穿透修復 ══════════ */
+    .face-b {
+      pointer-events: auto !important;
+      z-index: 100 !important;
+    }
+    .side-b {
+      overflow-y: auto !important;
+      max-height: 100% !important;
+      pointer-events: auto !important;
+    }
     .setting-group {
-      background: rgba(0, 0, 0, 0.5) !important;
+      background: rgba(0, 0, 0, 0.6) !important;
       border-radius: 8px !important;
-      padding: 12px !important;
+      padding: 10px 12px !important;
       margin-top: 10px !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      position: relative !important;
-      z-index: 99 !important;
+      pointer-events: auto !important;
     }
     .group-title {
       font-size: 12px;
       font-weight: 700;
       color: #ffca28;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .full-input {
       width: 100%;
       background: #111;
-      border: 1px solid #444;
+      border: 1px solid #555;
       color: #fff;
-      padding: 8px 10px;
+      padding: 7px 9px;
       border-radius: 5px;
       font-size: 12px;
       box-sizing: border-box;
       outline: none;
     }
+
+    /* 調色圓圈按鈕（保證最高層級能點擊） */
     .palette-row {
       display: flex;
       gap: 12px;
-      margin-top: 8px;
-      position: relative;
-      z-index: 100;
+      margin-top: 6px;
+      margin-bottom: 4px;
     }
     .palette-circle {
       width: 28px;
@@ -194,11 +230,35 @@
       border: 2px solid #fff;
       cursor: pointer !important;
       box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-      pointer-events: auto !important;
       transition: transform 0.15s ease;
+      position: relative;
+      z-index: 9999 !important;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .palette-circle:hover {
-      transform: scale(1.15);
+      transform: scale(1.18);
+    }
+
+    /* 檔案上傳按鈕樣式 */
+    .upload-btn-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .btn-custom-action {
+      background: #333;
+      color: #fff;
+      border: 1px solid #777;
+      padding: 6px 12px;
+      font-size: 11px;
+      border-radius: 4px;
+      cursor: pointer !important;
+      z-index: 9999 !important;
+    }
+    .btn-custom-action:hover {
+      background: #444;
     }
   </style>
 </head>
@@ -218,7 +278,7 @@
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 一整塊平整紅色貼紙 -->
+          <!-- 一整塊貼紙色彩（可置入背景圖） -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
@@ -233,7 +293,6 @@
             </div>
           </div>
 
-          <!-- 隱藏的音訊資訊 (供腳本抓取歌名) -->
           <div class="tape-footer" style="display:none !important;">
             <div class="now-playing" id="nowPlaying"></div>
           </div>
@@ -241,12 +300,11 @@
           <!-- 下移的進度條 + 聲波 Equalizer -->
           <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
-            <!-- 40 根跳動的聲波條 -->
             <div class="sound-wave-container" id="soundWaveBox"></div>
           </div>
         </div>
 
-        <div class="tape-base">
+        <div class="tape-base" id="tapeControlBase">
           <button class="hole-btn" id="btnPrev" title="上一首">
             <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
@@ -285,12 +343,12 @@
 
           <details class="sb-collapse" open>
             <summary class="sb-summary">
-              <span>卡帶設定</span>
+              <span>卡帶設定與外觀</span>
               <span class="chev" aria-hidden="true">▾</span>
             </summary>
             <div class="sb-body">
               
-              <!-- 獨立區塊 1：YouTube 音樂連結 -->
+              <!-- 1. YouTube 音樂連結 -->
               <div class="setting-group" style="margin-top:0;">
                 <div class="group-title">🎵 1. YouTube 音樂連結</div>
                 <div class="link-row">
@@ -299,19 +357,40 @@
                 </div>
               </div>
 
-              <!-- 獨立區塊 2：貼紙圖片與純色更換 -->
+              <!-- 2. 紅色貼紙 ＆ 按鍵色彩聯動 -->
               <div class="setting-group">
-                <div class="group-title">🖼️ 2. 貼紙底圖（置入圖片）</div>
-                <input type="text" id="stickerImgInput" class="full-input" placeholder="貼上圖片網址 (PNG / JPG)">
-                
-                <div style="font-size:11px; color:#ccc; margin-top:10px;">或點擊更換純色底色：</div>
+                <div class="group-title">🎨 2. 貼紙與按鈕主題色 (同時連動播放鍵)</div>
                 <div class="palette-row">
-                  <div class="palette-circle" data-bg="#e51d24" data-border="#b31218" style="background:#e51d24;" title="經典熱血紅"></div>
-                  <div class="palette-circle" data-bg="#1565c0" data-border="#0d47a1" style="background:#1565c0;" title="復古深藍"></div>
-                  <div class="palette-circle" data-bg="#2b2b2b" data-border="#181818" style="background:#2b2b2b;" title="黑魂深灰"></div>
-                  <div class="palette-circle" data-bg="#e8dfcf" data-border="#c4b59f" style="background:#e8dfcf;" title="牛皮紙米黃"></div>
-                  <div class="palette-circle" data-bg="#388e3c" data-border="#235926" style="background:#388e3c;" title="復古墨綠"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e51d24" data-border="#b31218" style="background:#e51d24;" title="經典熱血紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#1976d2" data-border="#0d47a1" style="background:#1976d2;" title="深海湛藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#388e3c" data-border="#1b5e20" style="background:#388e3c;" title="森林墨綠"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e67e22" data-border="#d35400" style="background:#e67e22;" title="復古暖橘"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e91e63" data-border="#ad1457" style="background:#e91e63;" title="龐克桃紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#2d3748" data-border="#1a202c" style="background:#2d3748;" title="深邃灰黑"></div>
                 </div>
+              </div>
+
+              <!-- 3. 卡帶外殼 ＆ 黑色底座聯動 -->
+              <div class="setting-group">
+                <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
+                <div class="palette-row">
+                  <div class="palette-circle color-case-btn" data-case="radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%)" data-bar="#11151c" data-border="#111" style="background:#1a1a1a;" title="經典黑魂"></div>
+                  <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" data-border="#c7c3ba" style="background:#eae6df;" title="復古米白"></div>
+                  <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" data-border="#1a202c" style="background:#4a5568;" title="水泥冷灰"></div>
+                  <div class="palette-circle color-case-btn" data-case="#1e293b" data-bar="#0f172a" data-border="#020617" style="background:#1e293b;" title="午夜星空藍"></div>
+                </div>
+              </div>
+
+              <!-- 4. 貼紙置入背景圖片 (支援直接上傳或網址) -->
+              <div class="setting-group">
+                <div class="group-title">🖼️ 4. 貼紙置入圖片 (選用)</div>
+                <div class="upload-btn-wrap">
+                  <!-- 直接從本機選擇圖片檔案 -->
+                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
+                  <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
+                  <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
+                </div>
+                <input type="text" id="stickerImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
               </div>
 
               <!-- 循環播放 -->
@@ -348,10 +427,13 @@
     };
 
     window.addEventListener('DOMContentLoaded', () => {
+      const root = document.documentElement;
       const stripe = document.getElementById('tapeStripe');
       const title = document.getElementById('tapeTitle');
       const nowPlaying = document.getElementById('nowPlaying');
       const imgInput = document.getElementById('stickerImgInput');
+      const fileInput = document.getElementById('fileUploadInput');
+      const btnClearImg = document.getElementById('btnClearImg');
       const soundWaveBox = document.getElementById('soundWaveBox');
       const progressFill = document.getElementById('progressFill');
       const wrapper = document.getElementById('cassette-player-wrapper');
@@ -365,12 +447,11 @@
       }
       const waveBars = soundWaveBox.querySelectorAll('.wave-bar');
 
-      // 2. 監聽播放狀態，更新聲波律動與播放進度亮燈
+      // 2. 聲波律動與播放進度追蹤
       setInterval(() => {
-        // 抓取播放狀態
         let isPlaying = false;
         if (window.player && typeof window.player.getPlayerState === 'function') {
-          isPlaying = (window.player.getPlayerState() === 1); // 1 = YT.PlayerState.PLAYING
+          isPlaying = (window.player.getPlayerState() === 1);
         }
         if (isPlaying) {
           wrapper.classList.add('is-playing');
@@ -378,13 +459,12 @@
           wrapper.classList.remove('is-playing');
         }
 
-        // 依據當前播放趴數讓對應範圍的聲波柱亮起
         const percent = parseFloat(progressFill.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
         waveBars.forEach((bar, idx) => {
           if (idx <= activeBarLimit) {
             bar.classList.add('active');
-            if (!isPlaying) bar.style.background = '#ff9800'; // 暫停時維持高亮
+            if (!isPlaying) bar.style.background = '#ff9800';
           } else {
             bar.classList.remove('active');
             bar.style.background = '#444';
@@ -392,50 +472,95 @@
         });
       }, 150);
 
-      // 3. 讀取並套用該 ID 專屬底色與圖片
-      const savedImg = localStorage.getItem('custom_tape_img');
-      const savedBg = localStorage.getItem('custom_tape_bg');
-      const savedBorder = localStorage.getItem('custom_tape_border');
+      // 3. 讀取並套用外觀快取
+      const savedAccent = localStorage.getItem('cfg_accent');
+      const savedBorder = localStorage.getItem('cfg_border');
+      if (savedAccent) {
+        root.style.setProperty('--accent-color', savedAccent);
+        root.style.setProperty('--accent-border', savedBorder || savedAccent);
+      }
 
+      const savedCaseBg = localStorage.getItem('cfg_case_bg');
+      const savedBarBg = localStorage.getItem('cfg_bar_bg');
+      const savedCaseBorder = localStorage.getItem('cfg_case_border');
+      if (savedCaseBg) {
+        root.style.setProperty('--case-bg', savedCaseBg);
+        root.style.setProperty('--control-bar-bg', savedBarBg || '#11151c');
+        root.style.setProperty('--case-border', savedCaseBorder || '#111');
+      }
+
+      const savedImg = localStorage.getItem('cfg_tape_img');
       if (savedImg) {
         stripe.style.backgroundImage = `url("${savedImg}")`;
-        imgInput.value = savedImg;
-      } else if (savedBg) {
-        stripe.style.backgroundColor = savedBg;
-      }
-      if (savedBorder) {
-        stripe.style.borderColor = savedBorder;
+        imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 4. 綁定自訂貼紙圖片
-      imgInput.addEventListener('change', () => {
-        const val = imgInput.value.trim();
-        if (val) {
-          stripe.style.backgroundImage = `url("${val}")`;
-          localStorage.setItem('custom_tape_img', val);
-        } else {
-          stripe.style.backgroundImage = 'none';
-          localStorage.removeItem('custom_tape_img');
+      // 4. 貼紙與播放按鈕主題色點擊監聽 (使用 mousedown + click 雙重保險防止冒泡攔截)
+      document.querySelectorAll('.color-accent-btn').forEach(btn => {
+        const handler = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const color = this.getAttribute('data-color');
+          const border = this.getAttribute('data-border');
+          root.style.setProperty('--accent-color', color);
+          root.style.setProperty('--accent-border', border);
+          localStorage.setItem('cfg_accent', color);
+          localStorage.setItem('cfg_border', border);
+        };
+        btn.addEventListener('click', handler);
+      });
+
+      // 5. 卡帶外殼與控制座底色點擊監聽
+      document.querySelectorAll('.color-case-btn').forEach(btn => {
+        const handler = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const caseBg = this.getAttribute('data-case');
+          const barBg = this.getAttribute('data-bar');
+          const cBorder = this.getAttribute('data-border');
+          root.style.setProperty('--case-bg', caseBg);
+          root.style.setProperty('--control-bar-bg', barBg);
+          root.style.setProperty('--case-border', cBorder);
+          localStorage.setItem('cfg_case_bg', caseBg);
+          localStorage.setItem('cfg_bar_bg', barBg);
+          localStorage.setItem('cfg_case_border', cBorder);
+        };
+        btn.addEventListener('click', handler);
+      });
+
+      // 6. 圖片本地上傳處理 (Base64 自動轉換)
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const dataUrl = e.target.result;
+            stripe.style.backgroundImage = `url("${dataUrl}")`;
+            localStorage.setItem('cfg_tape_img', dataUrl);
+            imgInput.value = '(已上傳圖片)';
+          };
+          reader.readAsDataURL(this.files[0]);
         }
       });
 
-      // 5. 綁定純色切換按鈕（解決無法點擊問題）
-      document.querySelectorAll('.palette-circle').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const bg = this.getAttribute('data-bg');
-          const border = this.getAttribute('data-border');
-          stripe.style.backgroundImage = 'none';
-          stripe.style.backgroundColor = bg;
-          stripe.style.borderColor = border;
-          localStorage.removeItem('custom_tape_img');
-          localStorage.setItem('custom_tape_bg', bg);
-          localStorage.setItem('custom_tape_border', border);
-          imgInput.value = '';
-        });
+      // 7. 圖片 URL 輸入處理
+      imgInput.addEventListener('change', () => {
+        const val = imgInput.value.trim();
+        if (val && !val.includes('(已上傳圖片)')) {
+          stripe.style.backgroundImage = `url("${val}")`;
+          localStorage.setItem('cfg_tape_img', val);
+        }
       });
 
-      // 6. 即時讀取歌名填入頂部標籤
+      // 8. 移除圖片按鈕
+      btnClearImg.addEventListener('click', (e) => {
+        e.preventDefault();
+        stripe.style.backgroundImage = 'none';
+        localStorage.removeItem('cfg_tape_img');
+        imgInput.value = '';
+        fileInput.value = '';
+      });
+
+      // 9. 即時讀取歌名填入頂部標籤
       const updateTitle = () => {
         let songName = '';
         if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
