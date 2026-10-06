@@ -12,13 +12,13 @@
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
-    /* ══════════ 全域動態色彩變數（預設：紅黑） ══════════ */
+    /* ══════════ 全域動態色彩變數 ══════════ */
     :root {
       --case-bg: radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%);
       --case-border: #111111;
       --control-bar-bg: #11151c;
       --accent-color: #e51d24; /* 貼紙主色與按鍵主題色 */
-      --accent-border: #b31218;
+      --accent-border: transparent; /* 消除紅色線框 */
       --btn-hover-color: #ff3b30;
     }
 
@@ -35,7 +35,6 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* 控制條底座外框 */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 8px !important;
@@ -68,28 +67,26 @@
       line-height: 1.2;
     }
 
-    /* ══════════ 一體化貼紙色彩 ══════════ */
+    /* ══════════ 貼紙區域：完全移除紅色線框，無縫置圖 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
       padding: 12px 0 12px !important;
-      border-left: 2px solid var(--accent-border) !important;
-      border-right: 2px solid var(--accent-border) !important;
-      border-bottom: 2px solid var(--accent-border) !important;
+      border: none !important; /* 彻底移除紅框 */
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
       box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
       position: relative !important;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 播放按鈕 ＆ B 翻面按鍵 聯動貼紙色彩 ══════════ */
+    /* ══════════ 按鍵主題色聯動 ══════════ */
     .play-btn, .flip-btn {
       background: var(--accent-color) !important;
       color: #ffffff !important;
-      border: 1px solid var(--accent-border) !important;
+      border: none !important;
       box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
       transition: background 0.3s ease, transform 0.1s ease;
     }
@@ -101,12 +98,11 @@
       fill: #ffffff !important;
       stroke: #ffffff !important;
     }
-    /* 音量拉桿滑塊顏色 */
     #volSlider::-webkit-slider-thumb {
       background: var(--accent-color) !important;
     }
 
-    /* 隱藏不必要的原版層級斷層 */
+    /* 隱藏無用標籤與階梯斷層 */
     .tape-footer,
     #cassetteBody > div[style*="height:10px"],
     #cassetteBody > div[style*="height:8px"],
@@ -114,6 +110,11 @@
       display: none !important;
     }
     .badge-a, .badge-60 { display: none !important; }
+
+    /* ══════════ 徹底移除 B 面的 ES 按鈕 與 B 標籤 ══════════ */
+    #langBtn, .badge-b, .sb-header-right {
+      display: none !important;
+    }
 
     /* 轉輪立體深凹 */
     .reel-plate {
@@ -127,7 +128,7 @@
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* ══════════ 進度條下移 ＆ 聲波柱 ══════════ */
+    /* ══════════ 下移進度條 ＆ 聲波柱 ══════════ */
     .tape-progress {
       margin: 14px 16px 4px !important;
       height: 14px !important;
@@ -180,7 +181,7 @@
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B 操作面板層級穿透修復 ══════════ */
+    /* ══════════ Side B 控制面板 ══════════ */
     .face-b {
       pointer-events: auto !important;
       z-index: 100 !important;
@@ -215,8 +216,6 @@
       box-sizing: border-box;
       outline: none;
     }
-
-    /* 調色圓圈按鈕（保證最高層級能點擊） */
     .palette-row {
       display: flex;
       gap: 12px;
@@ -233,14 +232,10 @@
       transition: transform 0.15s ease;
       position: relative;
       z-index: 9999 !important;
-      user-select: none;
-      -webkit-user-select: none;
     }
     .palette-circle:hover {
       transform: scale(1.18);
     }
-
-    /* 檔案上傳按鈕樣式 */
     .upload-btn-wrap {
       display: flex;
       align-items: center;
@@ -278,7 +273,7 @@
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 一整塊貼紙色彩（可置入背景圖） -->
+          <!-- 一整塊貼紙色彩 (無紅線框) -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
@@ -332,10 +327,7 @@
             <button class="back-btn" id="btnFlipA">
               <span aria-hidden="true">◀</span> <span>返回正面</span>
             </button>
-            <div class="sb-header-right">
-              <button class="lang-btn" id="langBtn">ES</button>
-              <span class="badge-b">B</span>
-            </div>
+            <!-- 移除 ES 與 B 標籤容器 -->
           </div>
           <div class="video-window">
             <div id="ytPlayer"></div>
@@ -357,20 +349,20 @@
                 </div>
               </div>
 
-              <!-- 2. 紅色貼紙 ＆ 按鍵色彩聯動 -->
+              <!-- 2. 貼紙與按鈕主題色 -->
               <div class="setting-group">
-                <div class="group-title">🎨 2. 貼紙與按鈕主題色 (同時連動播放鍵)</div>
+                <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
                 <div class="palette-row">
-                  <div class="palette-circle color-accent-btn" data-color="#e51d24" data-border="#b31218" style="background:#e51d24;" title="經典熱血紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#1976d2" data-border="#0d47a1" style="background:#1976d2;" title="深海湛藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#388e3c" data-border="#1b5e20" style="background:#388e3c;" title="森林墨綠"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#e67e22" data-border="#d35400" style="background:#e67e22;" title="復古暖橘"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#e91e63" data-border="#ad1457" style="background:#e91e63;" title="龐克桃紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#2d3748" data-border="#1a202c" style="background:#2d3748;" title="深邃灰黑"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典熱血紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="深海湛藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#388e3c" style="background:#388e3c;" title="森林墨綠"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e67e22" style="background:#e67e22;" title="復古暖橘"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#e91e63" style="background:#e91e63;" title="龐克桃紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#2d3748" style="background:#2d3748;" title="深邃灰黑"></div>
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼 ＆ 黑色底座聯動 -->
+              <!-- 3. 卡帶外殼 ＆ 控制座聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-row">
@@ -381,11 +373,10 @@
                 </div>
               </div>
 
-              <!-- 4. 貼紙置入背景圖片 (支援直接上傳或網址) -->
+              <!-- 4. 貼紙置入背景圖片 -->
               <div class="setting-group">
-                <div class="group-title">🖼️ 4. 貼紙置入圖片 (選用)</div>
+                <div class="group-title">🖼️ 4. 貼紙置入圖片</div>
                 <div class="upload-btn-wrap">
-                  <!-- 直接從本機選擇圖片檔案 -->
                   <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
                   <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
                   <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
@@ -438,7 +429,7 @@
       const progressFill = document.getElementById('progressFill');
       const wrapper = document.getElementById('cassette-player-wrapper');
 
-      // 1. 動態生成 38 根聲波柱
+      // 1. 生成 38 根聲波柱
       const barCount = 38;
       for (let i = 0; i < barCount; i++) {
         const bar = document.createElement('div');
@@ -474,10 +465,8 @@
 
       // 3. 讀取並套用外觀快取
       const savedAccent = localStorage.getItem('cfg_accent');
-      const savedBorder = localStorage.getItem('cfg_border');
       if (savedAccent) {
         root.style.setProperty('--accent-color', savedAccent);
-        root.style.setProperty('--accent-border', savedBorder || savedAccent);
       }
 
       const savedCaseBg = localStorage.getItem('cfg_case_bg');
@@ -495,24 +484,20 @@
         imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 4. 貼紙與播放按鈕主題色點擊監聽 (使用 mousedown + click 雙重保險防止冒泡攔截)
+      // 4. 主題色更換監聽
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
-        const handler = function(e) {
+        btn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           const color = this.getAttribute('data-color');
-          const border = this.getAttribute('data-border');
           root.style.setProperty('--accent-color', color);
-          root.style.setProperty('--accent-border', border);
           localStorage.setItem('cfg_accent', color);
-          localStorage.setItem('cfg_border', border);
-        };
-        btn.addEventListener('click', handler);
+        });
       });
 
-      // 5. 卡帶外殼與控制座底色點擊監聽
+      // 5. 外殼與底座更換監聽
       document.querySelectorAll('.color-case-btn').forEach(btn => {
-        const handler = function(e) {
+        btn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           const caseBg = this.getAttribute('data-case');
@@ -524,11 +509,10 @@
           localStorage.setItem('cfg_case_bg', caseBg);
           localStorage.setItem('cfg_bar_bg', barBg);
           localStorage.setItem('cfg_case_border', cBorder);
-        };
-        btn.addEventListener('click', handler);
+        });
       });
 
-      // 6. 圖片本地上傳處理 (Base64 自動轉換)
+      // 6. 圖片上傳
       fileInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
@@ -542,7 +526,7 @@
         }
       });
 
-      // 7. 圖片 URL 輸入處理
+      // 7. 圖片 URL
       imgInput.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
@@ -551,7 +535,7 @@
         }
       });
 
-      // 8. 移除圖片按鈕
+      // 8. 移除圖片
       btnClearImg.addEventListener('click', (e) => {
         e.preventDefault();
         stripe.style.backgroundImage = 'none';
