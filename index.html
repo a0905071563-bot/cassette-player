@@ -182,7 +182,7 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 黑色中軸視窗（收窄至 74%） ══════════ */
+    /* ══════════ 黑色中軸視窗 ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -365,7 +365,7 @@
       transform: scale(1.15) !important;
     }
 
-    /* ══════════ 播放控制底座（全新圖標樣式） ══════════ */
+    /* ══════════ 播放控制底座（重排緊湊版） ══════════ */
     .tape-base {
       background: var(--control-bar-bg) !important;
       border-radius: 28px !important;
@@ -376,74 +376,79 @@
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      padding: 6px 14px !important;
+      padding: 6px 16px !important;
       margin-top: 10px !important;
       transition: background 0.3s ease;
     }
 
-    .hole-btn {
-      background: transparent;
-      border: none;
-      outline: none;
-      cursor: pointer;
+    /* 左側核心播放按鈕組（緊湊間距） */
+    .playback-controls {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0;
-      color: #ffffff;
-      transition: transform 0.12s ease, opacity 0.15s ease;
-    }
-    .hole-btn:hover {
-      transform: scale(1.1);
-      opacity: 0.9;
-    }
-    .hole-btn:active {
-      transform: scale(0.95);
+      gap: 10px;
     }
 
-    /* 音量鍵、上一首、下一首 */
+    .hole-btn {
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
+      transition: transform 0.12s ease, opacity 0.15s ease !important;
+    }
+    .hole-btn:hover {
+      transform: scale(1.15) !important;
+      opacity: 0.85 !important;
+    }
+    .hole-btn:active {
+      transform: scale(0.95) !important;
+    }
+
     .ctrl-icon-btn {
       width: 32px;
       height: 32px;
-      color: rgba(255, 255, 255, 0.85) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
     }
     .ctrl-icon-btn svg {
       fill: currentColor !important;
     }
 
-    /* 中央圓形主播放按鍵 */
+    /* 中央實心主播放鍵 */
     .play-btn {
-      width: 40px !important;
-      height: 40px !important;
+      width: 44px !important;
+      height: 44px !important;
       border-radius: 50% !important;
       background: var(--accent-color) !important;
       color: var(--btn-icon-color) !important;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.45) !important;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4) !important;
       flex-shrink: 0;
     }
     .play-btn svg {
       fill: var(--btn-icon-color) !important;
     }
 
-    /* 右側翻面按鍵（循環 Loop 箭頭圖標） */
-    .flip-btn {
-      height: 32px !important;
-      min-width: 44px !important;
-      padding: 0 8px !important;
-      border-radius: 16px !important;
-      background: var(--accent-color) !important;
-      color: var(--btn-icon-color) !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.35) !important;
+    /* 右側音量模組（音量圖標與滑桿綁定在一起） */
+    .volume-module {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      max-width: 135px;
+      margin: 0 10px 0 16px;
     }
-    .flip-btn svg {
-      fill: var(--btn-icon-color) !important;
+    .vol-btn {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.85) !important;
     }
-
-    /* 音量滑桿 */
     .vol-wrap {
       flex: 1;
-      max-width: 90px;
-      margin: 0 8px;
       display: flex;
       align-items: center;
     }
@@ -458,8 +463,8 @@
     }
     #volSlider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 12px;
-      height: 12px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       background: var(--accent-color) !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -468,6 +473,17 @@
     }
     #volSlider::-webkit-slider-thumb:hover {
       transform: scale(1.25);
+    }
+
+    /* 最右側純無框循環 Loop 鍵 */
+    .clean-loop-btn {
+      width: 32px !important;
+      height: 32px !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      flex-shrink: 0;
+    }
+    .clean-loop-btn svg {
+      fill: currentColor !important;
     }
 
     /* ══════════ Side B：統一白字透明線框風格 ══════════ */
@@ -719,51 +735,54 @@
           </div>
         </div>
 
-        <!-- 播放控制底座（音量喇叭鍵、上一首、播放/暫停、下一首、音量拉桿、循環Loop鍵） -->
+        <!-- 播放控制底座（核心播放靠左、音量組合靠右、純無框循環鍵在最右） -->
         <div class="tape-base" id="tapeControlBase">
-          <!-- 1. 音量靜音切換按鈕 -->
-          <button class="hole-btn ctrl-icon-btn" id="btnMute" title="靜音 / 開啟聲音">
-            <svg viewBox="0 0 24 24" id="iconVolHigh" width="18" height="18" fill="currentColor">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-            </svg>
-            <svg viewBox="0 0 24 24" id="iconVolMuted" width="18" height="18" fill="currentColor" style="display:none;">
-              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-            </svg>
-          </button>
+          <!-- 左側核心控制群組 -->
+          <div class="playback-controls">
+            <!-- 1. 上一首按鈕 -->
+            <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+              </svg>
+            </button>
 
-          <!-- 2. 上一首按鈕 -->
-          <button class="hole-btn ctrl-icon-btn" id="btnPrev" title="上一首">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
-            </svg>
-          </button>
+            <!-- 2. 播放 / 暫停按鈕 -->
+            <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
+              <svg viewBox="0 0 24 24" id="iconPlay" width="24" height="24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" id="iconPause" width="24" height="24" fill="currentColor" style="display:none;">
+                <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+              </svg>
+            </button>
 
-          <!-- 3. 播放 / 暫停按鈕 -->
-          <button class="hole-btn play-btn" id="btnPlay" title="播放 / 暫停">
-            <svg viewBox="0 0 24 24" id="iconPlay" width="22" height="22" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg viewBox="0 0 24 24" id="iconPause" width="22" height="22" fill="currentColor" style="display:none;">
-              <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
-            </svg>
-          </button>
-
-          <!-- 4. 下一首按鈕 -->
-          <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
-            </svg>
-          </button>
-
-          <!-- 5. 音量滑塊 -->
-          <div class="vol-wrap">
-            <input type="range" id="volSlider" min="0" max="100" value="60">
+            <!-- 3. 下一首按鈕 -->
+            <button class="hole-btn ctrl-icon-btn" id="btnNext" title="下一首">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/>
+              </svg>
+            </button>
           </div>
 
-          <!-- 6. 翻面按鈕（循環 Loop 箭頭圖標） -->
-          <button class="hole-btn flip-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
-              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+          <!-- 右側音量模組（音量鍵緊鄰滑桿） -->
+          <div class="volume-module">
+            <button class="hole-btn ctrl-icon-btn vol-btn" id="btnMute" title="靜音 / 開啟聲音">
+              <svg viewBox="0 0 24 24" id="iconVolHigh" width="20" height="20" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" id="iconVolMuted" width="20" height="20" fill="currentColor" style="display:none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+            </button>
+            <div class="vol-wrap">
+              <input type="range" id="volSlider" min="0" max="100" value="60">
+            </div>
+          </div>
+
+          <!-- 最右側翻面按鍵（純無框循環 Loop 雙向箭頭圖標） -->
+          <button class="hole-btn clean-loop-btn" id="btnFlipB" title="換歌 / 設定 (背面)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
             </svg>
           </button>
         </div>
@@ -927,6 +946,8 @@
       const iconVolHigh = document.getElementById('iconVolHigh');
       const iconVolMuted = document.getElementById('iconVolMuted');
       const volSlider = document.getElementById('volSlider');
+      const iconPlay = document.getElementById('iconPlay');
+      const iconPause = document.getElementById('iconPause');
 
       function applyAccentColor(color, clearCustomImg = false) {
         const root = document.documentElement;
@@ -1053,11 +1074,17 @@
       soundWaveBox?.appendChild(fragment);
       const waveBars = soundWaveBox?.querySelectorAll('.wave-bar') || [];
 
-      // 進度輪詢
+      // 進度與撥放狀態輪詢
       setInterval(() => {
         const p = window.player || (window.widget && window.widget.player);
         const isPlaying = p && typeof p.getPlayerState === 'function' && p.getPlayerState() === 1;
         wrapper?.classList.toggle('is-playing', isPlaying);
+
+        // 圖標自動同步
+        if (iconPlay && iconPause) {
+          iconPlay.style.display = isPlaying ? 'none' : 'block';
+          iconPause.style.display = isPlaying ? 'block' : 'none';
+        }
 
         const percent = parseFloat(progressFill?.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
