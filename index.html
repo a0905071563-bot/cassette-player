@@ -105,7 +105,7 @@
     .screw.bl { bottom: 12px !important; left: 11px !important; }
     .screw.br { bottom: 12px !important; right: 11px !important; }
 
-    /* ══════════ 頂部白色標籤 ══════════ */
+   /* ══════════ 頂部白色標籤 ══════════ */
     .tape-label {
       background-color: #fdfdfd !important;
       background-image: repeating-linear-gradient(
@@ -119,11 +119,11 @@
       border-radius: 4px 4px 0 0 !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
       margin: 4px 20px 0 !important;
-      padding: 0 12px !important;
-      height: 32px !important;
+      padding: 0 16px !important;
+      height: 36px !important;            /* 微調高 4px 容納更大字體 */
       display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
+      align-items: center !important;     /* 垂直強制置中 */
+      justify-content: center !important;  /* 水平強制置中 */
       position: relative !important;
       z-index: 5 !important;
       box-sizing: border-box !important;
@@ -132,7 +132,7 @@
     .tape-label::before {
       content: "A";
       position: absolute;
-      left: 8px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       background: #111111;
@@ -148,9 +148,10 @@
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
     }
 
+    /* 標題字體：加大至 22px，正黑且完全置中 */
     .tape-title {
       font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif !important;
-      font-size: 18px !important;
+      font-size: 22px !important;         /* 字體放大 */
       font-weight: 700 !important;
       color: #111111 !important;
       letter-spacing: 0.5px;
@@ -158,8 +159,12 @@
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       text-align: center !important;
-      line-height: 1 !important;
-      margin: 0 24px !important;
+      line-height: 1.2 !important;        /* 修正文字 baseline 垂直居中 */
+      margin: 0 !important;              /* 清除偏移 margin */
+      width: 75% !important;              /* 給予適當寬度置中對齊 */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
       outline: none;
     }
 
@@ -178,7 +183,7 @@
       transition: background-color 0.3s ease;
     }
 
-    /* ══════════ 黑色中軸視窗 ══════════ */
+  /* ══════════ 黑色中軸視窗（寬度縮短至 74%） ══════════ */
     .reel-plate {
       background: #111111 !important;
       border: 2px solid #222222 !important;
@@ -187,12 +192,12 @@
       position: relative !important;
       overflow: hidden !important;
       height: 52px !important;
-      width: 92% !important;
+      width: 74% !important;              /* 原 92% 改為 74%，兩邊明顯縮短更集中 */
       margin: 0 auto !important;
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      padding: 0 8px !important;
+      padding: 0 6px !important;
       box-sizing: border-box !important;
     }
 
