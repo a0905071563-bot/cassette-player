@@ -420,18 +420,22 @@
       display: block;
     }
 
-    /* 外層舞台：向右位移 55px，將封套+唱片的整體幾何中心精準壓在 Play 鍵垂直線上 */
+  /* 外層舞台：寬度與下方底座 440px 等寬，確保中心軸線 100% 重合 */
     .vinyl-stage-wrapper {
       width: 100%;
+      max-width: 440px;
       height: 250px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 55px; /* 精準向右平移，徹底解決偏左問題 */
+      position: relative;
+      margin: 0 auto;
     }
 
+    /* 封套 250px + 露出半片 120px = 總寬 370px。
+       440px 的中心點是 220px，370px 的中心點是 185px。
+       所以只要 left 設定 (220 - 185) = 35px，就會分毫不差絕對置中！ */
     .vinyl-stage {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 35px;
       width: 370px;
       height: 250px;
     }
