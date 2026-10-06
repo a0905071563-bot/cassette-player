@@ -53,7 +53,7 @@
       pointer-events: none;
     }
 
-    /* 翻面事件層級切換（徹底避免 A 面控制座覆蓋 B 面點擊） */
+    /* 翻轉點擊層級 */
     .flipper.flipped .face-a,
     .flipper.flipped .face-a * { 
       pointer-events: none !important; 
@@ -282,6 +282,7 @@
     }
     #volSlider::-webkit-slider-thumb { background: var(--accent-color) !important; }
 
+    /* ══════════ 底部聲波進度條 ══════════ */
     .tape-progress {
       margin: 14px 16px 4px;
       height: 12px;
@@ -319,8 +320,10 @@
       background: #444;
       transition: height 0.15s ease, background 0.15s ease;
     }
+    /* 播放時：聲波動態漸層以貼紙顏色為主軸 */
     .is-playing .wave-bar.active {
-      background: linear-gradient(to top, #ff9800, #ff1744);
+      background: var(--accent-color) !important;
+      filter: brightness(1.2);
       animation: soundJump 0.65s infinite ease-in-out alternate;
     }
     .wave-bar:nth-child(2n) { animation-delay: 0.12s; }
@@ -334,7 +337,7 @@
       100% { height: 40%; }
     }
 
-    /* ══════════ Side B：白字透明線框統一風格 ══════════ */
+    /* ══════════ Side B：統一白字透明線框風格 ══════════ */
     .side-b {
       background: #11151c;
       border-radius: 12px;
@@ -361,7 +364,6 @@
       margin-bottom: 6px; 
     }
     
-    /* 統一白色透明線框輸入框 */
     .full-input, 
     .link-row input[type="text"] {
       background: rgba(0, 0, 0, 0.45) !important;
@@ -380,7 +382,6 @@
       background: rgba(0, 0, 0, 0.6) !important;
     }
 
-    /* 統一白色透明線框按鈕（載入、返回、選擇檔案、移除等） */
     .back-btn, 
     #btnLoad, 
     .btn-custom-action {
@@ -397,7 +398,6 @@
       justify-content: center !important;
       gap: 5px !important;
       transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease !important;
-      box-shadow: none !important;
     }
     .back-btn:hover, 
     #btnLoad:hover, 
@@ -405,11 +405,6 @@
       background: rgba(255, 255, 255, 0.18) !important;
       border-color: rgba(255, 255, 255, 0.6) !important;
       transform: translateY(-1px);
-    }
-    .back-btn:active, 
-    #btnLoad:active, 
-    .btn-custom-action:active {
-      transform: translateY(0);
     }
 
     .link-row {
@@ -476,6 +471,65 @@
       align-items: center; 
       gap: 8px; 
       margin-top: 6px; 
+    }
+
+    /* ══════════ 循環播放 (LOOP) 開關：統一白色透明極簡風 ══════════ */
+    .loop-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .loop-row .lbl {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff !important;
+      letter-spacing: 0.5px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .switch .track {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 20px !important;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .switch .track::before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 2.5px;
+      background-color: #ffffff !important;
+      border-radius: 50% !important;
+      transition: transform 0.25s ease, background 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .switch input:checked + .track {
+      background: rgba(255, 255, 255, 0.2) !important;
+      border-color: #ffffff !important;
+    }
+    .switch input:checked + .track::before {
+      transform: translateX(20px);
+      background-color: #ffffff !important;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
     }
   </style>
 </head>
@@ -598,7 +652,7 @@
                 </div>
               </div>
 
-              <!-- 3. 卡帶外殼與控制座底色（順序與貼紙一致，底色更加深沉） -->
+              <!-- 3. 卡帶外殼與控制座底色 -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
                 <div class="palette-grid">
@@ -631,7 +685,7 @@
               </div>
 
               <!-- 循環播放 -->
-              <div class="loop-row" style="margin-top:10px;">
+              <div class="loop-row">
                 <span class="lbl"><span>循環播放 (LOOP)</span></span>
                 <label class="switch">
                   <input type="checkbox" id="loopToggle">
@@ -682,11 +736,13 @@
       return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     }
 
-    function extractVideoId(url) {
+    // 全面解析 YouTube Video ID（含 shorts、youtu.be、embed 等）
+    function parseYouTubeID(url) {
       if (!url) return '';
-      const reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-      const match = url.match(reg);
-      return match ? match[1] : (url.length === 11 ? url : '');
+      const str = url.trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(str)) return str;
+      const match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/))([\w-]{11})/);
+      return match ? match[1] : '';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -738,42 +794,49 @@
       document.getElementById('btnFlipB')?.addEventListener('click', () => flipper.classList.add('flipped'));
       document.getElementById('btnFlipA')?.addEventListener('click', () => flipper.classList.remove('flipped'));
 
-      // YouTube 影片載入邏輯修復
-      function loadVideoFromInput() {
-        const val = linkInput?.value.trim();
-        if (!val) return;
-        const vid = extractVideoId(val);
+      // 影片載入
+      function executeLoadVideo() {
+        const raw = linkInput?.value.trim() || '';
+        const vid = parseYouTubeID(raw);
         if (!vid) {
           alert('請輸入有效的 YouTube 影片網址或 ID');
           return;
         }
 
+        // 存入快取供日後讀取
+        localStorage.setItem('yt_url', raw);
         localStorage.setItem('yt_video_id', vid);
-        localStorage.setItem('yt_url', val);
+        rawSetItem('saved_youtube_id', vid);
 
+        // 主動呼叫 YouTube Iframe 實例載入影片
         if (window.player && typeof window.player.loadVideoById === 'function') {
-          window.player.loadVideoById(vid);
-        } else if (window.player && typeof window.player.cueVideoById === 'function') {
-          window.player.cueVideoById(vid);
+          try {
+            window.player.loadVideoById(vid);
+            window.player.playVideo();
+          } catch(e) {
+            window.player.cueVideoById(vid);
+          }
         } else {
-          // 若播放器尚未就緒，留存等待主腳本讀取
-          window.location.search = `?id=${encodeURIComponent(widgetId)}&v=${encodeURIComponent(vid)}`;
+          // 透過重載網址參數啟動外部模板預載
+          const curUrl = new URL(window.location.href);
+          curUrl.searchParams.set('v', vid);
+          window.location.href = curUrl.toString();
         }
       }
 
       btnLoad?.addEventListener('click', (e) => {
         e.preventDefault();
-        loadVideoFromInput();
+        e.stopPropagation();
+        executeLoadVideo();
       });
 
       linkInput?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
-          loadVideoFromInput();
+          executeLoadVideo();
         }
       });
 
-      // 讀取暫存的影片連結
       const savedUrl = localStorage.getItem('yt_url') || localStorage.getItem('yt_video_id');
       if (savedUrl && linkInput) {
         linkInput.value = savedUrl;
@@ -798,14 +861,18 @@
         const percent = parseFloat(progressFill?.style.width) || 0;
         const activeBarLimit = Math.floor((percent / 100) * barCount);
 
+        const currentAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#e51d24';
+
         waveBars.forEach((bar, idx) => {
           const isActive = idx <= activeBarLimit;
           bar.classList.toggle('active', isActive);
-          bar.style.background = isActive ? (isPlaying ? '' : '#ff9800') : '#444';
+          // 聲波進度條顏色與貼紙顏色同步
+          bar.style.background = isActive ? (isPlaying ? currentAccent : currentAccent) : '#444';
+          bar.style.opacity = isActive ? '1' : '0.4';
         });
       }, 150);
 
-      // 讀取配色快取
+      // 配色載入
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) applyAccentColor(savedAccent);
 
@@ -818,7 +885,7 @@
         if (imgInput) imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 貼紙選色事件
+      // 貼紙選色
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
@@ -827,7 +894,7 @@
       });
       nativeColorPicker?.addEventListener('input', (e) => applyAccentColor(e.target.value, true));
 
-      // 外殼選色事件
+      // 外殼選色
       document.querySelectorAll('.color-case-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
@@ -836,7 +903,7 @@
       });
       caseColorPicker?.addEventListener('input', (e) => applyCaseColor(e.target.value));
 
-      // 檔案上傳
+      // 圖片上傳
       fileInput?.addEventListener('change', function() {
         if (this.files?.[0]) {
           const reader = new FileReader();
@@ -850,7 +917,6 @@
         }
       });
 
-      // 圖片網址變更
       imgInput?.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
@@ -859,7 +925,6 @@
         }
       });
 
-      // 移除圖片
       document.getElementById('btnClearImg')?.addEventListener('click', (e) => {
         e.preventDefault();
         applyAccentColor(localStorage.getItem('cfg_accent') || '#e51d24', true);
