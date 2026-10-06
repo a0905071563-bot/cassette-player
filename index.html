@@ -473,31 +473,71 @@
       margin-top: 6px; 
     }
 
-    /* ══════════ 循環播放 (LOOP) 開關：統一白色透明極簡風 ══════════ */
+   /* ══════════ 循環播放 (LOOP) 開關：鎖定完美置中 ══════════ */
     .loop-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 8px;
-      margin-top: 10px;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 8px 12px !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      border-radius: 8px !important;
+      margin-top: 10px !important;
     }
     .loop-row .lbl {
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 12px !important;
+      font-weight: 700 !important;
       color: #ffffff !important;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.5px !important;
     }
     .switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 22px;
+      position: relative !important;
+      display: inline-block !important;
+      width: 44px !important;
+      height: 22px !important;
+      box-sizing: border-box !important;
     }
     .switch input {
-      opacity: 0;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      position: absolute !important;
+    }
+    .switch .track {
+      position: absolute !important;
+      cursor: pointer !important;
+      inset: 0 !important;
+      background: rgba(0, 0, 0, 0.55) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+      border-radius: 22px !important;
+      box-sizing: border-box !important;
+      transition: background 0.25s ease, border-color 0.25s ease !important;
+    }
+    /* 圓球本體：強制水平垂直置中定位 */
+    .switch .track::before {
+      position: absolute !important;
+      content: "" !important;
+      height: 14px !important;
+      width: 14px !important;
+      left: 3px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      background-color: #ffffff !important;
+      border-radius: 50% !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+      box-sizing: border-box !important;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease !important;
+    }
+    /* 開啟時狀態 */
+    .switch input:checked + .track {
+      background: rgba(255, 255, 255, 0.25) !important;
+      border-color: #ffffff !important;
+    }
+    .switch input:checked + .track::before {
+      transform: translate(21px, -50%) !important; /* 保持垂直置中，僅水平平移 */
+      background-color: #ffffff !important;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.8) !important;
+    }
       width: 0;
       height: 0;
     }
