@@ -3,98 +3,213 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Realistic 3D Cassette Player</title>
+  <title>Maxell Retro Cassette Player</title>
   <base href="https://www.kanpekiuniverse.com/widgets/music/casete/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Barlow+Condensed:wght@700;800&family=Permanent+Marker&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/shared/css/base.css">
   <link rel="stylesheet" href="https://www.kanpekiuniverse.com/widgets/music/casete/style.css">
 
   <style>
-    /* ═══════════ 重度立體質感與光影 ═══════════ */
+    /* ══════════════ 黑色重度立體磨砂外殼 ══════════════ */
     #cassetteBody {
-      border-radius: 14px !important;
+      background: radial-gradient(circle at 50% 30%, #2a2a2a 0%, #151515 70%, #0d0d0d 100%) !important;
+      border-radius: 12px !important;
       box-shadow: 
-        0 18px 30px rgba(0, 0, 0, 0.45),
-        inset 0 2px 3px rgba(255, 255, 255, 0.4),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.5) !important;
+        0 20px 35px rgba(0, 0, 0, 0.65),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.8) !important;
+      border: 1px solid #111 !important;
+      padding: 14px 16px 10px !important;
+    }
+
+    /* ══════════════ 整張大貼紙（白色區域）支援置圖與切換底色 ══════════════ */
+    #stickerArea {
+      background-color: #f7f6f2;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 5px;
+      padding: 8px 10px 6px;
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 0 12px rgba(0, 0, 0, 0.06);
       position: relative;
+      transition: background-color 0.25s ease;
     }
 
-    /* 貼紙立體感：邊緣微翹與貼紙厚度陰影 */
-    .tape-label {
-      background-size: cover !important;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      box-shadow: 
-        0 2px 5px rgba(0, 0, 0, 0.35),
-        inset 0 0 10px rgba(0, 0, 0, 0.08) !important;
-      border-radius: 6px !important;
-      transition: background 0.3s ease;
+    /* 頂部歌名白條與手寫字 */
+    .sticker-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid #222;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 3px;
+      padding: 2px 6px;
     }
-
-    /* 中間磁帶凹槽厚度陰影 */
-    .tape-stripe {
-      box-shadow: 
-        inset 0 3px 6px rgba(0, 0, 0, 0.6),
-        inset 0 -2px 4px rgba(255, 255, 255, 0.15),
-        0 1px 2px rgba(255, 255, 255, 0.2) !important;
+    .badge-box-a {
+      background: #111;
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
     }
-
-    .reel-plate {
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7) !important;
-    }
-
-    /* 歌名樣式：支援長歌名跑馬燈或優雅手寫字體 */
     .tape-title {
-      font-family: 'Caveat', 'Permanent Marker', cursive, sans-serif !important;
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.5px;
+      flex: 1;
+      font-family: 'Permanent Marker', 'Caveat', cursive !important;
+      font-size: 19px !important;
+      color: #00aa44 !important; /* 經典手繪綠色字體 */
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
-      padding: 0 12px;
-      line-height: 1.3;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+      line-height: 1.2;
+    }
+    .header-icons {
+      font-size: 9px;
+      color: #555;
+      letter-spacing: 1px;
+      font-family: 'Share Tech Mono', monospace;
     }
 
-    /* Side B 擴充自訂欄位樣式 */
-    .custom-opt-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255,255,255,0.2);
+    /* ══════════════ 紅色 Maxell 經典裝飾框 ══════════════ */
+    .red-frame-box {
+      border: 3.5px solid #d32f2f;
+      border-radius: 4px;
+      padding: 4px 6px 2px;
+      position: relative;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
-    .custom-opt-row label {
-      font-size: 11px;
+    .frame-inner-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .brand-left {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -0.5px;
+    }
+    .brand-right {
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      line-height: 1;
+    }
+    .brand-right .ur {
+      font-size: 13px;
+      font-weight: 900;
+      background: #111;
+      color: #fff;
+      padding: 1px 3px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .brand-right .num {
+      font-size: 16px;
+      font-weight: 900;
+      color: #0d47a1;
+      margin-top: 1px;
+    }
+
+    /* 轉輪區域挖空深陷立體層次 */
+    .tape-stripe {
+      background: #181818 !important;
+      border-radius: 4px !important;
+      box-shadow: 
+        inset 0 4px 8px rgba(0, 0, 0, 0.85),
+        inset 0 -1px 3px rgba(255, 255, 255, 0.2),
+        0 1px 2px rgba(255, 255, 255, 0.4) !important;
+      margin: 0 4px !important;
+      flex: 1;
+      max-width: 170px;
+    }
+    .reel-plate {
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.9) !important;
+    }
+
+    /* 下方紅色刻度線 */
+    .scale-bar {
+      margin-top: 3px;
+      height: 9px;
+      background: repeating-linear-gradient(
+        90deg,
+        #d32f2f 0px,
+        #d32f2f 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      position: relative;
+    }
+    .scale-label {
+      text-align: center;
+      font-size: 8px;
+      font-weight: 800;
+      color: #d32f2f;
+      letter-spacing: 1px;
+      margin-top: 1px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* 螺絲金屬質感 */
+    .screw {
+      background: radial-gradient(circle, #ddd 30%, #777 70%, #333 100%) !important;
+      box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.8) !important;
+    }
+
+    /* 隱藏原版不需要的冗餘文字 */
+    .badge-a, .badge-60, .audio-tape { display: none !important; }
+    .tape-footer { padding: 2px 0 0 !important; }
+    .now-playing { font-size: 11px !important; opacity: 0.85; }
+
+    /* Side B 控制面板自訂 */
+    .custom-section {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .custom-title {
+      font-size: 12px;
       font-weight: bold;
-      color: #ddd;
-      letter-spacing: 0.5px;
+      color: #ffca28;
+      margin-bottom: 6px;
     }
     .custom-input {
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      width: 100%;
+      background: #111;
+      border: 1px solid #444;
       color: #fff;
-      padding: 7px 10px;
-      border-radius: 6px;
+      padding: 7px 9px;
+      border-radius: 4px;
       font-size: 12px;
-      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 8px;
     }
-    .preset-colors {
+    .palette-row {
       display: flex;
       gap: 8px;
+      align-items: center;
       margin-top: 4px;
     }
-    .preset-btn {
+    .palette-circle {
       width: 24px;
       height: 24px;
       border-radius: 50%;
       border: 2px solid #fff;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
   </style>
 </head>
@@ -102,121 +217,154 @@
 <div class="cassette-widget" id="cassette-player-wrapper">
   <div class="scene">
     <div class="flipper" id="flipper">
-      <!-- ══════════ LADO A ══════════ -->
+      
+      <!-- ══════════════ LADO A (正面) ══════════════ -->
       <div class="face face-a">
         <div class="cassette" id="cassetteBody">
           <span class="screw tl"></span><span class="screw tr"></span>
           <span class="screw bl"></span><span class="screw br"></span>
-          <div class="tape-label" id="customTapeLabel">
-            <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false" aria-label="Mixtape">Love Songs</div>
-          </div>
-          <div class="tape-stripe" id="tapeStripe">
-            <span class="badge-a">A</span>
-            <span class="badge-60">60</span>
-            <div class="reel-plate">
-              <div class="reel"><div class="teeth"></div></div>
-              <div class="tape-window">
-                <div class="spool"></div>
-                <div class="gap"></div>
-                <div class="spool"></div>
+
+          <!-- 白色範圍整張貼紙 -->
+          <div id="stickerArea">
+            
+            <!-- 頂部歌名區 (連動 YouTube) -->
+            <div class="sticker-header">
+              <span class="badge-box-a">A</span>
+              <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">ABOUT US</div>
+              <div class="header-icons">NR □YES □NO</div>
+            </div>
+
+            <!-- 紅色經典框與轉輪 -->
+            <div class="red-frame-box" id="redFrame">
+              <div class="frame-inner-grid">
+                <div class="brand-left" id="brandTextLeft">maxell</div>
+                
+                <div class="tape-stripe" id="tapeStripe">
+                  <div class="reel-plate">
+                    <div class="reel"><div class="teeth"></div></div>
+                    <div class="tape-window">
+                      <div class="spool"></div>
+                      <div class="gap"></div>
+                      <div class="spool"></div>
+                    </div>
+                    <div class="reel"><div class="teeth"></div></div>
+                  </div>
+                </div>
+
+                <div class="brand-right">
+                  <div class="ur">UR</div>
+                  <div class="num">90</div>
+                </div>
               </div>
-              <div class="reel"><div class="teeth"></div></div>
+
+              <!-- 下方刻度線 -->
+              <div class="scale-bar"></div>
+              <div class="scale-label">POSITION NORMAL</div>
             </div>
           </div>
+
           <div class="tape-footer">
-            <div class="now-playing" id="nowPlaying">pon play para empezar ♪</div>
-            <span class="audio-tape">AUDIO TAPE</span>
+            <div class="now-playing" id="nowPlaying">ready to play ♪</div>
           </div>
-          <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0" aria-label="Progreso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="tape-progress" id="tapeProgress" role="slider" tabindex="0">
             <div class="fill" id="progressFill"></div>
           </div>
-          <div style="height:10px"></div>
         </div>
+
         <div class="tape-base">
-          <button class="hole-btn" id="btnPrev" aria-label="Anterior" title="Anterior">
+          <button class="hole-btn" id="btnPrev" title="Anterior">
             <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
-          <button class="hole-btn play-btn" id="btnPlay" aria-label="Reproducir" title="Reproducir">
+          <button class="hole-btn play-btn" id="btnPlay" title="Reproducir">
             <svg viewBox="0 0 24 24" id="iconPlay"><path d="M8 5v14l11-7z"/></svg>
             <svg viewBox="0 0 24 24" id="iconPause" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
           </button>
-          <button class="hole-btn" id="btnNext" aria-label="Siguiente" title="Siguiente">
+          <button class="hole-btn" id="btnNext" title="Siguiente">
             <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
           </button>
           <div class="vol-wrap">
-            <input type="range" id="volSlider" min="0" max="100" value="60" aria-label="Volumen">
+            <input type="range" id="volSlider" min="0" max="100" value="60">
           </div>
-          <button class="hole-btn flip-btn" id="btnFlipB" aria-label="Ir al lado B" title="Lado B">
+          <button class="hole-btn flip-btn" id="btnFlipB" title="設定 / 換曲">
             B
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
           </button>
         </div>
       </div>
 
-      <!-- ══════════ LADO B ══════════ -->
+      <!-- ══════════════ LADO B (設定面) ══════════════ -->
       <div class="face face-b">
         <div class="side-b">
           <div class="side-b-header">
             <button class="back-btn" id="btnFlipA">
-              <span aria-hidden="true">◀</span> <span>VOLVER AL LADO A</span>
+              <span aria-hidden="true">◀</span> <span>返回卡帶正面</span>
             </button>
             <div class="sb-header-right">
-              <button class="lang-btn" id="langBtn" aria-label="Idioma">ES</button>
+              <button class="lang-btn" id="langBtn">ES</button>
               <span class="badge-b">B</span>
             </div>
           </div>
           <div class="video-window">
             <div id="ytPlayer"></div>
           </div>
+
           <details class="sb-collapse" open>
             <summary class="sb-summary">
-              <span>Opciones / 樣式自訂</span>
+              <span>卡帶設定與外觀</span>
               <span class="chev" aria-hidden="true">▾</span>
             </summary>
             <div class="sb-body">
+              
+              <!-- 音樂連結 -->
               <div class="link-row">
-                <input type="text" id="linkInput" placeholder="pega tu link de YouTube" aria-label="YouTube Link">
-                <button id="btnLoad">CARGAR</button>
+                <input type="text" id="linkInput" placeholder="貼上 YouTube 影片網址">
+                <button id="btnLoad">載入</button>
               </div>
 
-              <!-- 自訂貼紙底圖與底色 -->
-              <div class="custom-opt-row">
-                <label>貼紙圖片網址 (Image URL)</label>
-                <input type="text" id="stickerImgInput" class="custom-input" placeholder="貼上自訂插圖或底圖連結 (PNG / JPG)">
+              <!-- 自訂貼紙外觀區域 -->
+              <div class="custom-section">
+                <div class="custom-title">🎨 白色貼紙區域自訂 (不含轉輪)</div>
                 
-                <label style="margin-top:6px;">基礎貼紙底色 (經典復古色)</label>
-                <div class="preset-colors">
-                  <div class="preset-btn" style="background:#f4f0ea;" title="復古白" onclick="setLabelBg('#f4f0ea')"></div>
-                  <div class="preset-btn" style="background:#e8dfcf;" title="牛皮紙米" onclick="setLabelBg('#e8dfcf')"></div>
-                  <div class="preset-btn" style="background:#2b2b2b;" title="黑膠灰" onclick="setLabelBg('#2b2b2b', '#ffffff')"></div>
-                  <div class="preset-btn" style="background:#b8c7db;" title="丹寧藍" onclick="setLabelBg('#b8c7db')"></div>
-                  <div class="preset-btn" style="background:#e2c4c4;" title="枯粉色" onclick="setLabelBg('#e2c4c4')"></div>
+                <input type="text" id="stickerImgInput" class="custom-input" placeholder="貼上貼紙底圖網址 (例如自繪插畫 / PNG)">
+                
+                <div style="font-size:11px; color:#aaa; margin-bottom:4px;">經典貼紙底色：</div>
+                <div class="palette-row">
+                  <div class="palette-circle" style="background:#f7f6f2;" title="經典象牙白" onclick="changeStickerColor('#f7f6f2')"></div>
+                  <div class="palette-circle" style="background:#eedcbe;" title="復古米黃" onclick="changeStickerColor('#eedcbe')"></div>
+                  <div class="palette-circle" style="background:#262626;" title="黑魂灰" onclick="changeStickerColor('#262626')"></div>
+                  <div class="palette-circle" style="background:#b7cbe3;" title="千禧粉藍" onclick="changeStickerColor('#b7cbe3')"></div>
+                  <div class="palette-circle" style="background:#e8c7ce;" title="復古淡粉" onclick="changeStickerColor('#e8c7ce')"></div>
+                </div>
+
+                <div style="font-size:11px; color:#aaa; margin-top:8px; margin-bottom:4px;">外框紅色線條配色：</div>
+                <div class="palette-row">
+                  <div class="palette-circle" style="background:#d32f2f;" title="經典紅框" onclick="changeBorderColor('#d32f2f')"></div>
+                  <div class="palette-circle" style="background:#1976d2;" title="深藍框" onclick="changeBorderColor('#1976d2')"></div>
+                  <div class="palette-circle" style="background:#388e3c;" title="森林綠框" onclick="changeBorderColor('#388e3c')"></div>
+                  <div class="palette-circle" style="background:#fbc02d;" title="金黃框" onclick="changeBorderColor('#fbc02d')"></div>
+                  <div class="palette-circle" style="background:#8e24aa;" title="霓虹紫框" onclick="changeBorderColor('#8e24aa')"></div>
                 </div>
               </div>
 
+              <!-- 循環播放 -->
               <div class="loop-row" style="margin-top:10px;">
-                <span class="lbl">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
-                  <span>REPETIR (BUCLE)</span>
-                </span>
+                <span class="lbl"><span>循環播放 (LOOP)</span></span>
                 <label class="switch">
-                  <input type="checkbox" id="loopToggle" aria-label="Repetir en bucle">
+                  <input type="checkbox" id="loopToggle">
                   <span class="track"></span>
                 </label>
               </div>
-              <div class="theme-block">
-                <span class="lbl">外殼 Tema</span>
-                <div class="theme-grid" id="themeGrid"></div>
-              </div>
+
             </div>
           </details>
         </div>
       </div>
+
     </div>
   </div>
 </div>
 
-<!-- 注入：隔離快取 + 影片歌名自動替換 Love Songs + 貼紙自訂 -->
+<!-- ══════════════ 邏輯腳本 ══════════════ -->
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -231,37 +379,40 @@
       return rawGetItem(widgetId + '_' + key);
     };
 
-    // 貼紙樣式保存與讀取
     window.addEventListener('DOMContentLoaded', () => {
-      const label = document.getElementById('customTapeLabel');
+      const sticker = document.getElementById('stickerArea');
+      const redFrame = document.getElementById('redFrame');
       const title = document.getElementById('tapeTitle');
       const imgInput = document.getElementById('stickerImgInput');
 
-      const savedImg = localStorage.getItem('custom_sticker_img');
-      const savedBg = localStorage.getItem('custom_sticker_bg');
-      const savedColor = localStorage.getItem('custom_sticker_color');
+      // 讀取該 ID 專屬的外觀快取
+      const savedImg = localStorage.getItem('sticker_bg_img');
+      const savedBg = localStorage.getItem('sticker_bg_color');
+      const savedBorder = localStorage.getItem('sticker_border_color');
 
       if (savedImg) {
-        label.style.backgroundImage = `url("${savedImg}")`;
+        sticker.style.backgroundImage = `url("${savedImg}")`;
         imgInput.value = savedImg;
       } else if (savedBg) {
-        label.style.backgroundColor = savedBg;
+        sticker.style.backgroundColor = savedBg;
       }
-      if (savedColor) title.style.color = savedColor;
+      if (savedBorder) {
+        redFrame.style.borderColor = savedBorder;
+      }
 
       imgInput.addEventListener('change', () => {
-        const url = imgInput.value.trim();
-        if (url) {
-          label.style.backgroundImage = `url("${url}")`;
-          localStorage.setItem('custom_sticker_img', url);
+        const val = imgInput.value.trim();
+        if (val) {
+          sticker.style.backgroundImage = `url("${val}")`;
+          localStorage.setItem('sticker_bg_img', val);
         } else {
-          label.style.backgroundImage = 'none';
-          localStorage.removeItem('custom_sticker_img');
+          sticker.style.backgroundImage = 'none';
+          localStorage.removeItem('sticker_bg_img');
         }
       });
 
-      // 自動抓取 YouTube 歌名替換 Love Songs
-      const checkYtTitle = setInterval(() => {
+      // 自動將 YouTube 影片歌名填入 ABOUT US 欄位
+      setInterval(() => {
         if (window.player && typeof window.player.getVideoData === 'function') {
           const data = window.player.getVideoData();
           if (data && data.title && data.title !== "") {
@@ -272,16 +423,19 @@
       }, 1000);
     });
 
-    window.setLabelBg = function(bg, textColor = '#111') {
-      const label = document.getElementById('customTapeLabel');
-      const title = document.getElementById('tapeTitle');
-      label.style.backgroundImage = 'none';
-      label.style.backgroundColor = bg;
-      title.style.color = textColor;
-      localStorage.removeItem('custom_sticker_img');
-      localStorage.setItem('custom_sticker_bg', bg);
-      localStorage.setItem('custom_sticker_color', textColor);
+    window.changeStickerColor = function(color) {
+      const sticker = document.getElementById('stickerArea');
+      sticker.style.backgroundImage = 'none';
+      sticker.style.backgroundColor = color;
+      localStorage.removeItem('sticker_bg_img');
+      localStorage.setItem('sticker_bg_color', color);
       document.getElementById('stickerImgInput').value = '';
+    };
+
+    window.changeBorderColor = function(color) {
+      const redFrame = document.getElementById('redFrame');
+      redFrame.style.borderColor = color;
+      localStorage.setItem('sticker_border_color', color);
     };
   })();
 </script>
