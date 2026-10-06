@@ -28,14 +28,16 @@
 
     :root {
       --jacket-bg: #f8f8f8;
+      --disc-label-bg: #ffffff;
       --control-bar-bg: #11151c;
-      --accent-color: #e51d24;
+      --accent-color: #e51d24; /* 播放按鈕主題色 */
+      --title-color: #111111;  /* 標題文字顏色 */
       --btn-icon-color: #ffffff;
     }
 
     .vinyl-widget {
       width: 100%;
-      max-width: 480px;
+      max-width: 440px;
       padding: 12px;
     }
 
@@ -94,21 +96,18 @@
       align-items: center;
     }
 
-    /* ══════════ 右側黑膠唱片本體（半片露出 + 順時針旋轉） ══════════ */
+    /* ══════════ 右側黑膠唱片本體（半片露出 + 高光層 + 順時針旋轉） ══════════ */
     .vinyl-disc {
       position: absolute;
-      right: 4px;
+      left: 135px; /* 精準控制使唱片露出恰好一半 (圖2比例) */
       top: 50%;
       transform: translateY(-50%);
-      width: 236px;
-      height: 236px;
+      width: 240px;
+      height: 240px;
       border-radius: 50%;
-      /* 經典黑膠唱片同心圓黑膠溝槽 (Grooves) 光澤紋理 */
+      /* 黑膠唱片同心圓黑膠溝槽 (Grooves) */
       background: 
-        radial-gradient(circle at center, transparent 38px, rgba(255,255,255,0.06) 42px, transparent 46px),
-        radial-gradient(circle at center, transparent 65px, rgba(255,255,255,0.05) 70px, transparent 75px),
-        radial-gradient(circle at center, transparent 95px, rgba(255,255,255,0.06) 100px, transparent 105px),
-        repeating-radial-gradient(circle at center, #111 0px, #111 2px, #1c1c1c 3px, #0d0d0d 4px);
+        repeating-radial-gradient(circle at center, #111 0px, #111 2px, #1a1a1a 3px, #0c0c0c 4px);
       box-shadow: 
         0 14px 28px rgba(0, 0, 0, 0.6),
         inset 0 0 10px rgba(0,0,0,0.9);
@@ -116,44 +115,63 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.3s ease;
+      overflow: hidden;
     }
 
-    /* 唱片中央標籤與圓孔 */
+    /* 黑膠真實反射高光 (Vinyl Specular Highlight) */
+    .vinyl-disc::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        transparent 0deg,
+        rgba(255, 255, 255, 0.15) 45deg,
+        transparent 90deg,
+        transparent 180deg,
+        rgba(255, 255, 255, 0.15) 225deg,
+        transparent 270deg
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 唱片中央標籤（可改色與置入圖片） */
     .disc-label {
       width: 82px;
       height: 82px;
       border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 3px rgba(0,0,0,0.4), inset 0 0 6px rgba(0,0,0,0.1);
+      background-color: var(--disc-label-bg);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5), inset 0 0 6px rgba(0,0,0,0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      z-index: 3;
+      transition: background-color 0.3s ease;
     }
 
-    /* 中央小孔 */
+    /* 中央小孔洞 */
     .disc-hole {
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #0d0d0d;
-      box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 0 2px rgba(0,0,0,0.8);
-      z-index: 2;
+      background: #0a0a0a;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 0 2px rgba(0,0,0,0.8);
+      z-index: 4;
     }
 
-    /* 播放時順時針持續旋轉動畫 */
+    /* 播放時順時針旋轉 */
     .is-playing .vinyl-disc {
       animation: spinVinyl 3.5s linear infinite;
     }
 
     @keyframes spinVinyl {
-      from {
-        transform: translateY(-50%) rotate(0deg);
-      }
-      to {
-        transform: translateY(-50%) rotate(360deg);
-      }
+      from { transform: translateY(-50%) rotate(0deg); }
+      to { transform: translateY(-50%) rotate(360deg); }
     }
 
     /* ══════════ 左側方形唱片封套 ══════════ */
@@ -167,12 +185,12 @@
       background-color: var(--jacket-bg);
       background-size: cover;
       background-position: center;
-      border-radius: 4px;
+      border-radius: 6px;
       box-shadow: 
         0 16px 32px rgba(0, 0, 0, 0.45),
-        inset -2px 0 4px rgba(0,0,0,0.1);
-      z-index: 2;
-      padding: 16px;
+        inset -1px 0 3px rgba(0,0,0,0.1);
+      z-index: 3;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -180,33 +198,20 @@
       overflow: hidden;
     }
 
-    /* 封套開口處的半圓形手扣取槽（Thumb Notch） */
-    .jacket-notch {
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 48px;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: inset 4px 0 6px rgba(0,0,0,0.25);
-      pointer-events: none;
-    }
-
-    /* 封套上方：歌名 ＆ 聲波水平並列 */
+    /* ══════════ 標題底色：50% 半透明磨砂玻璃 ══════════ */
     .jacket-header {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      z-index: 3;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      gap: 5px;
+      z-index: 4;
+      background: rgba(255, 255, 255, 0.5) !important; /* 50% 半透明 */
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
       padding: 8px 10px;
       border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .header-row {
@@ -217,9 +222,9 @@
     }
 
     .header-decor-line {
-      width: 32px;
-      height: 3px;
-      background: #111;
+      width: 28px;
+      height: 2.5px;
+      background: var(--title-color);
       border-radius: 2px;
       margin-bottom: 2px;
     }
@@ -228,13 +233,14 @@
       font-family: 'Montserrat', 'Zen Maru Gothic', sans-serif;
       font-size: 13px;
       font-weight: 800;
-      color: #111111;
+      color: var(--title-color) !important;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
+      transition: color 0.3s ease;
     }
 
     /* 歌名旁邊的動態聲波 */
@@ -249,9 +255,9 @@
     .mini-wave-bar {
       width: 2.5px;
       height: 4px;
-      background: #111111;
+      background: var(--title-color);
       border-radius: 1px;
-      transition: height 0.12s ease;
+      transition: height 0.12s ease, background-color 0.3s ease;
     }
 
     .is-playing .mini-wave-bar {
@@ -273,20 +279,20 @@
     /* 封套下方進度條 */
     .jacket-progress-wrap {
       width: 100%;
-      height: 6px;
-      background: rgba(0, 0, 0, 0.15);
+      height: 5px;
+      background: rgba(0, 0, 0, 0.25);
       border-radius: 3px;
       overflow: hidden;
       cursor: pointer;
       position: relative;
-      z-index: 3;
+      z-index: 4;
     }
     .jacket-progress-fill {
       height: 100%;
       width: 0%;
-      background: #111;
+      background: var(--title-color);
       border-radius: 3px;
-      transition: width 0.15s linear;
+      transition: width 0.15s linear, background-color 0.3s ease;
     }
 
     /* ══════════ 控制底座 ══════════ */
@@ -524,21 +530,19 @@
       
       <!-- LADO A (正面) -->
       <div class="face face-a">
-        <!-- 黑膠展示台 -->
         <div class="vinyl-stage">
           
-          <!-- 右側露出黑膠唱片 -->
+          <!-- 右側黑膠唱片（半片露出 + 高光） -->
           <div class="vinyl-disc">
-            <div class="disc-label">
+            <div class="disc-label" id="discLabel">
               <div class="disc-hole"></div>
             </div>
           </div>
 
-          <!-- 左側方形封套（自訂底色或圖片） -->
+          <!-- 左側唱片封套（平口邊緣） -->
           <div class="vinyl-jacket" id="vinylJacket">
-            <div class="jacket-notch"></div>
             
-            <!-- 上方歌名 ＆ 聲波柱 -->
+            <!-- 50% 半透明磨砂玻璃標題區 -->
             <div class="jacket-header">
               <div class="header-decor-line"></div>
               <div class="header-row">
@@ -635,32 +639,66 @@
                 </div>
               </div>
 
-              <!-- 2. 封套底色 ＆ 按鍵色彩聯動 -->
+              <!-- 2. 標題與按鈕主題色 -->
               <div class="setting-group">
-                <div class="group-title">🎨 2. 封套底色 ＆ 按鍵色彩聯動</div>
+                <div class="group-title">🎛️ 2. 標題字體 ＆ 按鍵色彩聯動</div>
                 <div class="palette-grid">
-                  <div class="palette-circle color-jacket-btn" data-color="#f8f8f8" style="background:#f8f8f8; border-color:#999;" title="純白紙卡"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#f2efe9" style="background:#f2efe9;" title="復古米黃"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#222222" style="background:#222222;" title="沉穩曜黑"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#c93b3b" style="background:#c93b3b;" title="復古紅"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#e67e22" style="background:#e67e22;" title="黑膠暖橘"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#2980b9" style="background:#2980b9;" title="唱片深藍"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#27ae60" style="background:#27ae60;" title="墨綠"></div>
-                  <div class="palette-circle color-jacket-btn" data-color="#8e44ad" style="background:#8e44ad;" title="霓虹紫"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#e51d24" style="background:#e51d24;" title="熱血紅"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#e67e22" style="background:#e67e22;" title="溫暖橘"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#fbc02d" style="background:#fbc02d;" title="亮黃"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#2e7d32" style="background:#2e7d32;" title="翠綠"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#1976d2" style="background:#1976d2;" title="沉穩藍"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#8e24aa" style="background:#8e24aa;" title="幻紫"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
+                  <div class="palette-circle color-theme-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
+                </div>
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="themeColorPicker" class="native-color-picker" value="#e51d24">
+                  <span class="picker-label">🌈 標題與按鈕自訂色域</span>
+                </div>
+              </div>
+
+              <!-- 3. 黑膠中央圓標改色與置圖 -->
+              <div class="setting-group">
+                <div class="group-title">💿 3. 黑膠唱片圓標 (Disc Label) 外觀</div>
+                <div class="palette-grid">
+                  <div class="palette-circle color-label-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
+                  <div class="palette-circle color-label-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
+                  <div class="palette-circle color-label-btn" data-color="#e67e22" style="background:#e67e22;" title="復古橘"></div>
+                  <div class="palette-circle color-label-btn" data-color="#fbc02d" style="background:#fbc02d;" title="唱片黃"></div>
+                  <div class="palette-circle color-label-btn" data-color="#1976d2" style="background:#1976d2;" title="黑膠藍"></div>
+                  <div class="palette-circle color-label-btn" data-color="#222222" style="background:#222222;" title="沉著黑"></div>
+                </div>
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="labelColorPicker" class="native-color-picker" value="#ffffff">
+                  <span class="picker-label">🌈 圓標自訂任意色域</span>
+                </div>
+                <div class="upload-btn-wrap" style="margin-top:8px;">
+                  <label class="btn-custom-action" for="fileLabelInput">📁 選擇圓標圖片</label>
+                  <input type="file" id="fileLabelInput" accept="image/*" style="display:none;">
+                  <button type="button" class="btn-custom-action" id="btnClearLabelImg">移除圓標圖片</button>
+                </div>
+              </div>
+
+              <!-- 4. 封套底色與封面圖片 -->
+              <div class="setting-group">
+                <div class="group-title">🖼️ 4. 封套封面外觀</div>
+                <div class="palette-grid">
+                  <div class="palette-circle color-jacket-btn" data-color="#f8f8f8" style="background:#f8f8f8; border-color:#999;" title="純白卡紙"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#f2efe9" style="background:#f2efe9;" title="牛皮米白"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#222222" style="background:#222222;" title="深色封套"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#c93b3b" style="background:#c93b3b;" title="復古磚紅"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#d35400" style="background:#d35400;" title="黑膠橘紅"></div>
+                  <div class="palette-circle color-jacket-btn" data-color="#2c3e50" style="background:#2c3e50;" title="午夜深藍"></div>
                 </div>
                 <div class="custom-color-picker-wrap">
                   <input type="color" id="jacketColorPicker" class="native-color-picker" value="#f8f8f8">
                   <span class="picker-label">🌈 封套自訂任意色域</span>
                 </div>
-              </div>
-
-              <!-- 3. 封套置入封面圖片 -->
-              <div class="setting-group">
-                <div class="group-title">🖼️ 3. 封套自訂封面圖片</div>
-                <div class="upload-btn-wrap">
-                  <label class="btn-custom-action" for="fileUploadInput">📁 從電腦選擇圖片</label>
+                <div class="upload-btn-wrap" style="margin-top:8px;">
+                  <label class="btn-custom-action" for="fileUploadInput">📁 選擇封面圖片</label>
                   <input type="file" id="fileUploadInput" accept="image/*" style="display:none;">
-                  <button type="button" class="btn-custom-action" id="btnClearImg">移除圖片恢復純色</button>
+                  <button type="button" class="btn-custom-action" id="btnClearImg">移除封面圖片</button>
                 </div>
                 <input type="text" id="jacketImgInput" class="full-input" style="margin-top:8px;" placeholder="或在此貼上網路圖片網址 (PNG / JPG)">
               </div>
@@ -796,10 +834,15 @@
       const iconVolMuted = document.getElementById('iconVolMuted');
       const loopToggle = document.getElementById('loopToggle');
       const jacket = document.getElementById('vinylJacket');
+      const discLabel = document.getElementById('discLabel');
       const jacketImgInput = document.getElementById('jacketImgInput');
       const fileInput = document.getElementById('fileUploadInput');
+      const fileLabelInput = document.getElementById('fileLabelInput');
       const btnClearImg = document.getElementById('btnClearImg');
+      const btnClearLabelImg = document.getElementById('btnClearLabelImg');
       const jacketColorPicker = document.getElementById('jacketColorPicker');
+      const labelColorPicker = document.getElementById('labelColorPicker');
+      const themeColorPicker = document.getElementById('themeColorPicker');
       const progressFill = document.getElementById('progressFill');
       const jacketProgress = document.getElementById('jacketProgress');
 
@@ -891,7 +934,6 @@
         localStore.set('yt_loop', isLooping);
       });
 
-      // 點擊進度條跳轉
       jacketProgress.addEventListener('click', (e) => {
         if (!isReady || !ytPlayer) return;
         const rect = jacketProgress.getBoundingClientRect();
@@ -908,10 +950,32 @@
         progressFill.style.width = `${percent}%`;
       }, 250);
 
-      // ══════════ 封套外觀配色處理 ══════════
+      // ══════════ 外觀與色彩控制邏輯 ══════════
+      // 1. 標題與按鍵主題色
+      function applyThemeColor(color) {
+        document.documentElement.style.setProperty('--accent-color', color);
+        document.documentElement.style.setProperty('--title-color', color);
+        document.documentElement.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
+        localStore.set('cfg_theme_color', color);
+        if (themeColorPicker) themeColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+      }
+
+      // 2. 黑膠圓標顏色
+      function applyLabelColor(color, clearImg = false) {
+        document.documentElement.style.setProperty('--disc-label-bg', color);
+        localStore.set('cfg_label_color', color);
+        if (labelColorPicker) labelColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#ffffff';
+
+        if (clearImg) {
+          discLabel.style.backgroundImage = 'none';
+          localStore.remove('cfg_label_img');
+          if (fileLabelInput) fileLabelInput.value = '';
+        }
+      }
+
+      // 3. 封套底色
       function applyJacketColor(color, clearImg = false) {
         document.documentElement.style.setProperty('--jacket-bg', color);
-        document.documentElement.style.setProperty('--accent-color', isLightColor(color) ? '#111111' : color);
         localStore.set('cfg_jacket_bg', color);
         if (jacketColorPicker) jacketColorPicker.value = color.startsWith('#') && color.length === 7 ? color : '#f8f8f8';
 
@@ -923,6 +987,18 @@
         }
       }
 
+      // 恢復外觀快取
+      const savedTheme = localStore.get('cfg_theme_color');
+      if (savedTheme) applyThemeColor(savedTheme);
+
+      const savedLabelColor = localStore.get('cfg_label_color');
+      if (savedLabelColor) applyLabelColor(savedLabelColor);
+
+      const savedLabelImg = localStore.get('cfg_label_img');
+      if (savedLabelImg && discLabel) {
+        discLabel.style.backgroundImage = `url("${savedLabelImg}")`;
+      }
+
       const savedJacketColor = localStore.get('cfg_jacket_bg');
       if (savedJacketColor) applyJacketColor(savedJacketColor);
 
@@ -932,6 +1008,29 @@
         if (jacketImgInput) jacketImgInput.value = savedJacketImg.startsWith('data:') ? '(自訂上傳圖片)' : savedJacketImg;
       }
 
+      // 監聽：主題色按鈕
+      document.querySelectorAll('.color-theme-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          e.preventDefault();
+          applyThemeColor(this.getAttribute('data-color'));
+        };
+      });
+      themeColorPicker.oninput = function(e) {
+        applyThemeColor(e.target.value);
+      };
+
+      // 監聽：圓標色按鈕
+      document.querySelectorAll('.color-label-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          e.preventDefault();
+          applyLabelColor(this.getAttribute('data-color'), true);
+        };
+      });
+      labelColorPicker.oninput = function(e) {
+        applyLabelColor(e.target.value, true);
+      };
+
+      // 監聽：封套色按鈕
       document.querySelectorAll('.color-jacket-btn').forEach(btn => {
         btn.onclick = function(e) {
           e.preventDefault();
@@ -942,6 +1041,24 @@
         applyJacketColor(e.target.value, true);
       };
 
+      // 圓標圖片上傳
+      fileLabelInput.onchange = function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const d = e.target.result;
+            discLabel.style.backgroundImage = `url("${d}")`;
+            localStore.set('cfg_label_img', d);
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      };
+      btnClearLabelImg.onclick = function(e) {
+        e.preventDefault();
+        applyLabelColor(localStore.get('cfg_label_color') || '#ffffff', true);
+      };
+
+      // 封面圖片上傳
       fileInput.onchange = function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
