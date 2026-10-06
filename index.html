@@ -17,8 +17,8 @@
       --case-bg: radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%);
       --case-border: #111111;
       --control-bar-bg: #11151c;
-      --accent-color: #e51d24; /* 貼紙主色與按鍵主題色 */
-      --accent-border: transparent; /* 消除紅色線框 */
+      --accent-color: #e51d24; 
+      --btn-icon-color: #ffffff; /* 播放圖示顏色（自適應深淺） */
       --btn-hover-color: #ff3b30;
     }
 
@@ -67,14 +67,14 @@
       line-height: 1.2;
     }
 
-    /* ══════════ 貼紙區域：完全移除紅色線框，無縫置圖 ══════════ */
+    /* ══════════ 貼紙區域 ══════════ */
     .tape-stripe {
       background-color: var(--accent-color) !important;
       background-size: cover !important;
       background-position: center !important;
       margin: 0 14px !important;
       padding: 12px 0 12px !important;
-      border: none !important; /* 彻底移除紅框 */
+      border: none !important;
       border-bottom-left-radius: 6px !important;
       border-bottom-right-radius: 6px !important;
       box-shadow: 0 3px 6px rgba(0,0,0,0.35) !important;
@@ -85,24 +85,24 @@
     /* ══════════ 按鍵主題色聯動 ══════════ */
     .play-btn, .flip-btn {
       background: var(--accent-color) !important;
-      color: #ffffff !important;
+      color: var(--btn-icon-color) !important;
       border: none !important;
       box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
       transition: background 0.3s ease, transform 0.1s ease;
     }
     .play-btn:hover, .flip-btn:hover {
-      background: var(--btn-hover-color) !important;
+      filter: brightness(1.15);
       transform: scale(1.05);
     }
     .play-btn svg, .flip-btn svg {
-      fill: #ffffff !important;
-      stroke: #ffffff !important;
+      fill: var(--btn-icon-color) !important;
+      stroke: var(--btn-icon-color) !important;
     }
     #volSlider::-webkit-slider-thumb {
       background: var(--accent-color) !important;
     }
 
-    /* 隱藏無用標籤與階梯斷層 */
+    /* 隱藏原生多餘標籤 */
     .tape-footer,
     #cassetteBody > div[style*="height:10px"],
     #cassetteBody > div[style*="height:8px"],
@@ -110,11 +110,7 @@
       display: none !important;
     }
     .badge-a, .badge-60 { display: none !important; }
-
-    /* ══════════ 徹底移除 B 面的 ES 按鈕 與 B 標籤 ══════════ */
-    #langBtn, .badge-b, .sb-header-right {
-      display: none !important;
-    }
+    #langBtn, .badge-b, .sb-header-right { display: none !important; }
 
     /* 轉輪立體深凹 */
     .reel-plate {
@@ -122,13 +118,12 @@
       border: 2px solid rgba(0,0,0,0.4) !important;
       border-radius: 6px !important;
     }
-
     .screw {
       background: radial-gradient(circle, #f0f0f0 25%, #888 70%, #333 100%) !important;
       box-shadow: inset 0 1px 1px #fff, 0 1px 2px rgba(0,0,0,0.9) !important;
     }
 
-    /* ══════════ 下移進度條 ＆ 聲波柱 ══════════ */
+    /* ══════════ 進度條下移 ＆ 聲波柱 ══════════ */
     .tape-progress {
       margin: 14px 16px 4px !important;
       height: 14px !important;
@@ -216,26 +211,69 @@
       box-sizing: border-box;
       outline: none;
     }
-    .palette-row {
+
+    /* 色盤排版（支援多色自動折行） */
+    .palette-grid {
       display: flex;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-top: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      align-items: center;
     }
     .palette-circle {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      border: 2px solid #fff;
+      border: 2px solid rgba(255,255,255,0.8);
       cursor: pointer !important;
       box-shadow: 0 2px 5px rgba(0,0,0,0.6);
       transition: transform 0.15s ease;
       position: relative;
       z-index: 9999 !important;
+      box-sizing: border-box;
     }
     .palette-circle:hover {
-      transform: scale(1.18);
+      transform: scale(1.2);
+      border-color: #fff;
     }
+
+    /* 🌈 自訂取色器（色域）樣式 */
+    .custom-color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      background: rgba(255,255,255,0.06);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .picker-label {
+      font-size: 11px;
+      color: #ddd;
+      font-weight: 600;
+    }
+    .native-color-picker {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    .native-color-picker::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    .native-color-picker::-webkit-color-swatch {
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+    }
+
     .upload-btn-wrap {
       display: flex;
       align-items: center;
@@ -273,7 +311,7 @@
             <div class="tape-title" id="tapeTitle" contenteditable="true" spellcheck="false">Playlist</div>
           </div>
 
-          <!-- 一整塊貼紙色彩 (無紅線框) -->
+          <!-- 一整塊貼紙色彩 -->
           <div class="tape-stripe" id="tapeStripe">
             <span class="badge-a">A</span>
             <span class="badge-60">60</span>
@@ -327,7 +365,6 @@
             <button class="back-btn" id="btnFlipA">
               <span aria-hidden="true">◀</span> <span>返回正面</span>
             </button>
-            <!-- 移除 ES 與 B 標籤容器 -->
           </div>
           <div class="video-window">
             <div id="ytPlayer"></div>
@@ -349,23 +386,35 @@
                 </div>
               </div>
 
-              <!-- 2. 貼紙與按鈕主題色 -->
+              <!-- 2. 紅橙黃綠藍靛紫黑白灰 + 色域取色器 -->
               <div class="setting-group">
                 <div class="group-title">🎨 2. 貼紙底色 ＆ 按鍵色彩聯動</div>
-                <div class="palette-row">
-                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典熱血紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="深海湛藍"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#388e3c" style="background:#388e3c;" title="森林墨綠"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#e67e22" style="background:#e67e22;" title="復古暖橘"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#e91e63" style="background:#e91e63;" title="龐克桃紅"></div>
-                  <div class="palette-circle color-accent-btn" data-color="#2d3748" style="background:#2d3748;" title="深邃灰黑"></div>
+                
+                <!-- 基礎 10 大配色盤 -->
+                <div class="palette-grid">
+                  <div class="palette-circle color-accent-btn" data-color="#e51d24" style="background:#e51d24;" title="經典紅"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#f37021" style="background:#f37021;" title="夕陽橙"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#fbc02d" style="background:#fbc02d;" title="亮麗黃"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#2e7d32" style="background:#2e7d32;" title="森林綠"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#1976d2" style="background:#1976d2;" title="蔚藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#3f51b5" style="background:#3f51b5;" title="靛青藍"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#8e24aa" style="background:#8e24aa;" title="夢幻紫"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#111111" style="background:#111111;" title="墨黑"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#ffffff" style="background:#ffffff; border-color:#999;" title="純白"></div>
+                  <div class="palette-circle color-accent-btn" data-color="#757575" style="background:#757575;" title="水泥灰"></div>
+                </div>
+
+                <!-- 🌈 自訂色域（全彩調色盤） -->
+                <div class="custom-color-picker-wrap">
+                  <input type="color" id="nativeColorPicker" class="native-color-picker" value="#e51d24">
+                  <span class="picker-label">🌈 自訂任意色域（點擊挑選或輸入色票）</span>
                 </div>
               </div>
 
               <!-- 3. 卡帶外殼 ＆ 控制座聯動 -->
               <div class="setting-group">
                 <div class="group-title">🎛️ 3. 卡帶外殼與控制座底色</div>
-                <div class="palette-row">
+                <div class="palette-grid">
                   <div class="palette-circle color-case-btn" data-case="radial-gradient(circle at 50% 25%, #2a2a2a 0%, #161616 65%, #0a0a0a 100%)" data-bar="#11151c" data-border="#111" style="background:#1a1a1a;" title="經典黑魂"></div>
                   <div class="palette-circle color-case-btn" data-case="#eae6df" data-bar="#dfdbd3" data-border="#c7c3ba" style="background:#eae6df;" title="復古米白"></div>
                   <div class="palette-circle color-case-btn" data-case="#4a5568" data-bar="#2d3748" data-border="#1a202c" style="background:#4a5568;" title="水泥冷灰"></div>
@@ -417,6 +466,28 @@
       return rawGetItem(widgetId + '_' + key);
     };
 
+    // 判斷顏色深淺，自適應深淺圖示
+    function isLightColor(hex) {
+      if (!hex || !hex.startsWith('#')) return false;
+      const c = hex.substring(1);
+      const rgb = parseInt(c.length === 3 ? c.split('').map(x=>x+x).join('') : c, 16);
+      const r = (rgb >> 16) & 0xff;
+      const g = (rgb >>  8) & 0xff;
+      const b = (rgb >>  0) & 0xff;
+      const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return luma > 160;
+    }
+
+    function applyAccentColor(color) {
+      const root = document.documentElement;
+      const stripe = document.getElementById('tapeStripe');
+      root.style.setProperty('--accent-color', color);
+      root.style.setProperty('--btn-icon-color', isLightColor(color) ? '#111111' : '#ffffff');
+      stripe.style.backgroundImage = 'none'; // 切換純色時清空圖片背景
+      localStorage.setItem('cfg_accent', color);
+      document.getElementById('nativeColorPicker').value = color.startsWith('#') && color.length === 7 ? color : '#e51d24';
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const root = document.documentElement;
       const stripe = document.getElementById('tapeStripe');
@@ -428,6 +499,7 @@
       const soundWaveBox = document.getElementById('soundWaveBox');
       const progressFill = document.getElementById('progressFill');
       const wrapper = document.getElementById('cassette-player-wrapper');
+      const nativeColorPicker = document.getElementById('nativeColorPicker');
 
       // 1. 生成 38 根聲波柱
       const barCount = 38;
@@ -466,7 +538,7 @@
       // 3. 讀取並套用外觀快取
       const savedAccent = localStorage.getItem('cfg_accent');
       if (savedAccent) {
-        root.style.setProperty('--accent-color', savedAccent);
+        applyAccentColor(savedAccent);
       }
 
       const savedCaseBg = localStorage.getItem('cfg_case_bg');
@@ -484,18 +556,29 @@
         imgInput.value = savedImg.startsWith('data:') ? '(自訂上傳圖片)' : savedImg;
       }
 
-      // 4. 主題色更換監聽
+      // 4. 基礎 10 色按鈕監聽
       document.querySelectorAll('.color-accent-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           const color = this.getAttribute('data-color');
-          root.style.setProperty('--accent-color', color);
-          localStorage.setItem('cfg_accent', color);
+          applyAccentColor(color);
+          localStorage.removeItem('cfg_tape_img');
+          imgInput.value = '';
+          fileInput.value = '';
         });
       });
 
-      // 5. 外殼與底座更換監聽
+      // 5. 🌈 自訂色域 Color Picker 監聽
+      nativeColorPicker.addEventListener('input', function(e) {
+        const pickedColor = e.target.value;
+        applyAccentColor(pickedColor);
+        localStorage.removeItem('cfg_tape_img');
+        imgInput.value = '';
+        fileInput.value = '';
+      });
+
+      // 6. 外殼與底座更換監聽
       document.querySelectorAll('.color-case-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.preventDefault();
@@ -512,7 +595,7 @@
         });
       });
 
-      // 6. 圖片上傳
+      // 7. 圖片上傳 (Base64)
       fileInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
           const reader = new FileReader();
@@ -526,7 +609,7 @@
         }
       });
 
-      // 7. 圖片 URL
+      // 8. 圖片 URL
       imgInput.addEventListener('change', () => {
         const val = imgInput.value.trim();
         if (val && !val.includes('(已上傳圖片)')) {
@@ -535,7 +618,7 @@
         }
       });
 
-      // 8. 移除圖片
+      // 9. 移除圖片按鈕
       btnClearImg.addEventListener('click', (e) => {
         e.preventDefault();
         stripe.style.backgroundImage = 'none';
@@ -544,7 +627,7 @@
         fileInput.value = '';
       });
 
-      // 9. 即時讀取歌名填入頂部標籤
+      // 10. 即時讀取歌名填入頂部標籤
       const updateTitle = () => {
         let songName = '';
         if (nowPlaying && nowPlaying.textContent && !nowPlaying.textContent.includes('pon play') && !nowPlaying.textContent.includes('ready')) {
